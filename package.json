@@ -1,0 +1,19 @@
+{
+  "name": "BabylonJSFirstSteps",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-connect": "~0.5.0",
+    "load-grunt-tasks": "~0.2.0",
+    "time-grunt": "~0.2.1",
+    "grunt-open": ">=0.2.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/topheman/BabylonJSFirstSteps.git"
+  }
+}
