@@ -1,19 +1,25 @@
-// Get the canvas element from our HTML below
-var canvas = document.getElementById("renderCanvas");
-// Load BABYLON 3D engine
-var engine = new BABYLON.Engine(canvas, true);
+function createScene(engine) {
+  //Creation of the scene 
+  var scene = new BABYLON.Scene(engine);
 
-var scene = new BABYLON.Scene(engine);
+  //Adding the light to the scene
+  var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 100, 100), scene);
 
-// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-var camera = new BABYLON.ArcRotateCamera("Camera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
-var light0 = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 0, 10), scene);
-var origin = BABYLON.Mesh.CreateSphere("origin", 10, 1.0, scene);
-
-// Attach the camera to the scene
-scene.activeCamera.attachControl(canvas);
-
-// Once the scene is loaded, just register a render loop to render it
-engine.runRenderLoop(function() {
-  scene.render();
-});
+  //Adding an Arc Rotate Camera
+  var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, new BABYLON.Vector3.Zero(), scene);
+  
+  //creating props
+  var box = BABYLON.Mesh.CreateBox("Box", 6.0, scene);//Parameters are: name, size of the box, the scene to attach the mesh.
+  var sphere = BABYLON.Mesh.CreateSphere("Sphere", 10.0, 3.0, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
+  var plan = BABYLON.Mesh.CreatePlane("Plane", 50.0, scene);//Parameters are: name, size, and scene to attach the mesh.
+  var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 3, 3, 3, 15, scene, false);//Parameters are: name, height, diameterTop, diameterBottom, tessellation (highly detailed or not), scene, updatable.
+  var torus = BABYLON.Mesh.CreateTorus("torus", 5, 1, 30, scene, false);//Parameters are: name, diameter, thickness, tessellation (highly detailed or not), scene, updatable.
+  
+  //updating props coordinate
+  box.position.x = 10;
+  cylinder.position.x = -10;
+  plan.position.z = -5;
+  plan.rotation.x = Math.PI;
+  
+  return scene;
+}
