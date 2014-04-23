@@ -8,6 +8,7 @@ function Cone(scene, options){
   this.step = typeof options.step !== 'undefined' ? options.step : 0.1;
   this.turn = typeof options.turn !== 'undefined' ? options.turn : 0.1;
   this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
+  this.color = typeof options.color !== 'undefined' ? this.hexToRgb(options.color) : {r:0.564,g:0,b:0};//#900000
   
   //parent mesh to group all the others
   var parent = BABYLON.Mesh.CreatePlane(this.name+"-group", 1, scene);
@@ -36,7 +37,7 @@ function Cone(scene, options){
   
   //add texture to the cylinder
   this.cylinder.material = new BABYLON.StandardMaterial(this.name+"-texture-cyclinder", scene);
-  this.cylinder.material.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
+  this.cylinder.material.diffuseColor = new BABYLON.Color3(this.color.r, this.color.g, this.color.b);
   
   //add texture to the eyes
   var eyeMaterial = new BABYLON.StandardMaterial(this.name+"-texture-eye", scene);
@@ -88,5 +89,20 @@ Cone.prototype = {
   },
   turnRight : function(){
     this._getMeshGroup().rotate(BABYLON.Axis.Y, this.turn, BABYLON.Space.LOCAL);
+  },
+  //this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+  hexToRgb : function(hex){
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16)/255,
+        g: parseInt(result[2], 16)/255,
+        b: parseInt(result[3], 16)/255
+    } : null;
+  },
+  registerToShadowGenerator : function(shadowGenerator){
+    var renderList = shadowGenerator.getShadowMap().renderList;
+    renderList.push(this.cylinder);
+    renderList.push(this.leftEye);
+    renderList.push(this.rightEye);
   }
 };

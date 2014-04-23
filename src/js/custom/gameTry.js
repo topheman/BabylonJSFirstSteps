@@ -9,12 +9,12 @@ window.onload = function() {
 
     var scene = new BABYLON.Scene(engine);
 
-    var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 10, 10), scene);
-    
-//    var light0 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
-//    light0.diffuse = new BABYLON.Color3(1, 1, 1);
-//    light0.specular = new BABYLON.Color3(1, 1, 1);
-//    light0.groundColor = new BABYLON.Color3(0, 0, 0);
+    var omniLight = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-20, 10, 30), scene);
+    omniLight.intensity = 0.5;
+
+    var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(-1, -2, -1), scene);
+    light.intensity = 0.9;
+    light.position = new BABYLON.Vector3(20, 40, 20);
 
     var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 25, BABYLON.Vector3.Zero(), scene);
     camera.attachControl(canvas);
@@ -26,21 +26,28 @@ window.onload = function() {
 
     //add some objects
     var plan = BABYLON.Mesh.CreatePlane("Plane", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
-    plan.rotate(BABYLON.Axis.X, Math.PI/2, BABYLON.Space.GLOBAL);
+    plan.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
 
     cone = new Cone(scene);//global on purpose
-    
+
+    //shadows
+    var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
+    shadowGenerator.useVarianceShadowMap = false;
+    shadowGenerator.alpha = 0.8;
+    cone.registerToShadowGenerator(shadowGenerator);
+    plan.receiveShadows = true;
+
     //event management
-    
+
     var state = {
-      up : false,
-      down : false,
-      left : false,
-      right : false
+      up: false,
+      down: false,
+      left: false,
+      right: false
     };
-    
-    window.addEventListener('keydown',function(e){
-      switch(e.keyCode){
+
+    window.addEventListener('keydown', function(e) {
+      switch (e.keyCode) {
         case 38 :
           state.up = true;
           break;
@@ -55,9 +62,9 @@ window.onload = function() {
           break;
       }
     });
-    
-    window.addEventListener('keyup',function(e){
-      switch(e.keyCode){
+
+    window.addEventListener('keyup', function(e) {
+      switch (e.keyCode) {
         case 38 :
           state.up = false;
           break;
@@ -72,18 +79,18 @@ window.onload = function() {
           break;
       }
     });
-    
-    scene.registerBeforeRender(function(){
-      if(state.up){
+
+    scene.registerBeforeRender(function() {
+      if (state.up) {
         cone.moveForward();
       }
-      if(state.down){
+      if (state.down) {
         cone.moveBack();
       }
-      if(state.left){
+      if (state.left) {
         cone.turnLeft();
       }
-      if(state.right){
+      if (state.right) {
         cone.turnRight();
       }
     });
@@ -94,6 +101,23 @@ window.onload = function() {
 
     window.addEventListener('resize', function() {
       engine.resize();
+    });
+
+    document.getElementById('toggleFullScreen').addEventListener('click', function() {
+      var rootDiv = document.getElementById('rootDiv');
+      if (rootDiv.requestFullscreen) {
+        rootDiv.requestFullscreen();
+      }
+      else if (rootDiv.mozRequestFullScreen) {
+        rootDiv.mozRequestFullScreen();
+      }
+      else if (rootDiv.webkitRequestFullscreen) {
+        rootDiv.webkitRequestFullscreen();
+      }
+      else if (rootDiv.msRequestFullscreen) {
+        rootDiv.msRequestFullscreen();
+      }
+      //@todo back to normal
     });
   }
 };

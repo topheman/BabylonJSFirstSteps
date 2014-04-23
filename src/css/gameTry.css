@@ -1,0 +1,13 @@
+#infos{
+  position: absolute;
+  bottom:0px;  
+}
+#infos ul{
+
+}
+#infos ul li{
+
+}
+#toggleFullScreen{
+  cursor: pointer;
+}
