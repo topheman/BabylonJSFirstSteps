@@ -1,6 +1,12 @@
 function Cone(scene, options){
+  options = typeof options === 'object' ? options : {};
+  
   //single name
   this.name = (new Date()).getTime();
+  
+  //default settings
+  this.step = typeof options.step !== 'undefined' ? options.step : 0.1;
+  this.turn = typeof options.turn !== 'undefined' ? options.turn : 0.1;
   
   //parent mesh to group all the others
   var parent = BABYLON.Mesh.CreatePlane("Plane", 1, scene);
@@ -28,9 +34,29 @@ function Cone(scene, options){
     }
   });
   this.position = position;
+  this._getMeshGroup = function(){
+    return parent;
+  };
   
 };
 
 Cone.prototype = {
-  
+  moveForward : function(){
+    this._getMeshGroup().translate(BABYLON.Axis.X, this.step, BABYLON.Space.LOCAL);
+  },
+  moveBack : function(){
+    this._getMeshGroup().translate(BABYLON.Axis.X, -this.step, BABYLON.Space.LOCAL);
+  },
+  moveLeft : function(){
+    this._getMeshGroup().translate(BABYLON.Axis.Z, this.step, BABYLON.Space.LOCAL);
+  },
+  moveRight : function(){
+    this._getMeshGroup().translate(BABYLON.Axis.Z, -this.step, BABYLON.Space.LOCAL);
+  },
+  turnLeft : function(){
+    this._getMeshGroup().rotate(BABYLON.Axis.Y, -this.turn, BABYLON.Space.LOCAL);
+  },
+  turnRight : function(){
+    this._getMeshGroup().rotate(BABYLON.Axis.Y, this.turn, BABYLON.Space.LOCAL);
+  }
 };
