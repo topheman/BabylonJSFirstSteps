@@ -54,7 +54,7 @@ window.onload = function() {
         case 17 :
           state.unSquint = true;
           break;
-        case 32 :
+        case 16 :
           state.squint = true;
           break;
         case 38 :
@@ -77,7 +77,7 @@ window.onload = function() {
         case 17 :
           state.unSquint = false;
           break;
-        case 32 :
+        case 16 :
           state.squint = false;
           break;
         case 38 :

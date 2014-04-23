@@ -42,12 +42,14 @@ function Cone(scene, options) {
   //add texture to the eyes
   this.leftEye.material = new BABYLON.StandardMaterial(this.name + "-material-leftEye", scene);
   this.rightEye.material = new BABYLON.StandardMaterial(this.name + "-material-rightEye", scene);
-  this.leftEye.material.diffuseTexture = new BABYLON.Texture("./assets/gameTry/eye.png", scene);
-  this.rightEye.material.diffuseTexture = new BABYLON.Texture("./assets/gameTry/eye.png", scene);;
-  this.leftEye.material.diffuseTexture.vOffset = 1.5;
-  this.leftEye.material.diffuseTexture.vScale = 2;
-  this.rightEye.material.diffuseTexture.vOffset = 1.5;
-  this.rightEye.material.diffuseTexture.vScale = 2;
+  this.leftEye.material.diffuseTexture = new BABYLON.Texture("./assets/gameTry/eye-light.png", scene);
+  this.rightEye.material.diffuseTexture = new BABYLON.Texture("./assets/gameTry/eye-light.png", scene);;
+  
+  this.rightEye.material.diffuseTexture.vOffset = -0.245;
+  this.rightEye.material.diffuseTexture.uOffset = 0;
+  
+  this.leftEye.material.diffuseTexture.vOffset = -0.245;
+  this.leftEye.material.diffuseTexture.uOffset = 0;
 
 
   //emulate getters setters on position babylonjs style
@@ -121,21 +123,21 @@ Cone.prototype = {
     renderList.push(this.rightEye);
   },
   squint: function() {
-    if(this.leftEye.material.diffuseTexture.vOffset < 1.65){
+    if(this.rightEye.material.diffuseTexture.uOffset < 0.08){
       this.leftEye.material.diffuseTexture.vOffset += 0.005;
       this.rightEye.material.diffuseTexture.vOffset -= 0.005;
-      this.leftEye.material.diffuseTexture.uOffset += 0.0003;
-      this.rightEye.material.diffuseTexture.uOffset += 0.0003;
+      this.leftEye.material.diffuseTexture.uOffset += 0.003;
+      this.rightEye.material.diffuseTexture.uOffset += 0.003;
       return true;
     }
     return false;
   },
   unSquint: function(){
-    if(this.leftEye.material.diffuseTexture.vOffset >= 1.5){
+    if(this.rightEye.material.diffuseTexture.uOffset > 0){
       this.leftEye.material.diffuseTexture.vOffset -= 0.005;
       this.rightEye.material.diffuseTexture.vOffset += 0.005;
-      this.leftEye.material.diffuseTexture.uOffset -= 0.0003;
-      this.rightEye.material.diffuseTexture.uOffset -= 0.0003;
+      this.leftEye.material.diffuseTexture.uOffset -= 0.003;
+      this.rightEye.material.diffuseTexture.uOffset -= 0.003;
       return true;
     }
     return false;
