@@ -124,13 +124,20 @@ Cone.prototype = {
     if(this.leftEye.material.diffuseTexture.vOffset < 1.65){
       this.leftEye.material.diffuseTexture.vOffset += 0.005;
       this.rightEye.material.diffuseTexture.vOffset -= 0.005;
-      this.leftEye.material.diffuseTexture.uOffset += 0.0002;
-      this.rightEye.material.diffuseTexture.uOffset += 0.0002;
+      this.leftEye.material.diffuseTexture.uOffset += 0.0003;
+      this.rightEye.material.diffuseTexture.uOffset += 0.0003;
       return true;
     }
     return false;
   },
   unSquint: function(){
-    
+    if(this.leftEye.material.diffuseTexture.vOffset >= 1.5){
+      this.leftEye.material.diffuseTexture.vOffset -= 0.005;
+      this.rightEye.material.diffuseTexture.vOffset += 0.005;
+      this.leftEye.material.diffuseTexture.uOffset -= 0.0003;
+      this.rightEye.material.diffuseTexture.uOffset -= 0.0003;
+      return true;
+    }
+    return false;
   }
 };

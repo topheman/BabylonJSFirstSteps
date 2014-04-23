@@ -44,11 +44,16 @@ window.onload = function() {
       down: false,
       left: false,
       right: false,
-      squint : false
+      squint : false,
+      unSquint : false
     };
 
     window.addEventListener('keydown', function(e) {
+      console.log(e);
       switch (e.keyCode) {
+        case 17 :
+          state.unSquint = true;
+          break;
         case 32 :
           state.squint = true;
           break;
@@ -69,6 +74,9 @@ window.onload = function() {
 
     window.addEventListener('keyup', function(e) {
       switch (e.keyCode) {
+        case 17 :
+          state.unSquint = false;
+          break;
         case 32 :
           state.squint = false;
           break;
@@ -88,6 +96,9 @@ window.onload = function() {
     });
 
     scene.registerBeforeRender(function() {
+      if (state.unSquint) {
+        cone.unSquint();
+      }
       if (state.squint) {
         cone.squint();
       }
