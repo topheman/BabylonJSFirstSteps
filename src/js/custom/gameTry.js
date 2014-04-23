@@ -43,11 +43,15 @@ window.onload = function() {
       up: false,
       down: false,
       left: false,
-      right: false
+      right: false,
+      squint : false
     };
 
     window.addEventListener('keydown', function(e) {
       switch (e.keyCode) {
+        case 32 :
+          state.squint = true;
+          break;
         case 38 :
           state.up = true;
           break;
@@ -65,6 +69,9 @@ window.onload = function() {
 
     window.addEventListener('keyup', function(e) {
       switch (e.keyCode) {
+        case 32 :
+          state.squint = false;
+          break;
         case 38 :
           state.up = false;
           break;
@@ -81,6 +88,9 @@ window.onload = function() {
     });
 
     scene.registerBeforeRender(function() {
+      if (state.squint) {
+        cone.squint();
+      }
       if (state.up) {
         cone.moveForward();
       }
