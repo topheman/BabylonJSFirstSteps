@@ -70,7 +70,6 @@
     this.leftEye.material.diffuseTexture.uOffset = 0;
     
     //add animations
-    this.cylinder.animations.push(getBumpAnimation());
 
 
     //emulate getters setters on position babylonjs style
@@ -154,8 +153,15 @@
       }
       return false;
     },
-    bump: function() {
-      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, 3, function(){
+    bump: function(scale,speed) {
+      scale = (typeof scale === 'undefined' || scale === 0) ? 1.2 : scale;
+      speed = (typeof speed === 'undefined' || speed === 0) ? 3 : speed;
+      if(this.bumpingScale !== scale){
+        this.bumpingScale = scale;
+        helpers.removeAnimationFromMesh(this.cylinder,"bumpAnimation");
+        this.cylinder.animations.push(getBumpAnimation(scale));
+      }
+      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, speed, function(){
         console.log('bumping - back normal');
       });
       this.bumping = true;
@@ -171,8 +177,12 @@
   };
 
   //Private methods
-
-  //this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+  
+  /**
+   * this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+   * @param {String} hex
+   * @returns {Object}
+   */
   var hexToRgb = function(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -183,19 +193,11 @@
   };
 
   /**
-   * Private BABYLON.Animation shared by all Cone instances, create it with getBumpAnimation.
-   * @type BABYLON.Animation
-   */
-  var bumpAnimation = null;
-  /**
-   * Acts like a singleton, all the instances will share the same BABYLON.Animation to save memory.
+   * Returns a simple bumpAnimation
    * @returns {BABYLON.Animation}
    */
-  var getBumpAnimation = function() {
-    if(bumpAnimation !== null){
-      return bumpAnimation;
-    }
-    bumpAnimation = new BABYLON.Animation("bumpAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+  var getBumpAnimation = function(scale) {
+    var bumpAnimation = new BABYLON.Animation("bumpAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var keys = [];
     keys.push({
       frame: 0,
@@ -203,7 +205,7 @@
     });
     keys.push({
       frame: 50,
-      value: 1.2
+      value: scale
     });
     keys.push({
       frame: 100,
@@ -211,6 +213,48 @@
     });
     bumpAnimation.setKeys(keys);
     return bumpAnimation;
+  };
+  
+  /**
+   * Bunch of methods I didn't find inside BabylonJS, that I coded for myself
+   * please tell me if they exist
+   */
+  var helpers = {
+    /**
+     * @unused
+     * @param {BABYLON.Mesh} mesh
+     * @returns {Array}
+     */
+    getAnimationNamesFromMesh : function(mesh){
+      var result = mesh.animations.map(function(item,index){
+        return item.name;
+      });
+    },
+    /**
+     * @unused
+     * @param {BABYLON.Mesh} mesh
+     * @param {String} animationName
+     * @returns {Boolean}
+     */
+    isAnimationRegistered : function(mesh,animationName){
+      return helpers.getAnimationNamesFromMesh(mesh).indexOf(animationName) > -1;
+    },
+    /**
+     * Removes the animation from the mesh
+     * returns true if the animation was removed / false if there was no animation to remove
+     * @param {BABYLON.Mesh} mesh
+     * @param {String} animationName
+     * @returns {Boolean}
+     */
+    removeAnimationFromMesh : function(mesh, animationName){
+      if(mesh.animations.length > 0){
+        mesh.animations.splice(mesh.animations.indexOf(animationName),1);
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
   };
 
   return Cone;
