@@ -13,6 +13,10 @@
   var Cone = function(scene, options) {
     options = typeof options === 'object' ? options : {};
 
+    var CONE_CYLINDER_TOP_DIAMETER = 2;
+    var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
+    var CONE_CYLINDER_HEIGHT = 5;
+
     //single name
     this.name = (new Date()).getTime();
 
@@ -27,9 +31,11 @@
     parent.isVisible = false;
 
     //create + link + reposition the cylinder inside the group
-    this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", 5, 5, 2, 20, scene);
+    this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
+    var pivot = BABYLON.Matrix.Translation(0,CONE_CYLINDER_HEIGHT/2,0);
+    this.cylinder.setPivotMatrix(pivot);
     this.cylinder.parent = parent;
-    this.cylinder.setPositionWithLocalVector(new BABYLON.Vector3(0, 2.5, 0));
+    this.cylinder.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
 
     //create a parent mesh for the eyes + link it to the global parent mesh + reposition and scale
     this.parentEyes = BABYLON.Mesh.CreatePlane(this.name + "-group-eyesGroup", 1, scene);
@@ -156,9 +162,6 @@
     },
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
-      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, 3, function(){
-        console.log('bumping - back normal');
-      });
       this.bumping = false;
 
     },
