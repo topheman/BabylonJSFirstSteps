@@ -17,30 +17,35 @@ window.onload = function() {
     light.position = new BABYLON.Vector3(20, 60, 20);
 
     var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 25, BABYLON.Vector3.Zero(), scene);
+    scene.activeCamera = camera;
     camera.attachControl(canvas);
     // deactivate keyboard binding
     camera.keysUp = [];
     camera.keysDown = [];
     camera.keysRight = [];
     camera.keysLeft = [];
-
+    
     //add some objects
     var plan = BABYLON.Mesh.CreatePlane("Plane", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
     plan.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
-
-    cone = new Cone(scene);//global on purpose
-    //test cones to check correct behavior
-    coneTest1 = new Cone(scene,{color:'#3d9aff'});
-    coneTest2 = new Cone(scene,{color:'#ffd53d'});
-    coneTest1.position.x = 10;
-    coneTest2.position.z = -10;
+    
+    plan.isPickable = false;
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
     shadowGenerator.useVarianceShadowMap = false;
     shadowGenerator.alpha = 0.8;
-    cone.registerToShadowGenerator(shadowGenerator);
     plan.receiveShadows = true;
+
+    cone = new Cone(scene,{name:"coneMain"});//global on purpose
+    //test cones to check correct behavior
+    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});
+    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});
+    coneTest1.position.x = 10;
+    coneTest2.position.z = -10;
+    cone.registerToShadowGenerator(shadowGenerator);
+    coneTest1.registerToShadowGenerator(shadowGenerator);
+    coneTest2.registerToShadowGenerator(shadowGenerator);
 
     //event management
 
@@ -126,6 +131,24 @@ window.onload = function() {
 
     window.addEventListener('resize', function() {
       engine.resize();
+    });
+    
+    window.addEventListener('pointerdown', function(e){
+      console.log(e.x,e.y,scene.pick(e.x,e.y));
+      var pickingInfos = scene.pick(e.x,e.y);
+      if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
+        switch(pickingInfos.pickedMesh.name.split('-')[0]){
+          case "coneMain" :
+            cone.toggleBump();
+            break;
+          case "coneTest1" :
+            coneTest1.toggleBump(1.5,2);
+            break;
+          case "coneTest2" :
+            coneTest2.toggleBump(0.5,4);
+            break;
+        }
+      }
     });
     
     document.getElementById('toggleBumping').addEventListener('click',function(){

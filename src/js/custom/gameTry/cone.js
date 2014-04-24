@@ -18,24 +18,28 @@
     var CONE_CYLINDER_HEIGHT = 5;
 
     //single name
-    this.name = (new Date()).getTime();
+    this.cone = true;
+    this.name = typeof options.name !== 'undefined' ? options.name : "cone"+(new Date()).getTime();
 
     //default settings
-    this.step = typeof options.step !== 'undefined' ? options.step : 0.1;
-    this.turn = typeof options.turn !== 'undefined' ? options.turn : 0.1;
+    this.moveStep = typeof options.moveStep !== 'undefined' ? options.moveStep : 0.1;
+    this.turnStep = typeof options.turn !== 'undefined' ? options.turnStep : 0.1;
     this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
     this.color = typeof options.color !== 'undefined' ? hexToRgb(options.color) : {r: 0.564, g: 0, b: 0};//#900000
+    options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
 
     //parent mesh to group all the others
     var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
     parentMesh.isVisible = false;
+    parentMesh.isPickable = true;
 
     //create + link + reposition the cylinder inside the group
     this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
-    var pivot = BABYLON.Matrix.Translation(0,CONE_CYLINDER_HEIGHT/2,0);
+    var pivot = BABYLON.Matrix.Translation(0, CONE_CYLINDER_HEIGHT / 2, 0);
     this.cylinder.setPivotMatrix(pivot);
     this.cylinder.parent = parentMesh;
     this.cylinder.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
+    this.cylinder.isPickable = options.pickable;
 
     //create a parent mesh for the eyes + link it to the global parent mesh + reposition and scale
     this.parentEyes = BABYLON.Mesh.CreatePlane(this.name + "-group-eyesGroup", 1, scene);
@@ -43,15 +47,18 @@
     this.parentEyes.isVisible = false;
     this.parentEyes.setPositionWithLocalVector(new BABYLON.Vector3(1, 3.5, 0));
     this.parentEyes.scaling.y = 1.5;
+    this.parentEyes.isPickable = false;
 
     //create eyes + link them to the parentEyes mesh
     this.leftEye = BABYLON.Mesh.CreateSphere(this.name + "-group-eyesGroup-left-eye", 10.0, this.eyeSize, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
     this.leftEye.parent = this.parentEyes;
     this.leftEye.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0.7));
+    this.leftEye.isPickable = options.pickable;
 
     this.rightEye = BABYLON.Mesh.CreateSphere(this.name + "-group-eyesGroup-right-eye", 10.0, this.eyeSize, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
     this.rightEye.parent = this.parentEyes;
     this.rightEye.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, -0.7));
+    this.rightEye.isPickable = options.pickable;
 
     //add texture to the cylinder
     this.cylinder.material = new BABYLON.StandardMaterial(this.name + "-texture-cyclinder", scene);
@@ -68,7 +75,7 @@
 
     this.leftEye.material.diffuseTexture.vOffset = -0.245;
     this.leftEye.material.diffuseTexture.uOffset = 0;
-    
+
     //add animations
 
 
@@ -110,22 +117,22 @@
   //Instance methode shared on the prototype
   Cone.prototype = {
     moveForward: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.X, this.step, BABYLON.Space.LOCAL);
+      this._getMeshGroup().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
     },
     moveBack: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.X, -this.step, BABYLON.Space.LOCAL);
+      this._getMeshGroup().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
     },
     moveLeft: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.Z, this.step, BABYLON.Space.LOCAL);
+      this._getMeshGroup().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
     },
     moveRight: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.Z, -this.step, BABYLON.Space.LOCAL);
+      this._getMeshGroup().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
     },
     turnLeft: function() {
-      this._getMeshGroup().rotate(BABYLON.Axis.Y, -this.turn, BABYLON.Space.LOCAL);
+      this._getMeshGroup().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
     },
     turnRight: function() {
-      this._getMeshGroup().rotate(BABYLON.Axis.Y, this.turn, BABYLON.Space.LOCAL);
+      this._getMeshGroup().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
     },
     registerToShadowGenerator: function(shadowGenerator) {
       var renderList = shadowGenerator.getShadowMap().renderList;
@@ -153,15 +160,15 @@
       }
       return false;
     },
-    bump: function(scale,speed) {
+    bump: function(scale, speed) {
       scale = (typeof scale === 'undefined' || scale === 0) ? 1.2 : scale;
       speed = (typeof speed === 'undefined' || speed === 0) ? 3 : speed;
-      if(this.bumpingScale !== scale){
+      if (this.bumpingScale !== scale) {
         this.bumpingScale = scale;
-        helpers.removeAnimationFromMesh(this.cylinder,"bumpAnimation");
+        helpers.removeAnimationFromMesh(this.cylinder, "bumpAnimation");
         this.cylinder.animations.push(getBumpAnimation(scale));
       }
-      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, speed, function(){
+      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, speed, function() {
         console.log('bumping - back normal');
       });
       this.bumping = true;
@@ -173,11 +180,31 @@
     },
     isBumping: function() {
       return this.bumping;
+    },
+    toggleBump: function(scale, speed) {
+      if (this.isBumping()) {
+        this.stopBump();
+      }
+      else {
+        this.bump(scale, speed);
+      }
+    },
+    setMoveStep: function(moveStep) {
+      this.moveStep = moveStep;
+    },
+    getMoveStep: function() {
+      return this.moveStep;
+    },
+    setTurnStep: function(turnStep) {
+      this.turnStep = turnStep;
+    },
+    getTurnStep: function() {
+      return this.turnStep;
     }
   };
 
   //Private methods
-  
+
   /**
    * this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
    * @param {String} hex
@@ -194,6 +221,7 @@
 
   /**
    * Returns a simple bumpAnimation
+   * @param {Number} scale description
    * @returns {BABYLON.Animation}
    */
   var getBumpAnimation = function(scale) {
@@ -214,7 +242,7 @@
     bumpAnimation.setKeys(keys);
     return bumpAnimation;
   };
-  
+
   /**
    * Bunch of methods I didn't find inside BabylonJS, that I coded for myself
    * please tell me if they exist
@@ -225,8 +253,8 @@
      * @param {BABYLON.Mesh} mesh
      * @returns {Array}
      */
-    getAnimationNamesFromMesh : function(mesh){
-      var result = mesh.animations.map(function(item,index){
+    getAnimationNamesFromMesh: function(mesh) {
+      var result = mesh.animations.map(function(item, index) {
         return item.name;
       });
     },
@@ -236,7 +264,7 @@
      * @param {String} animationName
      * @returns {Boolean}
      */
-    isAnimationRegistered : function(mesh,animationName){
+    isAnimationRegistered: function(mesh, animationName) {
       return helpers.getAnimationNamesFromMesh(mesh).indexOf(animationName) > -1;
     },
     /**
@@ -246,12 +274,12 @@
      * @param {String} animationName
      * @returns {Boolean}
      */
-    removeAnimationFromMesh : function(mesh, animationName){
-      if(mesh.animations.length > 0){
-        mesh.animations.splice(mesh.animations.indexOf(animationName),1);
+    removeAnimationFromMesh: function(mesh, animationName) {
+      if (mesh.animations.length > 0) {
+        mesh.animations.splice(mesh.animations.indexOf(animationName), 1);
         return true;
       }
-      else{
+      else {
         return false;
       }
     }
