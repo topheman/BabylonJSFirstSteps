@@ -8,6 +8,6 @@
 #infos ul li{
 
 }
-#toggleFullScreen{
+#infos ul li.pointer{
   cursor: pointer;
 }

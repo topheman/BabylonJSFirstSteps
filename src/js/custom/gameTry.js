@@ -29,6 +29,11 @@ window.onload = function() {
     plan.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
 
     cone = new Cone(scene);//global on purpose
+    //test cones to check correct behavior
+    coneTest1 = new Cone(scene,{color:'#3d9aff'});
+    coneTest2 = new Cone(scene,{color:'#ffd53d'});
+    coneTest1.position.x = 10;
+    coneTest2.position.z = -10;
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
@@ -122,6 +127,15 @@ window.onload = function() {
     window.addEventListener('resize', function() {
       engine.resize();
     });
+    
+    document.getElementById('toggleBumping').addEventListener('click',function(){
+      if(cone.isBumping()){
+        cone.stopBump();
+      }
+      else{
+        cone.bump();
+      }
+    },false);
 
     document.getElementById('toggleFullScreen').addEventListener('click', function() {
       var rootDiv = document.getElementById('rootDiv');
@@ -138,6 +152,6 @@ window.onload = function() {
         rootDiv.msRequestFullscreen();
       }
       //@todo back to normal
-    });
+    },false);
   }
 };

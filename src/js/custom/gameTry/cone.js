@@ -8,7 +8,7 @@
   }
   //@todo add CommonJS support for browserify
 })(function() {
-  
+
   //Contructor
   var Cone = function(scene, options) {
     options = typeof options === 'object' ? options : {};
@@ -62,6 +62,9 @@
 
     this.leftEye.material.diffuseTexture.vOffset = -0.245;
     this.leftEye.material.diffuseTexture.uOffset = 0;
+    
+    //add animations
+    this.cylinder.animations.push(getBumpAnimation());
 
 
     //emulate getters setters on position babylonjs style
@@ -144,13 +147,30 @@
         return true;
       }
       return false;
+    },
+    bump: function() {
+      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, 3, function(){
+        console.log('bumping - back normal');
+      });
+      this.bumping = true;
+    },
+    stopBump: function() {
+      this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, 3, function(){
+        console.log('bumping - back normal');
+      });
+      this.bumping = false;
+
+    },
+    isBumping: function() {
+      return this.bumping;
     }
   };
-  
+
   //Private methods
-  
+
   //this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-  var hexToRgb = function (hex) {
+  var hexToRgb = function(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
       r: parseInt(result[1], 16) / 255,
@@ -158,7 +178,38 @@
       b: parseInt(result[3], 16) / 255
     } : null;
   };
-  
+
+  /**
+   * Private BABYLON.Animation shared by all Cone instances, create it with getBumpAnimation.
+   * @type BABYLON.Animation
+   */
+  var bumpAnimation = null;
+  /**
+   * Acts like a singleton, all the instances will share the same BABYLON.Animation to save memory.
+   * @returns {BABYLON.Animation}
+   */
+  var getBumpAnimation = function() {
+    if(bumpAnimation !== null){
+      return bumpAnimation;
+    }
+    bumpAnimation = new BABYLON.Animation("bumpAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var keys = [];
+    keys.push({
+      frame: 0,
+      value: 1
+    });
+    keys.push({
+      frame: 50,
+      value: 1.2
+    });
+    keys.push({
+      frame: 100,
+      value: 1
+    });
+    bumpAnimation.setKeys(keys);
+    return bumpAnimation;
+  };
+
   return Cone;
 
 });
