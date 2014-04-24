@@ -27,19 +27,19 @@
     this.color = typeof options.color !== 'undefined' ? hexToRgb(options.color) : {r: 0.564, g: 0, b: 0};//#900000
 
     //parent mesh to group all the others
-    var parent = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
-    parent.isVisible = false;
+    var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
+    parentMesh.isVisible = false;
 
     //create + link + reposition the cylinder inside the group
     this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
     var pivot = BABYLON.Matrix.Translation(0,CONE_CYLINDER_HEIGHT/2,0);
     this.cylinder.setPivotMatrix(pivot);
-    this.cylinder.parent = parent;
+    this.cylinder.parent = parentMesh;
     this.cylinder.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
 
     //create a parent mesh for the eyes + link it to the global parent mesh + reposition and scale
     this.parentEyes = BABYLON.Mesh.CreatePlane(this.name + "-group-eyesGroup", 1, scene);
-    this.parentEyes.parent = parent;
+    this.parentEyes.parent = parentMesh;
     this.parentEyes.isVisible = false;
     this.parentEyes.setPositionWithLocalVector(new BABYLON.Vector3(1, 3.5, 0));
     this.parentEyes.scaling.y = 1.5;
@@ -78,32 +78,32 @@
     Object.defineProperties(position, {
       'x': {
         get: function() {
-          return parent.position.x;
+          return parentMesh.position.x;
         },
         set: function(x) {
-          return parent.position.x = x;
+          return parentMesh.position.x = x;
         }
       },
       'y': {
         get: function() {
-          return parent.position.y;
+          return parentMesh.position.y;
         },
         set: function(y) {
-          return parent.position.y = y;
+          return parentMesh.position.y = y;
         }
       },
       'z': {
         get: function() {
-          return parent.position.z;
+          return parentMesh.position.z;
         },
         set: function(z) {
-          return parent.position.z = z;
+          return parentMesh.position.z = z;
         }
       }
     });
     this.position = position;
     this._getMeshGroup = function() {
-      return parent;
+      return parentMesh;
     };
 
   };
