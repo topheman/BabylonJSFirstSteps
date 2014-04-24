@@ -9,12 +9,12 @@ window.onload = function() {
 
     var scene = new BABYLON.Scene(engine);
 
-    var omniLight = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-20, 10, 30), scene);
-    omniLight.intensity = 0.5;
+//    var omniLight = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-20, 10, 30), scene);
+//    omniLight.intensity = 0.5;
 
-    var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(-1, -2, -1), scene);
-    light.intensity = 0.9;
-    light.position = new BABYLON.Vector3(20, 40, 20);
+    var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(-2, -2, -1), scene);
+    light.intensity = 1.2;
+    light.position = new BABYLON.Vector3(20, 60, 20);
 
     var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 25, BABYLON.Vector3.Zero(), scene);
     camera.attachControl(canvas);
@@ -49,7 +49,6 @@ window.onload = function() {
     };
 
     window.addEventListener('keydown', function(e) {
-      console.log(e);
       switch (e.keyCode) {
         case 17 :
           state.unSquint = true;
