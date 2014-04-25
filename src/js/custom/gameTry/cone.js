@@ -1,3 +1,13 @@
+/*!
+ * Copyright 2014, Christophe Rosset (Topheman)
+ * http://labs.topheman.com/
+ * http://twitter.com/topheman
+ * 
+ * @dependency BabylonJS - https://github.com/BabylonJS/Babylon.js
+ * @dependency handjs - http://handjs.codeplex.com/
+ * 
+ */
+
 (function(ConeExport) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -29,14 +39,13 @@
     this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
     this.color = typeof options.color !== 'undefined' ? hexToRgb(options.color) : {r: 0.564, g: 0, b: 0};//#900000
     options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
+    options.enablePhysics = typeof options.enablePhysics === 'undefined' ? false : options.enablePhysics;
 //    options.applyGravity = typeof options.applyGravity === 'undefined' ? false : options.applyGravity;
 
     //parent mesh to group all the others
     var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
     parentMesh.isVisible = false;
-    parentMesh.isPickable = true;
-//    parentMesh.applyGravity = options.applyGravity;
-//    parentMesh.checkCollisions = options.applyGravity;//we only check collision with the floor from the parentMesh which is a plane at the bottom of the cone
+    parentMesh.isPickable = false;
 
     //create + link + reposition the cylinder inside the group
     this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
@@ -80,6 +89,15 @@
 
     this.leftEye.material.diffuseTexture.vOffset = -0.245;
     this.leftEye.material.diffuseTexture.uOffset = 0;
+    
+    //physics
+    
+    if(options.enablePhysics === true){
+      console.log('enabling physics for '+this.name+' ...');
+      parentMesh.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0.1 });
+      parentMesh.applyGravity = true;
+      parentMesh.checkCollisions = true;//we only check collision with the floor from the parentMesh which is a plane at the bottom of the cone
+    }    
 
     //add animations
 

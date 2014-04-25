@@ -5,9 +5,14 @@ window.onload = function() {
     window.alert('Browser not supported');
   }
   else {
-    var engine = new BABYLON.Engine(canvas, true);
+//    var ENABLE_PHYSICS = true;
+    var ENABLE_PHYSICS = false;
+    
+    var engine = new BABYLON.Engine(canvas, false);
 
     var scene = new BABYLON.Scene(engine);
+    
+    scene.enablePhysics();
 
 //    var omniLight = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-20, 10, 30), scene);
 //    omniLight.intensity = 0.5;
@@ -26,21 +31,21 @@ window.onload = function() {
     camera.keysLeft = [];
     
     //add some objects
-    var plan = BABYLON.Mesh.CreatePlane("Plane", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
-    plan.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
+    var ground = BABYLON.Mesh.CreatePlane("Plane", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
+    ground.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
     
-    plan.isPickable = false;
+    ground.isPickable = false;
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
     shadowGenerator.useVarianceShadowMap = false;
     shadowGenerator.alpha = 0.8;
-    plan.receiveShadows = true;
-
-    cone = new Cone(scene,{name:"coneMain"});//global on purpose
+    ground.receiveShadows = true;
+    
+    cone = new Cone(scene,{name:"coneMain", enablePhysics:ENABLE_PHYSICS});//global on purpose
     //test cones to check correct behavior
-    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});
-    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});
+    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff', enablePhysics:ENABLE_PHYSICS});
+    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d', enablePhysics:ENABLE_PHYSICS});
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
     coneTest2.rotation.y = -1;
@@ -48,15 +53,17 @@ window.onload = function() {
     coneTest1.registerToShadowGenerator(shadowGenerator);
     coneTest2.registerToShadowGenerator(shadowGenerator);
     
-    //@note teporary commented - this kind of physics not supported directly in BabylonJS (needs CannonJS)
-//    //gravity
-//    scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
-//    scene.collisionsEnabled = true;
-//    cone.applyGravity = true;
-//    coneTest1.applyGravity = true;
-//    coneTest2.applyGravity = true;
-//    coneTest1.position.y = 10;
-//    plan.checkCollisions = true;
+    //gravity
+    scene.setGravity(new BABYLON.Vector3(0, -10, 0));
+    ground.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0, friction: 0.5, restitution: 0.7 });
+    coneTest1.position.y = 10;
+    //test with a simple cube ...
+    var cube = BABYLON.Mesh.CreateBox("Box", 6.0, scene);
+    cube.applyGravity = true;
+    cube.checkCollisions = true;
+    cube.position.y = 10;
+    cube.position.z = 10;
+    cube.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 1 });
 
     //event management
 
