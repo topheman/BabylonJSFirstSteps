@@ -29,11 +29,14 @@
     this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
     this.color = typeof options.color !== 'undefined' ? hexToRgb(options.color) : {r: 0.564, g: 0, b: 0};//#900000
     options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
+//    options.applyGravity = typeof options.applyGravity === 'undefined' ? false : options.applyGravity;
 
     //parent mesh to group all the others
     var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
     parentMesh.isVisible = false;
     parentMesh.isPickable = true;
+//    parentMesh.applyGravity = options.applyGravity;
+//    parentMesh.checkCollisions = options.applyGravity;//we only check collision with the floor from the parentMesh which is a plane at the bottom of the cone
 
     //create + link + reposition the cylinder inside the group
     this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
@@ -80,6 +83,7 @@
 
     //add animations
 
+    //emulate getter
 
     //emulate getters setters on position babylonjs style
     var position = {};
@@ -140,6 +144,15 @@
       }
     });
     this.rotation = rotation;
+    
+//    Object.defineProperty(this,'applyGravity', {
+//      get: function() {
+//        return parentMesh.applyGravity;
+//      },
+//      set: function(applyGravity) {
+//        return parentMesh.applyGravity = applyGravity;
+//      }
+//    });
     
     this._getMeshGroup = function() {
       return parentMesh;

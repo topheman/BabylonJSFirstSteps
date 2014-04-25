@@ -47,6 +47,16 @@ window.onload = function() {
     cone.registerToShadowGenerator(shadowGenerator);
     coneTest1.registerToShadowGenerator(shadowGenerator);
     coneTest2.registerToShadowGenerator(shadowGenerator);
+    
+    //@note teporary commented - this kind of physics not supported directly in BabylonJS (needs CannonJS)
+//    //gravity
+//    scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
+//    scene.collisionsEnabled = true;
+//    cone.applyGravity = true;
+//    coneTest1.applyGravity = true;
+//    coneTest2.applyGravity = true;
+//    coneTest1.position.y = 10;
+//    plan.checkCollisions = true;
 
     //event management
 
