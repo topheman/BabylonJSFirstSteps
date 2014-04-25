@@ -4,25 +4,16 @@ window.onload = function() {
   if (!BABYLON.Engine.isSupported()) {
     window.alert('Browser not supported');
   }
-  else {
-//    var ENABLE_PHYSICS = true;
-    var ENABLE_PHYSICS = false;
-    
+  else {    
     var engine = new BABYLON.Engine(canvas, false);
 
     var scene = new BABYLON.Scene(engine);
-    
-    scene.enablePhysics();
-    scene.setGravity(new BABYLON.Vector3(0, -10, 0));
-
-//    var omniLight = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-20, 10, 30), scene);
-//    omniLight.intensity = 0.5;
 
     var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(-2, -2, -1), scene);
     light.intensity = 1.2;
     light.position = new BABYLON.Vector3(20, 60, 20);
 
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 25, BABYLON.Vector3.Zero(), scene);
+    camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 25, BABYLON.Vector3.Zero(), scene);
     scene.activeCamera = camera;
     camera.attachControl(canvas);
     // deactivate keyboard binding
@@ -38,44 +29,47 @@ window.onload = function() {
     ground.isPickable = false;
     
     //create cones
-    cone = new Cone(scene,{name:"coneMain"});//global on purpose
+    coneMain = new Cone(scene,{name:"coneMain"});//global on purpose
     //test cones to check correct behavior
     coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});
     coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
     coneTest2.rotation.y = -1;
+    var cones = {
+      'coneMain' : {
+        'instance' : coneMain,
+        'bumpSettings' : {
+          'scale' : 1.2,
+          'speed': 3
+        }
+      },
+      'coneTest1' : {
+        'instance' : coneTest1,
+        'bumpSettings' : {
+          'scale' : 1.5,
+          'speed': 2
+        }
+      },
+      'coneTest2' : {
+        'instance' : coneTest2,
+        'bumpSettings' : {
+          'scale' : 0.5,
+          'speed': 4
+        }
+      }
+    };
+    
+    camera.target = coneMain.getMainMesh();
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
     shadowGenerator.useVarianceShadowMap = false;
     shadowGenerator.alpha = 0.8;
     ground.receiveShadows = true;
-    cone.registerToShadowGenerator(shadowGenerator);
+    coneMain.registerToShadowGenerator(shadowGenerator);
     coneTest1.registerToShadowGenerator(shadowGenerator);
     coneTest2.registerToShadowGenerator(shadowGenerator);
-    
-    //gravity
-    ground.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0, friction: 0.5, restitution: 0.7 });
-    if(ENABLE_PHYSICS){
-      cone.position.y = 10;
-      coneTest1.position.y = 10;
-      coneTest2.position.y = 10;
-      cone.enablePhysics();
-      coneTest1.enablePhysics();
-      coneTest2.enablePhysics();
-    }
-    //test with a simple cube ...
-//    var prop = BABYLON.Mesh.CreateBox("Box", 6.0, scene);
-//    var prop = BABYLON.Mesh.CreatePlane("plane", 7, scene);
-    var prop = BABYLON.Mesh.CreateCylinder("cylinder", 8, 3, 3, 15, scene, false);
-    prop.applyGravity = true;
-    prop.checkCollisions = true;
-    prop.position.y = 10;
-    prop.position.z = 10;
-    prop.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 1 });
-    var prop2 = BABYLON.Mesh.CreateBox("Box", 5, scene);
-    prop2.parent = prop;
 
     //event management
 
@@ -136,22 +130,22 @@ window.onload = function() {
 
     scene.registerBeforeRender(function() {
       if (state.unSquint) {
-        cone.unSquint();
+        coneMain.unSquint();
       }
       if (state.squint) {
-        cone.squint();
+        coneMain.squint();
       }
       if (state.up) {
-        cone.moveForward();
+        coneMain.moveForward();
       }
       if (state.down) {
-        cone.moveBack();
+        coneMain.moveBack();
       }
       if (state.left) {
-        cone.turnLeft();
+        coneMain.turnLeft();
       }
       if (state.right) {
-        cone.turnRight();
+        coneMain.turnRight();
       }
     });
 
@@ -163,30 +157,21 @@ window.onload = function() {
       engine.resize();
     });
     
-    window.addEventListener('pointerdown', function(e){
+    window.addEventListener('pointerup', function(e){
       console.log(e.x,e.y,scene.pick(e.x,e.y));
       var pickingInfos = scene.pick(e.x,e.y);
       if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
-        switch(pickingInfos.pickedMesh.name.split('-')[0]){
-          case "coneMain" :
-            cone.toggleBump();
-            break;
-          case "coneTest1" :
-            coneTest1.toggleBump(1.5,2);
-            break;
-          case "coneTest2" :
-            coneTest2.toggleBump(0.5,4);
-            break;
-        }
+        var coneName = pickingInfos.pickedMesh.name.split('-')[0];
+        cones[coneName].instance.toggleBump(cones[coneName].bumpSettings.scale,cones[coneName].bumpSettings.speed);
       }
     });
     
     document.getElementById('toggleBumping').addEventListener('click',function(){
-      if(cone.isBumping()){
-        cone.stopBump();
+      if(coneMain.isBumping()){
+        coneMain.stopBump();
       }
       else{
-        cone.bump();
+        coneMain.bump();
       }
     },false);
 

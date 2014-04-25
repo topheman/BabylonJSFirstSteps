@@ -87,14 +87,6 @@
 
     this.leftEye.material.diffuseTexture.vOffset = -0.245;
     this.leftEye.material.diffuseTexture.uOffset = 0;
-    
-    //physics    
-    this.enablePhysics = function(){
-      console.log('enabling physics for '+this.name+' ...');
-      parentMesh.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0.1 });
-      parentMesh.applyGravity = true;
-      parentMesh.checkCollisions = true;//we only check collision with the floor from the parentMesh which is a plane at the bottom of the cone
-    };
 
     //add animations
 
@@ -169,7 +161,7 @@
 //      }
 //    });
     
-    this._getMeshGroup = function() {
+    this.getMainMesh = function() {
       return parentMesh;
     };
 
@@ -178,22 +170,22 @@
   //Instance methode shared on the prototype
   Cone.prototype = {
     moveForward: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
+      this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
     },
     moveBack: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
+      this.getMainMesh().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
     },
     moveLeft: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
+      this.getMainMesh().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
     },
     moveRight: function() {
-      this._getMeshGroup().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
+      this.getMainMesh().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
     },
     turnLeft: function() {
-      this._getMeshGroup().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
+      this.getMainMesh().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
     },
     turnRight: function() {
-      this._getMeshGroup().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
+      this.getMainMesh().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
     },
     registerToShadowGenerator: function(shadowGenerator) {
       var renderList = shadowGenerator.getShadowMap().renderList;
