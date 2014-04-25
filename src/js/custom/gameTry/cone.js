@@ -2,6 +2,8 @@
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(ConeExport);
+  } else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ConeExport;
   } else {
     // Browser globals
     window.Cone = ConeExport();
@@ -108,6 +110,37 @@
       }
     });
     this.position = position;
+    
+    //emulate getters setters on rotation babylonjs style
+    var rotation = {};
+    Object.defineProperties(rotation, {
+      'x': {
+        get: function() {
+          return parentMesh.rotation.x;
+        },
+        set: function(x) {
+          return parentMesh.rotation.x = x;
+        }
+      },
+      'y': {
+        get: function() {
+          return parentMesh.rotation.y;
+        },
+        set: function(y) {
+          return parentMesh.rotation.y = y;
+        }
+      },
+      'z': {
+        get: function() {
+          return parentMesh.rotation.z;
+        },
+        set: function(z) {
+          return parentMesh.rotation.z = z;
+        }
+      }
+    });
+    this.rotation = rotation;
+    
     this._getMeshGroup = function() {
       return parentMesh;
     };

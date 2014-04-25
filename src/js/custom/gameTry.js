@@ -43,6 +43,7 @@ window.onload = function() {
     coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
+    coneTest2.rotation.y = -1;
     cone.registerToShadowGenerator(shadowGenerator);
     coneTest1.registerToShadowGenerator(shadowGenerator);
     coneTest2.registerToShadowGenerator(shadowGenerator);
