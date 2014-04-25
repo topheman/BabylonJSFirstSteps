@@ -44,7 +44,7 @@
     var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
     parentMesh.isVisible = false;
     parentMesh.isPickable = false;
-
+    
     //create + link + reposition the cylinder inside the group
     this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
     var pivot = BABYLON.Matrix.Translation(0, CONE_CYLINDER_HEIGHT / 2, 0);
