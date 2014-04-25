@@ -23,10 +23,10 @@ window.onload = function() {
     camera.keysLeft = [];
     
     //add some objects
-    var ground = BABYLON.Mesh.CreatePlane("Plane", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
+    var ground = BABYLON.Mesh.CreatePlane("ground", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
     ground.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
     
-    ground.isPickable = false;
+    ground.isPickable = true;
     
     //create cones
     coneMain = new Cone(scene,{name:"coneMain"});//global on purpose
@@ -165,15 +165,6 @@ window.onload = function() {
         cones[coneName].instance.toggleBump(cones[coneName].bumpSettings.scale,cones[coneName].bumpSettings.speed);
       }
     });
-    
-    document.getElementById('toggleBumping').addEventListener('click',function(){
-      if(coneMain.isBumping()){
-        coneMain.stopBump();
-      }
-      else{
-        coneMain.bump();
-      }
-    },false);
 
     document.getElementById('toggleFullScreen').addEventListener('click', function() {
       var rootDiv = document.getElementById('rootDiv');

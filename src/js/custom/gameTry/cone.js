@@ -28,7 +28,7 @@
     var CONE_CYLINDER_TOP_DIAMETER = 2;
     var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
     var CONE_CYLINDER_HEIGHT = 5;
-
+    
     //single name
     this.cone = true;
     this.name = typeof options.name !== 'undefined' ? options.name : "cone"+(new Date()).getTime();
@@ -151,6 +151,36 @@
       }
     });
     this.rotation = rotation;
+    
+    //emulate getters setters on rotation babylonjs style
+    var scaling = {};
+    Object.defineProperties(scaling, {
+      'x': {
+        get: function() {
+          return parentMesh.scaling.x;
+        },
+        set: function(x) {
+          return parentMesh.scaling.x = x;
+        }
+      },
+      'y': {
+        get: function() {
+          return parentMesh.scaling.y;
+        },
+        set: function(y) {
+          return parentMesh.scaling.y = y;
+        }
+      },
+      'z': {
+        get: function() {
+          return parentMesh.scaling.z;
+        },
+        set: function(z) {
+          return parentMesh.scaling.z = z;
+        }
+      }
+    });
+    this.scaling = scaling;
     
 //    Object.defineProperty(this,'applyGravity', {
 //      get: function() {
