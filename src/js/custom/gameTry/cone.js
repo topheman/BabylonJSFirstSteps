@@ -39,8 +39,6 @@
     this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
     this.color = typeof options.color !== 'undefined' ? hexToRgb(options.color) : {r: 0.564, g: 0, b: 0};//#900000
     options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
-    options.enablePhysics = typeof options.enablePhysics === 'undefined' ? false : options.enablePhysics;
-//    options.applyGravity = typeof options.applyGravity === 'undefined' ? false : options.applyGravity;
 
     //parent mesh to group all the others
     var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
@@ -90,14 +88,13 @@
     this.leftEye.material.diffuseTexture.vOffset = -0.245;
     this.leftEye.material.diffuseTexture.uOffset = 0;
     
-    //physics
-    
-    if(options.enablePhysics === true){
+    //physics    
+    this.enablePhysics = function(){
       console.log('enabling physics for '+this.name+' ...');
       parentMesh.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0.1 });
       parentMesh.applyGravity = true;
       parentMesh.checkCollisions = true;//we only check collision with the floor from the parentMesh which is a plane at the bottom of the cone
-    }    
+    };
 
     //add animations
 

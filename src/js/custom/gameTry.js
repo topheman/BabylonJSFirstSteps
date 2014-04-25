@@ -13,6 +13,7 @@ window.onload = function() {
     var scene = new BABYLON.Scene(engine);
     
     scene.enablePhysics();
+    scene.setGravity(new BABYLON.Vector3(0, -10, 0));
 
 //    var omniLight = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-20, 10, 30), scene);
 //    omniLight.intensity = 0.5;
@@ -35,28 +36,35 @@ window.onload = function() {
     ground.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
     
     ground.isPickable = false;
+    
+    //create cones
+    cone = new Cone(scene,{name:"coneMain"});//global on purpose
+    //test cones to check correct behavior
+    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});
+    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});
+    coneTest1.position.x = 10;
+    coneTest2.position.z = -10;
+    coneTest2.rotation.y = -1;
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
     shadowGenerator.useVarianceShadowMap = false;
     shadowGenerator.alpha = 0.8;
     ground.receiveShadows = true;
-    
-    cone = new Cone(scene,{name:"coneMain", enablePhysics:ENABLE_PHYSICS});//global on purpose
-    //test cones to check correct behavior
-    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff', enablePhysics:ENABLE_PHYSICS});
-    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d', enablePhysics:ENABLE_PHYSICS});
-    coneTest1.position.x = 10;
-    coneTest2.position.z = -10;
-    coneTest2.rotation.y = -1;
     cone.registerToShadowGenerator(shadowGenerator);
     coneTest1.registerToShadowGenerator(shadowGenerator);
     coneTest2.registerToShadowGenerator(shadowGenerator);
     
     //gravity
-    scene.setGravity(new BABYLON.Vector3(0, -10, 0));
     ground.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0, friction: 0.5, restitution: 0.7 });
-    coneTest1.position.y = 10;
+    if(ENABLE_PHYSICS){
+      cone.position.y = 10;
+      coneTest1.position.y = 10;
+      coneTest2.position.y = 10;
+      cone.enablePhysics();
+      coneTest1.enablePhysics();
+      coneTest2.enablePhysics();
+    }
     //test with a simple cube ...
 //    var prop = BABYLON.Mesh.CreateBox("Box", 6.0, scene);
 //    var prop = BABYLON.Mesh.CreatePlane("plane", 7, scene);
