@@ -29,6 +29,12 @@
     var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
     var CONE_CYLINDER_HEIGHT = 5;
     
+    this._size = {
+      topDiameter : CONE_CYLINDER_TOP_DIAMETER,
+      bottomDiameter : CONE_CYLINDER_BOTTOM_DIAMETER,
+      height : CONE_CYLINDER_HEIGHT
+    };
+    
     //single name
     this.cone = true;
     this.name = typeof options.name !== 'undefined' ? options.name : "cone"+(new Date()).getTime();
@@ -283,6 +289,29 @@
     },
     getTurnStep: function() {
       return this.turnStep;
+    },
+    getHeight: function(){
+      return this._size.height*this.cylinder.scaling.y*this.scaling.y;
+    },
+    getTopDiameter: function(){
+      return this._size.topDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
+    },
+    getBottomDiameter: function(){
+      return this._size.bottomDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
+    },
+    /**
+     * Checks if two cones intersect (based on the bottom diameter)
+     * If a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)
+     * @param {Cone} cone
+     * @returns {Boolean}
+     */
+    intersectsCone: function(cone){
+      var distance = Math.sqrt((this.position.x - cone.position.x)*(this.position.x - cone.position.x)+(this.position.z - cone.position.z)*(this.position.z - cone.position.z));
+      console.log(distance);
+      if(distance < (this.getBottomDiameter() + cone.getBottomDiameter())/2){
+        return true;
+      }
+      return false;
     }
   };
 

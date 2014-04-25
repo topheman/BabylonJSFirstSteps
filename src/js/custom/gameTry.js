@@ -27,12 +27,13 @@ window.onload = function() {
     ground.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
     
     ground.isPickable = true;
+//    ground.isVisible = false;
     
     //create cones
     coneMain = new Cone(scene,{name:"coneMain"});//global on purpose
     //test cones to check correct behavior
-    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});
-    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});
+    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});//blue
+    coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});//yellow
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
     coneTest2.rotation.y = -1;
