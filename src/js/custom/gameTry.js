@@ -58,12 +58,16 @@ window.onload = function() {
     ground.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 0, friction: 0.5, restitution: 0.7 });
     coneTest1.position.y = 10;
     //test with a simple cube ...
-    var cube = BABYLON.Mesh.CreateBox("Box", 6.0, scene);
-    cube.applyGravity = true;
-    cube.checkCollisions = true;
-    cube.position.y = 10;
-    cube.position.z = 10;
-    cube.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 1 });
+//    var prop = BABYLON.Mesh.CreateBox("Box", 6.0, scene);
+//    var prop = BABYLON.Mesh.CreatePlane("plane", 7, scene);
+    var prop = BABYLON.Mesh.CreateCylinder("cylinder", 8, 3, 3, 15, scene, false);
+    prop.applyGravity = true;
+    prop.checkCollisions = true;
+    prop.position.y = 10;
+    prop.position.z = 10;
+    prop.setPhysicsState({ impostor: BABYLON.PhysicsEngine.BoxImpostor, mass: 1 });
+    var prop2 = BABYLON.Mesh.CreateBox("Box", 5, scene);
+    prop2.parent = prop;
 
     //event management
 
