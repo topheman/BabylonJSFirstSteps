@@ -13,7 +13,7 @@
     // AMD. Register as an anonymous module.
     define(ConeExport);
   } else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = ConeExport;
+    module.exports = ConeExport();
   } else {
     // Browser globals
     window.Cone = ConeExport();
@@ -325,9 +325,9 @@
   var hexToRgb = function(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
-      r: parseInt(result[1], 16) / 255,
-      g: parseInt(result[2], 16) / 255,
-      b: parseInt(result[3], 16) / 255
+      r: parseInt(result[1], 16) / 256,
+      g: parseInt(result[2], 16) / 256,
+      b: parseInt(result[3], 16) / 256
     } : null;
   };
 
