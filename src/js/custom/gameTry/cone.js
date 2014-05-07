@@ -312,6 +312,19 @@
         return true;
       }
       return false;
+    },
+    /**
+     * 
+     * @param {BABYLON.Vector3} point
+     * @returns {undefined}
+     */
+    lookAt: function(point){
+      point.y = 0;
+      this.getMainMesh().lookAt(point);
+    },
+    follow: function(point){
+      this.lookAt(point);
+      this.moveForward();
     }
   };
 

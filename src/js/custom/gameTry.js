@@ -15,7 +15,7 @@ window.onload = function() {
 
     camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 25, BABYLON.Vector3.Zero(), scene);
     scene.activeCamera = camera;
-    camera.attachControl(canvas);
+//    camera.attachControl(canvas);
     // deactivate keyboard binding
     camera.keysUp = [];
     camera.keysDown = [];
@@ -61,7 +61,7 @@ window.onload = function() {
       }
     };
     
-    camera.target = coneMain.getMainMesh();
+//    camera.target = coneMain.getMainMesh();
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
@@ -80,7 +80,8 @@ window.onload = function() {
       left: false,
       right: false,
       squint : false,
-      unSquint : false
+      unSquint : false,
+      pointerDown : false
     };
 
     window.addEventListener('keydown', function(e) {
@@ -148,6 +149,9 @@ window.onload = function() {
       if (state.right) {
         coneMain.turnRight();
       }
+      if(state.pointerDown && state.pointerDown.coneName && state.pointerDown.lastCoords){
+        cones[state.pointerDown.coneName].instance.lookAt(state.pointerDown.lastCoords);
+      }
     });
 
     engine.runRenderLoop(function() {
@@ -158,12 +162,38 @@ window.onload = function() {
       engine.resize();
     });
     
-    window.addEventListener('pointerup', function(e){
-      console.log(e.x,e.y,scene.pick(e.x,e.y));
+    window.addEventListener('pointerdown', function(e){
+      console.log('pointerdown');
       var pickingInfos = scene.pick(e.x,e.y);
       if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
         var coneName = pickingInfos.pickedMesh.name.split('-')[0];
-        cones[coneName].instance.toggleBump(cones[coneName].bumpSettings.scale,cones[coneName].bumpSettings.speed);
+        state.pointerDown = {
+          "coneName" : coneName
+        };
+      }
+    });
+    
+    window.addEventListener('pointermove', function(e){
+      console.log('pointermove');
+      if(state.pointerDown !== false){
+        var pickingInfos = scene.pick(e.x,e.y);
+        if(pickingInfos.pickedPoint){
+          state.pointerDown.lastCoords = pickingInfos.pickedPoint;
+        }
+      }
+    });
+    
+    window.addEventListener('pointerup', function(e){
+      console.log('pointerup');
+      if(state.pointerDown !== false){
+        state.pointerDown = false;
+      }
+      else{
+        var pickingInfos = scene.pick(e.x,e.y);
+        if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
+          var coneName = pickingInfos.pickedMesh.name.split('-')[0];
+          cones[coneName].instance.toggleBump(cones[coneName].bumpSettings.scale,cones[coneName].bumpSettings.speed);
+        }
       }
     });
 
