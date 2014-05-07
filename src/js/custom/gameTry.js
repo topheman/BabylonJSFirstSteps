@@ -1,3 +1,5 @@
+var camera, coneMain, coneTest1, coneTest2;
+
 window.onload = function() {
   var canvas = document.getElementById("canvas");
 
@@ -61,7 +63,8 @@ window.onload = function() {
       }
     };
     
-//    camera.target = coneMain.getMainMesh();
+    camera.target = coneMain.getMainMesh();
+    var cameraMouseMode = false;
 
     //shadows
     var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
@@ -89,6 +92,9 @@ window.onload = function() {
         case 17 :
           state.unSquint = true;
           break;
+        case 18 :
+          state.camera = true;
+          break;
         case 16 :
           state.squint = true;
           break;
@@ -111,6 +117,9 @@ window.onload = function() {
       switch (e.keyCode) {
         case 17 :
           state.unSquint = false;
+          break;
+        case 18 :
+          state.camera = false;
           break;
         case 16 :
           state.squint = false;
@@ -150,7 +159,16 @@ window.onload = function() {
         coneMain.turnRight();
       }
       if(state.pointerDown && state.pointerDown.coneName && state.pointerDown.lastCoords){
-        cones[state.pointerDown.coneName].instance.lookAt(state.pointerDown.lastCoords);
+        cones[state.pointerDown.coneName].instance.follow(state.pointerDown.lastCoords);
+      }
+      if(state.camera === true && cameraMouseMode === false){
+        camera.attachControl(canvas);
+        cameraMouseMode = true;
+        
+      }
+      if(state.camera === false && cameraMouseMode === true){
+        camera.detachControl(canvas);
+        cameraMouseMode = false;
       }
     });
 
@@ -163,7 +181,6 @@ window.onload = function() {
     });
     
     window.addEventListener('pointerdown', function(e){
-      console.log('pointerdown');
       var pickingInfos = scene.pick(e.x,e.y);
       if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
         var coneName = pickingInfos.pickedMesh.name.split('-')[0];
@@ -174,7 +191,6 @@ window.onload = function() {
     });
     
     window.addEventListener('pointermove', function(e){
-      console.log('pointermove');
       if(state.pointerDown !== false){
         var pickingInfos = scene.pick(e.x,e.y);
         if(pickingInfos.pickedPoint){
@@ -184,7 +200,6 @@ window.onload = function() {
     });
     
     window.addEventListener('pointerup', function(e){
-      console.log('pointerup');
       if(state.pointerDown !== false){
         state.pointerDown = false;
       }

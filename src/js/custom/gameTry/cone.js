@@ -205,6 +205,9 @@
 
   //Instance methode shared on the prototype
   Cone.prototype = {
+    getPosition:function(){
+      return this.getMainMesh().position;
+    },
     moveForward: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
     },
@@ -319,12 +322,14 @@
      * @returns {undefined}
      */
     lookAt: function(point){
-      point.y = 0;
-      this.getMainMesh().lookAt(point);
+      point.y = this.getMainMesh().position.y;
+      this.getMainMesh().lookAt(point,Math.PI/2);
     },
     follow: function(point){
-      this.lookAt(point);
-      this.moveForward();
+      if(point && point.subtract(this.getPosition()).length() > 0.05){
+        this.lookAt(point);
+        this.moveForward();
+      }
     }
   };
 

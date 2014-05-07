@@ -3,7 +3,9 @@
   bottom:0px;  
 }
 #infos ul{
-
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 #infos ul li{
 
