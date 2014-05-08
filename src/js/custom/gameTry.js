@@ -1,3 +1,9 @@
+/**
+ * This file may seem poorly coded (global variables, etc ...), this is only to test the framework
+ * I don't really have a clue of what I will do exactly (a game probably)
+ * If you have ideas please share them !
+ */
+
 var camera, coneMain, coneTest1, coneTest2;
 
 window.onload = function() {
@@ -62,6 +68,11 @@ window.onload = function() {
         }
       }
     };
+    //put them as an array as well
+    var conesArray = [];
+    for (var currentCone in cones){
+      conesArray.push(cones[currentCone].instance);
+    }
     
     camera.target = coneMain.getMainMesh();
     var cameraMouseMode = false;
@@ -152,9 +163,11 @@ window.onload = function() {
       }
       if (state.up) {
         coneMain.moveForward();
+        coneMain.$hasMoved = true;
       }
       if (state.down) {
         coneMain.moveBack();
+        coneMain.$hasMoved = true;
       }
       if (state.left) {
         coneMain.turnLeft();
@@ -164,15 +177,33 @@ window.onload = function() {
       }
       if(state.pointer.coneName && state.pointer.lastCoords){
         cones[state.pointer.coneName].instance.follow(state.pointer.lastCoords);
+        cones[state.pointer.coneName].instance.$hasMoved = true;
       }
       if(state.camera === true && cameraMouseMode === false){
         camera.attachControl(canvas);
         cameraMouseMode = true;
-        
       }
       if(state.camera === false && cameraMouseMode === true){
         camera.detachControl(canvas);
         cameraMouseMode = false;
+      }
+      //this loop can be optimize (according to exactly what we want to do)
+      var i,j;
+      //loop from the 1rst cone
+      for(i=0; i<conesArray.length; i++){
+        //loop from the second cone
+        for(j=i+1; j<conesArray.length; j++){
+          if(conesArray[i].intersectsCone(conesArray[j])){
+            //only do something to the instance that is not moving
+            if(!conesArray[i].isBumping() && conesArray[j].$hasMoved === true){
+              conesArray[i].bump({loop:false});
+            }
+            else if(!conesArray[j].isBumping() && conesArray[i].$hasMoved === true){
+              conesArray[j].bump({loop:false});
+            }
+          }
+        }
+        conesArray[i].$hasMoved = false;//reset tag
       }
     });
 

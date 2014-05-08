@@ -327,7 +327,6 @@
      */
     intersectsCone: function(cone){
       var distance = Math.sqrt((this.position.x - cone.position.x)*(this.position.x - cone.position.x)+(this.position.z - cone.position.z)*(this.position.z - cone.position.z));
-      console.log(distance);
       if(distance < (this.getBottomDiameter() + cone.getBottomDiameter())/2){
         return true;
       }
