@@ -84,7 +84,11 @@ window.onload = function() {
       right: false,
       squint : false,
       unSquint : false,
-      pointerDown : false
+      pointer : {
+        coneName : false,
+        lastCoords : false,
+        i : 0
+      }
     };
 
     window.addEventListener('keydown', function(e) {
@@ -158,8 +162,8 @@ window.onload = function() {
       if (state.right) {
         coneMain.turnRight();
       }
-      if(state.pointerDown && state.pointerDown.coneName && state.pointerDown.lastCoords){
-        cones[state.pointerDown.coneName].instance.follow(state.pointerDown.lastCoords);
+      if(state.pointer.coneName && state.pointer.lastCoords){
+        cones[state.pointer.coneName].instance.follow(state.pointer.lastCoords);
       }
       if(state.camera === true && cameraMouseMode === false){
         camera.attachControl(canvas);
@@ -184,32 +188,35 @@ window.onload = function() {
       var pickingInfos = scene.pick(e.x,e.y);
       if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
         var coneName = pickingInfos.pickedMesh.name.split('-')[0];
-        state.pointerDown = {
-          "coneName" : coneName
-        };
+        state.pointer.coneName = coneName;
+        state.pointer.i = 0;
       }
     });
     
     window.addEventListener('pointermove', function(e){
-      if(state.pointerDown !== false){
+      if(state.pointer.coneName !== false){
+        //to check if the cone has been moved (a pointermove is triggered after the pointerup)
+        //so this is how a simple click is detected
+        state.pointer.i++;
         var pickingInfos = scene.pick(e.x,e.y);
         if(pickingInfos.pickedPoint){
-          state.pointerDown.lastCoords = pickingInfos.pickedPoint;
+          state.pointer.lastCoords = pickingInfos.pickedPoint;
         }
       }
     });
     
     window.addEventListener('pointerup', function(e){
-      if(state.pointerDown !== false){
-        state.pointerDown = false;
+      if(state.pointer.coneName !== false){
+        state.pointer.coneName = false;
       }
-      else{
+      if(state.pointer.i === 0){
         var pickingInfos = scene.pick(e.x,e.y);
         if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
           var coneName = pickingInfos.pickedMesh.name.split('-')[0];
           cones[coneName].instance.toggleBump(cones[coneName].bumpSettings.scale,cones[coneName].bumpSettings.speed);
         }
       }
+      state.pointer.i = 0;
     });
 
     document.getElementById('toggleFullScreen').addEventListener('click', function() {
