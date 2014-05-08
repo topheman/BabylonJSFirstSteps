@@ -1,15 +1,43 @@
+body{
+  font-family: Arial, "sans-serif";
+}
 #infos{
   position: absolute;
   bottom:0px;  
+  background: transparent;
+  padding: 10px;
+  border-top-right-radius:15px;
+}
+#infos.loaded{
+  -webkit-animation: infos-flash 0.7s linear 0s 3;
+  animation: infos-flash 0.7s linear 0s 3;
 }
 #infos ul{
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+  padding-left: 15px;
+  margin: 0px;
+
 }
 #infos ul li{
 
 }
 #infos ul li.pointer{
   cursor: pointer;
+}
+
+/** animations */
+/* Chrome, Safari, Opera */
+@-webkit-keyframes infos-flash{
+  0%   {background: transparent;}
+  50%  {background: white;}
+  100% {background: transparent;}
+}
+
+/* Standard syntax */
+@keyframes infos-flash{
+  0%   {background: transparent;}
+  50%  {background: white;}
+  100% {background: transparent;}
 }

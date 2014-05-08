@@ -235,5 +235,8 @@ window.onload = function() {
       }
       //@todo back to normal
     },false);
+    
+    document.getElementById('infos').classList.add('loaded');
+    
   }
 };
