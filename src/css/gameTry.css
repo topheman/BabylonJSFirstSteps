@@ -1,6 +1,9 @@
 body{
   font-family: Arial, "sans-serif";
 }
+canvas{
+  touch-action: none;
+}
 #infos{
   position: absolute;
   bottom:0px;  

@@ -252,33 +252,35 @@
       }
       return false;
     },
-    bump: function(scale, speed) {
-      scale = (typeof scale === 'undefined' || scale === 0) ? 1.2 : scale;
-      speed = (typeof speed === 'undefined' || speed === 0) ? 3 : speed;
-      if (this.bumpingScale !== scale) {
-        this.bumpingScale = scale;
+    bump: function(options) {
+      options = typeof options === 'undefined' ? {} : options;
+      options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
+      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+      options.loop = (typeof options.loop === 'undefined') ? true : options.loop;
+      if (this.bumpingScale !== options.scale) {
+        this.bumpingScale = options.scale;
         helpers.removeAnimationFromMesh(this.cylinder, "bumpAnimation");
-        this.cylinder.animations.push(getBumpAnimation(scale));
+        this.cylinder.animations.push(getBumpAnimation(options.scale));
       }
-      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, true, speed, function() {
+      this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, options.loop, options.speed, function() {
         console.log('bumping - back normal');
       });
       this.bumping = true;
     },
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.cylinder.scaling.y = 1;
       this.bumping = false;
-
     },
     isBumping: function() {
       return this.bumping;
     },
-    toggleBump: function(scale, speed) {
+    toggleBump: function(options) {
       if (this.isBumping()) {
         this.stopBump();
       }
       else {
-        this.bump(scale, speed);
+        this.bump(options);
       }
     },
     setMoveStep: function(moveStep) {

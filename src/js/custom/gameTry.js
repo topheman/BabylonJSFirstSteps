@@ -184,40 +184,43 @@ window.onload = function() {
       engine.resize();
     });
     
-    window.addEventListener('pointerdown', function(e){
-      var pickingInfos = scene.pick(e.x,e.y);
+    canvas.addEventListener('pointerdown', function(e){
+      var pickingInfos = scene.pick(e.clientX,e.clientY);
       if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
         var coneName = pickingInfos.pickedMesh.name.split('-')[0];
         state.pointer.coneName = coneName;
         state.pointer.i = 0;
       }
-    });
+    },false);
     
-    window.addEventListener('pointermove', function(e){
+    canvas.addEventListener('pointermove', function(e){
       if(state.pointer.coneName !== false){
         //to check if the cone has been moved (a pointermove is triggered after the pointerup)
         //so this is how a simple click is detected
         state.pointer.i++;
-        var pickingInfos = scene.pick(e.x,e.y);
+        var pickingInfos = scene.pick(e.clientX,e.clientY);
         if(pickingInfos.pickedPoint){
           state.pointer.lastCoords = pickingInfos.pickedPoint;
         }
       }
-    });
+    },false);
     
-    window.addEventListener('pointerup', function(e){
+    canvas.addEventListener('pointerup', function(e){
       if(state.pointer.coneName !== false){
         state.pointer.coneName = false;
       }
       if(state.pointer.i === 0){
-        var pickingInfos = scene.pick(e.x,e.y);
+        var pickingInfos = scene.pick(e.clientX,e.clientY);
         if(pickingInfos.pickedMesh && pickingInfos.pickedMesh.name.indexOf("cone") > -1){
           var coneName = pickingInfos.pickedMesh.name.split('-')[0];
-          cones[coneName].instance.toggleBump(cones[coneName].bumpSettings.scale,cones[coneName].bumpSettings.speed);
+          cones[coneName].instance.toggleBump({
+            scale:cones[coneName].bumpSettings.scale,
+            speed:cones[coneName].bumpSettings.speed
+          });
         }
       }
       state.pointer.i = 0;
-    });
+    },false);
 
     document.getElementById('toggleFullScreen').addEventListener('click', function() {
       var rootDiv = document.getElementById('rootDiv');
