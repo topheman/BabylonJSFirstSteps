@@ -253,22 +253,37 @@
       return false;
     },
     bump: function(options) {
+      var that = this;
       options = typeof options === 'undefined' ? {} : options;
       options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
       options.loop = (typeof options.loop === 'undefined') ? true : options.loop;
+      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      if(options.loop !== false && options.callback !== null){
+        console.warn("Can't apply callback on looped animation");
+      }
       if (this.bumpingScale !== options.scale) {
         this.bumpingScale = options.scale;
         helpers.removeAnimationFromMesh(this.cylinder, "bumpAnimation");
         this.cylinder.animations.push(getBumpAnimation(options.scale));
       }
       this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, options.loop, options.speed, function() {
-        console.log('bumping - back normal');
+        that.resetBump();
+        if(options.callback !== null){
+          //I know a setTimout is ugly, but it seems that if you want to relaunch a bump, it doesn't work
+          //(seems like the callback needs to come after in the stack of the render loop - or something like that)
+          setTimeout(function(){
+            options.callback();
+          },0);
+        }
       });
       this.bumping = true;
     },
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.resetBump();
+    },
+    resetBump: function(){
       this.cylinder.scaling.y = 1;
       this.bumping = false;
     },
