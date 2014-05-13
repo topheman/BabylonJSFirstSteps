@@ -21,13 +21,16 @@
   //@todo add CommonJS support for browserify
 })(function() {
 
+var CONE_CYLINDER_TOP_DIAMETER = 2;
+var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
+var CONE_CYLINDER_HEIGHT = 5;
+var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
+var PARENT_EYES_ORIGINAL_POSITION_X = 1;
+var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
+    
   //Contructor
   var Cone = function(scene, options) {
     options = typeof options === 'object' ? options : {};
-
-    var CONE_CYLINDER_TOP_DIAMETER = 2;
-    var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
-    var CONE_CYLINDER_HEIGHT = 5;
     
     this._size = {
       topDiameter : CONE_CYLINDER_TOP_DIAMETER,
@@ -63,8 +66,8 @@
     this.parentEyes = BABYLON.Mesh.CreatePlane(this.name + "-group-eyesGroup", 1, scene);
     this.parentEyes.parent = parentMesh;
     this.parentEyes.isVisible = false;
-    this.parentEyes.setPositionWithLocalVector(new BABYLON.Vector3(1, 3.5, 0));
-    this.parentEyes.scaling.y = 1.5;
+    this.parentEyes.setPositionWithLocalVector(new BABYLON.Vector3(PARENT_EYES_ORIGINAL_POSITION_X, PARENT_EYES_ORIGINAL_POSITION_Y, 0));
+    this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
     this.parentEyes.isPickable = false;
 
     //create eyes + link them to the parentEyes mesh
@@ -93,9 +96,11 @@
 
     this.leftEye.material.diffuseTexture.vOffset = -0.245;
     this.leftEye.material.diffuseTexture.uOffset = 0;
-
-    //add animations
-
+    
+    //states
+    this.bumping = false;
+    this.widenningEyes = false;
+    
     //emulate getter
 
     //emulate getters setters on position babylonjs style
@@ -201,6 +206,10 @@
       return parentMesh;
     };
 
+    //add animations (the ones which are the sames on all instances)
+    addWidenEyesAnimation(this);
+    //customizable animations are added/removed on the fly
+
   };
 
   //Instance methode shared on the prototype
@@ -252,6 +261,60 @@
       }
       return false;
     },
+    widenEyes: function(options){
+      var that = this, from, to, endState;
+      options = typeof options === 'undefined' ? {} : options;
+      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
+      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      if(options.loop !== false && options.callback !== null){
+        console.warn("Can't apply callback on looped animation");
+      }
+      if(options.close === true){
+        from = 50;
+        to = 100;
+        endState = false;
+      }
+      else if(options.full === true){
+        from = 0;
+        to = 100;
+        endState = false;
+      }
+      else{
+        from = 0;
+        to = 50;
+        endState = true;
+      }
+      
+      this.widenningEyes = true;
+      this.parentEyes.getScene().beginAnimation(this.parentEyes, from, to, options.loop, options.speed,function(){
+        that.widenningEyes = endState;
+        console.log(endState);
+        if(options.callback !== null){
+          setTimeout(function(){//setTimeout needed
+            options.callback();
+          },0);
+        }
+      });
+    },
+    unWidenEyes: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.close = true;
+      this.widenEyes(options);
+    },
+    stopWidenEyes: function(){
+      this.parentEyes.getScene().stopAnimation(this.parentEyes);
+      this.resetWidenEyes();
+    },
+    resetWidenEyes: function(){
+      this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
+      this.parentEyes.position.x = PARENT_EYES_ORIGINAL_POSITION_X;
+      this.parentEyes.position.y = PARENT_EYES_ORIGINAL_POSITION_Y;
+      this.widenningEyes = false;
+    },
+    isWidenningEyes: function(){
+      return this.widenningEyes;
+    },
     bump: function(options) {
       var that = this;
       options = typeof options === 'undefined' ? {} : options;
@@ -270,9 +333,7 @@
       this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, options.loop, options.speed, function() {
         that.resetBump();
         if(options.callback !== null){
-          //I know a setTimout is ugly, but it seems that if you want to relaunch a bump, it doesn't work
-          //(seems like the callback needs to come after in the stack of the render loop - or something like that)
-          setTimeout(function(){
+          setTimeout(function(){//setTimeout needed
             options.callback();
           },0);
         }
@@ -421,6 +482,59 @@
     });
     bumpAnimation.setKeys(keys);
     return bumpAnimation;
+  };
+  
+  var addWidenEyesAnimation = function(cone){
+    var parentEyesAnimationScalingY = new BABYLON.Animation("parentEyesAnimationScalingY", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var parentEyesAnimationScalingYKeys = [];
+    parentEyesAnimationScalingYKeys.push({
+      frame: 0,
+      value: PARENT_EYES_ORIGINAL_SCALING_Y
+    });
+    parentEyesAnimationScalingYKeys.push({
+      frame: 50,
+      value: PARENT_EYES_ORIGINAL_SCALING_Y*1.8
+    });
+    parentEyesAnimationScalingYKeys.push({
+      frame: 100,
+      value: PARENT_EYES_ORIGINAL_SCALING_Y
+    });
+    parentEyesAnimationScalingY.setKeys(parentEyesAnimationScalingYKeys);
+    cone.parentEyes.animations.push(parentEyesAnimationScalingY);
+    
+    var parentEyesAnimationPositionX = new BABYLON.Animation("parentEyesAnimationPositionX", "position.x", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var parentEyesAnimationPositionXKeys = [];
+    parentEyesAnimationPositionXKeys.push({
+      frame: 0,
+      value: PARENT_EYES_ORIGINAL_POSITION_X
+    });
+    parentEyesAnimationPositionXKeys.push({
+      frame: 50,
+      value: PARENT_EYES_ORIGINAL_POSITION_X+1
+    });
+    parentEyesAnimationPositionXKeys.push({
+      frame: 100,
+      value: PARENT_EYES_ORIGINAL_POSITION_X
+    });
+    parentEyesAnimationPositionX.setKeys(parentEyesAnimationPositionXKeys);
+    cone.parentEyes.animations.push(parentEyesAnimationPositionX);
+    
+    var parentEyesAnimationPositionY = new BABYLON.Animation("parentEyesAnimationPositionY", "position.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var parentEyesAnimationPositionYKeys = [];
+    parentEyesAnimationPositionYKeys.push({
+      frame: 0,
+      value: PARENT_EYES_ORIGINAL_POSITION_Y
+    });
+    parentEyesAnimationPositionYKeys.push({
+      frame: 50,
+      value: PARENT_EYES_ORIGINAL_POSITION_Y+1
+    });
+    parentEyesAnimationPositionYKeys.push({
+      frame: 100,
+      value: PARENT_EYES_ORIGINAL_POSITION_Y
+    });
+    parentEyesAnimationPositionY.setKeys(parentEyesAnimationPositionYKeys);
+    cone.parentEyes.animations.push(parentEyesAnimationPositionY);
   };
 
   /**
