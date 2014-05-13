@@ -100,6 +100,7 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
     //states
     this.bumping = false;
     this.widenningEyes = false;
+    this.eyesWiden = false;
     
     //emulate getter
 
@@ -262,7 +263,7 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
       return false;
     },
     widenEyes: function(options){
-      var that = this, from, to, endState;
+      var that = this, from, to, endState, eyesWidenState;
       options = typeof options === 'undefined' ? {} : options;
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
       options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
@@ -274,22 +275,26 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
         from = 50;
         to = 100;
         endState = false;
+        eyesWidenState = false;
       }
       else if(options.full === true){
         from = 0;
         to = 100;
         endState = false;
+        eyesWidenState = false;
       }
       else{
         from = 0;
         to = 50;
         endState = true;
+        eyesWidenState = true;
       }
       
       this.widenningEyes = true;
+      this.eyesWiden = false;
       this.parentEyes.getScene().beginAnimation(this.parentEyes, from, to, options.loop, options.speed,function(){
         that.widenningEyes = endState;
-        console.log(endState);
+        that.eyesWiden = eyesWidenState;
         if(options.callback !== null){
           setTimeout(function(){//setTimeout needed
             options.callback();
@@ -314,6 +319,9 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
     },
     isWidenningEyes: function(){
       return this.widenningEyes;
+    },
+    isEyesWiden: function(){
+      return this.eyesWiden;
     },
     bump: function(options) {
       var that = this;

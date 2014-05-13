@@ -195,16 +195,26 @@ window.onload = function() {
         for(j=i+1; j<conesArray.length; j++){
           if(conesArray[i].intersectsCone(conesArray[j])){
             //only do something to the instance that is not moving
-            if(!conesArray[i].isBumping() && conesArray[j].$hasMoved === true){
-              conesArray[i].bump({loop:false});
+            if(conesArray[j].$hasMoved === true){
+              conesArray[i].$intersected = true;
             }
-            else if(!conesArray[j].isBumping() && conesArray[i].$hasMoved === true){
-              conesArray[j].bump({loop:false});
+            else if(conesArray[i].$hasMoved === true){
+              conesArray[j].$intersected = true;
             }
           }
         }
         conesArray[i].intersectsGroundLimits(ground,true);//keep cones inside ground
         conesArray[i].$hasMoved = false;//reset tag
+      }
+    
+      for(i=0; i<conesArray.length; i++){
+        if(conesArray[i].$intersected === true && conesArray[i].isWidenningEyes() === false){
+          conesArray[i].widenEyes();
+        }
+        else if(conesArray[i].$intersected === false && conesArray[i].isEyesWiden()){
+          conesArray[i].unWidenEyes();
+        }
+        conesArray[i].$intersected = false;
       }
     });
 
