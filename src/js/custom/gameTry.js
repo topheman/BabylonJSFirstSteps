@@ -4,7 +4,7 @@
  * If you have ideas please share them !
  */
 
-var camera, coneMain, coneTest1, coneTest2;
+var camera, coneMain, coneTest1, coneTest2, ground;
 
 window.onload = function() {
   var canvas = document.getElementById("canvas");
@@ -31,7 +31,7 @@ window.onload = function() {
     camera.keysLeft = [];
     
     //add some objects
-    var ground = BABYLON.Mesh.CreatePlane("ground", 100, scene);//Parameters are: name, size, and scene to attach the mesh.
+    ground = BABYLON.Mesh.CreatePlane("ground", 30, scene);//Parameters are: name, size, and scene to attach the mesh.
     ground.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.GLOBAL);
     
     ground.isPickable = true;
@@ -203,6 +203,7 @@ window.onload = function() {
             }
           }
         }
+        conesArray[i].intersectsGroundLimits(ground,true);//keep cones inside ground
         conesArray[i].$hasMoved = false;//reset tag
       }
     });

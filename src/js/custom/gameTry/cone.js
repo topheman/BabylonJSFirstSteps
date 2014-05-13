@@ -334,6 +334,40 @@
     },
     /**
      * 
+     * @param {BABYLON.Mesh} ground (plane)
+     * @param {Boolean} replace if you wan't not only to check the limit but also keep the cone inside it
+     * @returns {Boolean}
+     */
+    intersectsGroundLimits: function(ground,replace){
+      var boundingInfos = ground.getBoundingInfo(), result = false;
+      if((this.position.x + this.getBottomDiameter()/2) > boundingInfos.boundingBox.maximum.x){
+        if(replace === true){
+          this.position.x = boundingInfos.boundingBox.maximum.x - this.getBottomDiameter()/2;
+        }
+        result = true;
+      }
+      if((this.position.x - this.getBottomDiameter()/2) < boundingInfos.boundingBox.minimum.x){
+        if(replace === true){
+          this.position.x = boundingInfos.boundingBox.minimum.x + this.getBottomDiameter()/2;
+        }
+        result = true;
+      }
+      if((this.position.z + this.getBottomDiameter()/2) > boundingInfos.boundingBox.maximum.y){
+        if(replace === true){
+          this.position.z = boundingInfos.boundingBox.maximum.y - this.getBottomDiameter()/2;
+        }
+        result = true;
+      }
+      if((this.position.z - this.getBottomDiameter()/2) < boundingInfos.boundingBox.minimum.y){
+        if(replace === true){
+          this.position.z = boundingInfos.boundingBox.minimum.y + this.getBottomDiameter()/2;
+        }
+        result = true;
+      }
+      return result;
+    },
+    /**
+     * 
      * @param {BABYLON.Vector3} point
      * @returns {undefined}
      */
