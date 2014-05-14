@@ -4,7 +4,6 @@
  * http://twitter.com/topheman
  * 
  * @dependency BabylonJS - https://github.com/BabylonJS/Babylon.js
- * @dependency handjs - http://handjs.codeplex.com/
  * 
  */
 
@@ -18,15 +17,14 @@
     // Browser globals
     window.Cone = ConeExport();
   }
-  //@todo add CommonJS support for browserify
 })(function() {
 
-var CONE_CYLINDER_TOP_DIAMETER = 2;
-var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
-var CONE_CYLINDER_HEIGHT = 5;
-var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
-var PARENT_EYES_ORIGINAL_POSITION_X = 1;
-var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
+  var CONE_CYLINDER_TOP_DIAMETER = 2;
+  var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
+  var CONE_CYLINDER_HEIGHT = 5;
+  var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
+  var PARENT_EYES_ORIGINAL_POSITION_X = 1;
+  var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
     
   //Contructor
   var Cone = function(scene, options) {
@@ -194,15 +192,6 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
     });
     this.scaling = scaling;
     
-//    Object.defineProperty(this,'applyGravity', {
-//      get: function() {
-//        return parentMesh.applyGravity;
-//      },
-//      set: function(applyGravity) {
-//        return parentMesh.applyGravity = applyGravity;
-//      }
-//    });
-    
     this.getMainMesh = function() {
       return parentMesh;
     };
@@ -210,7 +199,10 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
     //add animations (the ones which are the sames on all instances)
     addWidenEyesAnimation(this);
     //customizable animations are added/removed on the fly
-
+    
+    this._coneTailing = false;
+    this._coneTailedBy = false;
+    
   };
 
   //Instance methode shared on the prototype
@@ -388,6 +380,9 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
     getBottomDiameter: function(){
       return this._size.bottomDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
+    getDistance: function(cone){
+      return Math.sqrt((this.position.x - cone.position.x)*(this.position.x - cone.position.x)+(this.position.z - cone.position.z)*(this.position.z - cone.position.z));
+    },
     /**
      * Checks if two cones intersect (based on the bottom diameter)
      * If a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)
@@ -395,7 +390,7 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
      * @returns {Boolean}
      */
     intersectsCone: function(cone){
-      var distance = Math.sqrt((this.position.x - cone.position.x)*(this.position.x - cone.position.x)+(this.position.z - cone.position.z)*(this.position.z - cone.position.z));
+      var distance = this.getDistance(cone);
       if(distance < (this.getBottomDiameter() + cone.getBottomDiameter())/2){
         return true;
       }
@@ -449,6 +444,80 @@ var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
         this.lookAt(point);
         this.moveForward();
       }
+    },
+    //@todo implement a hasMoved tag to know if the instance has moved (update it in a registerBeforeRenderLoop)
+    /**
+     * Attaches this cone to the one passed in parameter
+     * If you try to tail a cone already followed by another, your cone will follow the last one in the tail
+     * It returns the cone you end up tailing
+     * @param {Cone} cone
+     * @param {Object} options
+     * @returns {Cone}
+     */
+    tail: function(cone,options){
+      var beforeRender, fullTail;
+      options = typeof options === 'undefined' ? {} : options;
+      options.distance = typeof options.distance === 'undefined' ? (this.getBottomDiameter() + cone.getBottomDiameter())/2 : options.distance;
+      this._tailingOptions = options;
+      
+      //if cones are already following, chose the last one in the tail
+      fullTail = cone.getFullTail();
+      console.log(fullTail);
+      if(fullTail.length > 0){
+        cone = fullTail[fullTail.length-1];
+      }
+      
+      this._coneTailing = cone;
+      cone._coneTailedBy = this;
+      var thisCone = this;
+      this._tailingBeforeRender = function(){
+        if(thisCone.getDistance(cone) > options.distance){
+          thisCone.follow(new BABYLON.Vector3(cone.position.x,0,cone.position.z));
+        }
+      };
+      this.getMainMesh().getScene().registerBeforeRender(this._tailingBeforeRender);
+      return cone;
+    },
+    /**
+     * Detaches your cone, returns the cone it was tailing
+     * @returns {Cone}
+     */
+    unTail: function(){
+      var cone = this._coneTailing;
+      cone._coneTailedBy = false;
+      this._coneTailing = false;
+      this.getMainMesh().getScene().unRegisterBeforeRender(this._tailingBeforeRender);
+      return cone;
+    },
+    /**
+     * Returns the cone instance which this cone is tailing
+     * @returns {Boolean|Cone}
+     */
+    isTailing: function(){
+      return this._coneTailing;
+    },
+    /**
+     * Returns the cone instance which this cone is tailed by
+     * @returns {Boolean}
+     */
+    isTailed: function(){
+      return this._coneTailedBy;
+    },
+    /**
+     * Returns an array of the cones tailing this one
+     * @returns {Array[Cone]}
+     */
+    getFullTail: function(){
+      var fullTail = [], reccursiveTailingConesDiscovery;
+      reccursiveTailingConesDiscovery = function(cone){
+        var tailingCone = cone.isTailed();
+        if(tailingCone !== false){
+          fullTail.push(tailingCone);
+          reccursiveTailingConesDiscovery(tailingCone);
+        }
+      };
+      reccursiveTailingConesDiscovery(this);
+      return fullTail;
     }
   };
 

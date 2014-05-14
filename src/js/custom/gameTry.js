@@ -1,4 +1,11 @@
 /**
+ * Copyright 2014, Christophe Rosset (Topheman)
+ * http://labs.topheman.com/
+ * http://twitter.com/topheman
+ * 
+ * @dependency BabylonJS - https://github.com/BabylonJS/Babylon.js
+ * @dependency handjs - http://handjs.codeplex.com/
+ * 
  * This file may seem poorly coded (global variables, etc ...), this is only to test the framework
  * I don't really have a clue of what I will do exactly (a game probably)
  * If you have ideas please share them !
