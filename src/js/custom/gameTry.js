@@ -101,13 +101,14 @@ window.onload = function() {
         if(coneIndex < conesArray.length){
           options = {
             callback:function(){
+              previousOptions.speed = 1.5;
               console.log('a',coneIndex,previousOptions);
               conesArray[coneIndex].fadeIn(previousOptions);
             }
           };
         }
         else{
-          options = {};
+          options = {speed:1.5};
         }
         return options;
       })(coneIndex, previousOptions);
