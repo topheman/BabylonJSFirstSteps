@@ -37,7 +37,6 @@
     };
     
     //single name
-    this.cone = true;
     this.name = typeof options.name !== 'undefined' ? options.name : "cone"+(new Date()).getTime();
 
     //default settings
@@ -196,8 +195,6 @@
       return parentMesh;
     };
 
-    //add animations (the ones which are the sames on all instances)
-    addWidenEyesAnimation(this);
     //customizable animations are added/removed on the fly
     
     this._coneTailing = false;
@@ -282,11 +279,15 @@
         eyesWidenState = true;
       }
       
+      addWidenEyesAnimation(this);
       this.widenningEyes = true;
       this.eyesWiden = false;
       this.parentEyes.getScene().beginAnimation(this.parentEyes, from, to, options.loop, options.speed,function(){
         that.widenningEyes = endState;
         that.eyesWiden = eyesWidenState;
+        console.log(that.parentEyes.animations,from,to);
+        removeWidenEyesAnimation(that);
+        console.log(that.parentEyes.animations);
         if(options.callback !== null){
           setTimeout(function(){//setTimeout needed
             options.callback();
@@ -301,6 +302,7 @@
     },
     stopWidenEyes: function(){
       this.parentEyes.getScene().stopAnimation(this.parentEyes);
+      removeWidenEyesAnimation(this);
       this.resetWidenEyes();
     },
     resetWidenEyes: function(){
@@ -325,13 +327,10 @@
       if(options.loop !== false && options.callback !== null){
         console.warn("Can't apply callback on looped animation");
       }
-      if (this.bumpingScale !== options.scale) {
-        this.bumpingScale = options.scale;
-        helpers.removeAnimationFromMesh(this.cylinder, "bumpAnimation");
-        this.cylinder.animations.push(getBumpAnimation(options.scale));
-      }
+      addBumpAnimation(this,options.scale);
       this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, options.loop, options.speed, function() {
         that.resetBump();
+        removeBumpAnimation(that);
         if(options.callback !== null){
           setTimeout(function(){//setTimeout needed
             options.callback();
@@ -343,6 +342,7 @@
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
       this.resetBump();
+      removeBumpAnimation(this);
     },
     resetBump: function(){
       this.cylinder.scaling.y = 1;
@@ -455,7 +455,7 @@
      * @returns {Cone}
      */
     tail: function(cone,options){
-      var beforeRender, fullTail;
+      var fullTail;
       options = typeof options === 'undefined' ? {} : options;
       options.distance = typeof options.distance === 'undefined' ? (this.getBottomDiameter() + cone.getBottomDiameter())/2 : options.distance;
       this._tailingOptions = options;
@@ -518,6 +518,9 @@
       };
       reccursiveTailingConesDiscovery(this);
       return fullTail;
+    },
+    fade: function(options){
+      
     }
   };
 
@@ -538,11 +541,10 @@
   };
 
   /**
-   * Returns a simple bumpAnimation
+   * @param {Cone} cone
    * @param {Number} scale description
-   * @returns {BABYLON.Animation}
    */
-  var getBumpAnimation = function(scale) {
+  var addBumpAnimation = function(cone,scale) {
     var bumpAnimation = new BABYLON.Animation("bumpAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var keys = [];
     keys.push({
@@ -558,7 +560,14 @@
       value: 1
     });
     bumpAnimation.setKeys(keys);
-    return bumpAnimation;
+    cone.cylinder.animations.push(bumpAnimation);
+  };
+  
+  /**
+   * @param {Cone} cone
+   */
+  var removeBumpAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.cylinder, "bumpAnimation");
   };
   
   var addWidenEyesAnimation = function(cone){
@@ -612,6 +621,16 @@
     });
     parentEyesAnimationPositionY.setKeys(parentEyesAnimationPositionYKeys);
     cone.parentEyes.animations.push(parentEyesAnimationPositionY);
+  };
+  
+  /**
+   * 
+   * @param {Cone} cone
+   */
+  var removeWidenEyesAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationScalingY");
+    helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationPositionX");
+    helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationPositionY");
   };
 
   /**
