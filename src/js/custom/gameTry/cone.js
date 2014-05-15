@@ -807,7 +807,21 @@
    * @returns {undefined}
    */
   Cone.List = function(coneList){
-    
+    this._list = coneList;
+  };
+  
+  Cone.List.prototype = {
+    add: function(cone){
+      this._list.push(cone);
+    },
+    queueAnimation: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.eachCallback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
+      options.endCallback = typeof options.callback !== 'function' ? null : options.callback;
+      if(typeof options.method === 'undefined'){
+        throw new Error('method needs to be specified');
+      }
+    }
   };
 
   return Cone;
