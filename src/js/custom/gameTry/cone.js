@@ -804,6 +804,20 @@
   
   /*** Cone.List ***/
   
+  var animationMethods = [
+    'widenEyes',
+    'unWidenEyes',
+    'bump',
+    'animateAlpha',
+    'fadeIn',
+    'fadeOut'
+  ];
+  
+  var stopAnimationMethods = [
+    'stopWidenEyes',
+    'stopBump'
+  ];
+  
   /**
    * 
    * @param {Array[Cone]|Cone} coneList
@@ -824,7 +838,7 @@
         }
       }
     }
-    else{
+    else if(typeof coneList !== 'undefined'){
       throw new Error(MESSAGE_ERROR);
     }
   };
@@ -832,13 +846,26 @@
   Cone.List.prototype = [];
   
   Cone.List.prototype.animate = function(options){
-    
+    options = typeof options === 'undefined' ? {} : options;
+    if(typeof options.method === 'undefined'){
+      throw new Error('method needs to be specified');
+    }
+    if(animationMethods.indexOf(options.method) === -1 && stopAnimationMethods.indexOf(options.method) === -1){
+      throw new Error('"'+options.method+'" : method not allowed');
+    }
+    if(this.length > 0){
+      for(var i=0; i<this.length; i++){
+        this[i][options.method](options);
+      }
+    }
   };
   
   Cone.List.prototype.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
     options.eachCallback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
-    options.endCallback = typeof options.callback !== 'function' ? null : options.callback;
+    options.eachDelay = (typeof options.eachDelay === 'undefined') ? 0 : options.eachDelay;
+    options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
+    options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }

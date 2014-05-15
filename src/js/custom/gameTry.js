@@ -11,7 +11,7 @@
  * If you have ideas please share them !
  */
 
-var camera, coneMain, coneTest1, coneTest2, ground;
+var camera, coneMain, coneTest1, coneTest2, ground, coneList1, coneList2;
 
 window.onload = function() {
   var canvas = document.getElementById("canvas");
@@ -52,6 +52,15 @@ window.onload = function() {
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
     coneTest2.rotation.y = -1;
+    
+    coneList1 = new Cone.List();
+    coneList1.push(coneMain);
+    coneList1.push(coneTest1);
+    coneList1.push(coneTest2);
+    
+    coneList2 = new Cone.List();
+    coneList2.push(coneTest1);
+    coneList2.push(coneTest2);
     
     
     var cones = {
@@ -251,10 +260,10 @@ window.onload = function() {
     
       for(i=0; i<conesArray.length; i++){
         if(conesArray[i].$intersected === true && conesArray[i].isWidenningEyes() === false){
-          conesArray[i].widenEyes();
+//          conesArray[i].widenEyes();
         }
         else if(conesArray[i].$intersected === false && conesArray[i].isEyesWiden()){
-          conesArray[i].unWidenEyes();
+//          conesArray[i].unWidenEyes();
         }
         conesArray[i].$intersected = false;
       }
