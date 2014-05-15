@@ -803,24 +803,41 @@
   
   /**
    * 
-   * @param {Array[Cone]} coneList
-   * @returns {undefined}
+   * @param {Array[Cone]|Cone} coneList
+   * @returns {Cone.List}
    */
   Cone.List = function(coneList){
-    this._list = coneList;
+    var MESSAGE_ERROR = 'Cone.List only accepts Cone object or Array of Cone objects';
+    if(coneList instanceof Cone){
+      this.push(coneList);
+    }
+    else if(coneList instanceof Array){
+      for(var i=0;i<coneList.length;i++){
+        if(coneList[i] instanceof Cone){
+          this.push(coneList[i]);
+        }
+        else{
+          throw new Error(MESSAGE_ERROR);
+        }
+      }
+    }
+    else{
+      throw new Error(MESSAGE_ERROR);
+    }
   };
   
-  Cone.List.prototype = {
-    add: function(cone){
-      this._list.push(cone);
-    },
-    queueAnimation: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.eachCallback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
-      options.endCallback = typeof options.callback !== 'function' ? null : options.callback;
-      if(typeof options.method === 'undefined'){
-        throw new Error('method needs to be specified');
-      }
+  Cone.List.prototype = [];
+  
+  Cone.List.prototype.animate = function(options){
+    
+  };
+  
+  Cone.List.prototype.animateCascade = function(options){
+    options = typeof options === 'undefined' ? {} : options;
+    options.eachCallback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
+    options.endCallback = typeof options.callback !== 'function' ? null : options.callback;
+    if(typeof options.method === 'undefined'){
+      throw new Error('method needs to be specified');
     }
   };
 
