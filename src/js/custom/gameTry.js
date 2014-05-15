@@ -52,6 +52,8 @@ window.onload = function() {
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
     coneTest2.rotation.y = -1;
+    
+    
     var cones = {
       'coneMain' : {
         'instance' : coneMain,
@@ -79,7 +81,40 @@ window.onload = function() {
     var conesArray = [];
     for (var currentCone in cones){
       conesArray.push(cones[currentCone].instance);
+      cones[currentCone].instance.setAlpha(0);//set all of them to alpha = 0
     }
+    
+    var coneIndex, previousOptions;
+    for(coneIndex = conesArray.length; coneIndex > 0; coneIndex--){
+      console.log(coneIndex, previousOptions);
+      previousOptions = (function(coneIndex, previousOptions){
+        var options;
+        if(coneIndex < conesArray.length){
+          options = {
+            callback:function(){
+              console.log('a',coneIndex,previousOptions);
+              conesArray[coneIndex].fadeIn(previousOptions);
+            }
+          };
+        }
+        else{
+          options = {};
+        }
+        return options;
+      })(coneIndex, previousOptions);
+    }
+    
+    conesArray[0].fadeIn(previousOptions);
+    
+//    coneMain.fadeIn({
+//      callback:function(){
+//        coneTest1.fadeIn({
+//          callback:function(){
+//            coneTest2.fadeIn();
+//          }
+//        });
+//      }
+//    });
     
     camera.target = coneMain.getMainMesh();
     var cameraMouseMode = false;

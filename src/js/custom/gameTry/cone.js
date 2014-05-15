@@ -18,6 +18,8 @@
     window.Cone = ConeExport();
   }
 })(function() {
+  
+  /*** Cone (Public Class Methods below) ***/
 
   var CONE_CYLINDER_TOP_DIAMETER = 2;
   var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
@@ -98,6 +100,7 @@
     this.bumping = false;
     this.widenningEyes = false;
     this.eyesWiden = false;
+    this.alphaAnimating = false;
     
     //emulate getter
 
@@ -207,6 +210,11 @@
     getPosition:function(){
       return this.getMainMesh().position;
     },
+    setAlpha: function(alpha){
+      this.cylinder.material.alpha = alpha;
+      this.leftEye.material.alpha = alpha;
+      this.rightEye.material.alpha = alpha;
+    },
     moveForward: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
     },
@@ -285,9 +293,7 @@
       this.parentEyes.getScene().beginAnimation(this.parentEyes, from, to, options.loop, options.speed,function(){
         that.widenningEyes = endState;
         that.eyesWiden = eyesWidenState;
-        console.log(that.parentEyes.animations,from,to);
         removeWidenEyesAnimation(that);
-        console.log(that.parentEyes.animations);
         if(options.callback !== null){
           setTimeout(function(){//setTimeout needed
             options.callback();
@@ -358,6 +364,64 @@
       else {
         this.bump(options);
       }
+    },
+    animateAlpha: function(options){
+      var that = this;
+      options = typeof options === 'undefined' ? {} : options;
+      options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
+      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+      options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
+      options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
+      options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
+      if(options.loop !== false && options.callback !== null){
+        console.warn("Can't apply callback on looped animation");
+      }
+      
+      addAlphaAnimation(this,options);
+      
+      var callback = function(cone){
+        if(cone.alphaAnimating === true){
+          removeAlphaAnimation(cone);
+          if(options.callback !== null){
+            setTimeout(function(){//setTimeout needed
+              options.callback();
+            },0);
+          }
+        }
+        that.alphaAnimating = false;
+      };
+      
+      if(options.cylinder === true){
+        this.alphaAnimating = true;
+        this.cylinder.getScene().beginAnimation(this.cylinder, 0, 100, options.loop, options.speed, function(){
+          callback(that);
+        });
+      }
+      if(options.leftEye === true){
+        this.alphaAnimating = true;
+        this.leftEye.getScene().beginAnimation(this.leftEye, 0, 100, options.loop, options.speed, function(){
+          callback(that);
+        });
+      }
+      if(options.rightEye === true){
+        this.alphaAnimating = true;
+        this.rightEye.getScene().beginAnimation(this.rightEye, 0, 100, options.loop, options.speed, function(){
+          callback(that);
+        });
+      }
+      
+    },
+    fadeIn: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.alpha = 1;
+      this.animateAlpha(options);
+    },
+    fadeOut: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.alpha = 0;
+      this.animateAlpha(options);
     },
     setMoveStep: function(moveStep) {
       this.moveStep = moveStep;
@@ -632,6 +696,66 @@
     helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationPositionX");
     helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationPositionY");
   };
+  
+  /**
+   * 
+   * @param {Cone} cone
+   * @param {Object} options
+   */
+  var addAlphaAnimation = function(cone,options){
+    
+    if(options.cylinder === true){
+      var cylinderAlphaAnimation = new BABYLON.Animation("cylinderAlphaAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      var cylinderAlphaAnimationKeys = [];
+      cylinderAlphaAnimationKeys.push({
+        frame: 0,
+        value: cone.cylinder.material.alpha
+      });
+      cylinderAlphaAnimationKeys.push({
+        frame: 100,
+        value: options.alpha
+      });
+      cylinderAlphaAnimation.setKeys(cylinderAlphaAnimationKeys);
+      cone.cylinder.animations.push(cylinderAlphaAnimation);
+    }
+    
+    if(options.leftEye === true){
+      var leftEyeAlphaAnimation = new BABYLON.Animation("leftEyeAlphaAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      var leftEyeAlphaAnimationKeys = [];
+      leftEyeAlphaAnimationKeys.push({
+        frame: 0,
+        value: cone.leftEye.material.alpha
+      });
+      leftEyeAlphaAnimationKeys.push({
+        frame: 100,
+        value: options.alpha
+      });
+      leftEyeAlphaAnimation.setKeys(leftEyeAlphaAnimationKeys);
+      cone.leftEye.animations.push(leftEyeAlphaAnimation);
+    }
+    
+    if(options.rightEye === true){
+      var rightEyeAlphaAnimation = new BABYLON.Animation("rightEyeAlphaAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      var rightEyeAlphaAnimationKeys = [];
+      rightEyeAlphaAnimationKeys.push({
+        frame: 0,
+        value: cone.rightEye.material.alpha
+      });
+      rightEyeAlphaAnimationKeys.push({
+        frame: 100,
+        value: options.alpha
+      });
+      rightEyeAlphaAnimation.setKeys(rightEyeAlphaAnimationKeys);
+      cone.rightEye.animations.push(rightEyeAlphaAnimation);
+    }
+    
+  };
+  
+  var removeAlphaAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderAlphaAnimation");
+    helpers.removeAnimationFromMesh(cone.leftEye, "leftEyeAlphaAnimation");
+    helpers.removeAnimationFromMesh(cone.rightEye, "rightEyeAlphaAnimation");
+  };
 
   /**
    * Bunch of methods I didn't find inside BabylonJS, that I coded for myself
@@ -673,6 +797,17 @@
         return false;
       }
     }
+  };
+  
+  /*** Cone.List ***/
+  
+  /**
+   * 
+   * @param {Array[Cone]} coneList
+   * @returns {undefined}
+   */
+  Cone.List = function(coneList){
+    
   };
 
   return Cone;
