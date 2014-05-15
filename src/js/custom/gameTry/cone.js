@@ -265,6 +265,7 @@
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
       options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
       options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.callbackDelay = (typeof options.callbackDelay === 'undefined') ? 0 : options.callbackDelay;
       if(options.loop !== false && options.callback !== null){
         console.warn("Can't apply callback on looped animation");
       }
@@ -297,7 +298,7 @@
         if(options.callback !== null){
           setTimeout(function(){//setTimeout needed
             options.callback();
-          },0);
+          },options.callbackDelay);
         }
       });
     },
@@ -330,6 +331,7 @@
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
       options.loop = (typeof options.loop === 'undefined') ? true : options.loop;
       options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.callbackDelay = (typeof options.callbackDelay === 'undefined') ? 0 : options.callbackDelay;
       if(options.loop !== false && options.callback !== null){
         console.warn("Can't apply callback on looped animation");
       }
@@ -340,7 +342,7 @@
         if(options.callback !== null){
           setTimeout(function(){//setTimeout needed
             options.callback();
-          },0);
+          },options.callbackDelay);
         }
       });
       this.bumping = true;
@@ -372,6 +374,7 @@
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
       options.loop = typeof options.loop === 'undefined' ? false : options.loop;
       options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.callbackDelay = (typeof options.callbackDelay === 'undefined') ? 0 : options.callbackDelay;
       options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
       options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
       options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
@@ -387,7 +390,7 @@
           if(options.callback !== null){
             setTimeout(function(){//setTimeout needed
               options.callback();
-            },0);
+            },options.callbackDelay);
           }
         }
         that.alphaAnimating = false;
