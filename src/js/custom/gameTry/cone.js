@@ -990,7 +990,8 @@
     options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
     options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
     options.callback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
-    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+    options.totalDelay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+    options.delay = (typeof options.eachDelay === 'undefined') ? 0 : options.eachDelay;
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
@@ -1008,7 +1009,9 @@
                 options.callback.call({},cone);
               }
               if(options.totalCallback !== null){
-                options.totalCallback.call({},that);
+                setTimeout(function(){
+                  options.totalCallback.call({},that);
+                },options.totalDelay);
               }
             };
           })(options);
