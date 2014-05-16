@@ -309,7 +309,7 @@
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
       options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
       options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.callbackDelay = (typeof options.callbackDelay === 'undefined') ? 0 : options.callbackDelay;
+      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
       options.break = (typeof options.break === 'undefined') ? false : options.break;
       if(options.loop !== false && options.callback !== null){
         console.warn("Can't apply callback on looped animation");
@@ -352,10 +352,10 @@
             removeWidenEyesAnimation(that);
             setTimeout(function(){//setTimeout needed
               if(options.callback !== null){
-                options.callback();
+                options.callback.call({},that);
               }
               that._resolveAnimationQueue();
-            },options.callbackDelay);
+            },options.delay);
           });
         };
       })(this));
@@ -395,7 +395,7 @@
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
       options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
       options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.callbackDelay = (typeof options.callbackDelay === 'undefined') ? 0 : options.callbackDelay;
+      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
       options.break = (typeof options.break === 'undefined') ? false : options.break;
       if(options.loop !== false && options.callback !== null){
         console.warn("Can't apply callback on looped animation");
@@ -417,10 +417,10 @@
             removeBumpAnimation(that);
             setTimeout(function(){//setTimeout needed
               if(options.callback !== null){
-                options.callback();
+                options.callback.call({},that);
               }
               that._resolveAnimationQueue();
-            },options.callbackDelay);
+            },options.delay);
           });
           that.bumping = true;
         };
@@ -461,7 +461,7 @@
       options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
       options.loop = typeof options.loop === 'undefined' ? false : options.loop;
       options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.callbackDelay = (typeof options.callbackDelay === 'undefined') ? 0 : options.callbackDelay;
+      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
       options.break = (typeof options.break === 'undefined') ? false : options.break;
       options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
       options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
@@ -487,10 +487,10 @@
               removeAlphaAnimation(cone);
               setTimeout(function(){//setTimeout needed
                 if(options.callback !== null){
-                  options.callback();
+                  options.callback.call({},that);
                 }
                 that._resolveAnimationQueue();
-              },options.callbackDelay);
+              },options.delay);
             }
             that.alphaAnimatingCylinder = false;
             that.alphaAnimatingLeftEye = false;
@@ -930,6 +930,13 @@
       else {
         return false;
       }
+    },
+    cloneObject: function(obj){
+      var result = {}, key;
+      for(key in obj){
+        result[key] = obj[key];
+      }
+      return result;
     }
   };
   
@@ -978,11 +985,12 @@
   Cone.List.prototype = [];
   
   Cone.List.prototype.animate = function(options){
+    var that = this;
     options = typeof options === 'undefined' ? {} : options;
-    options.eachCallback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
-    options.eachDelay = (typeof options.eachDelay === 'undefined') ? 0 : options.eachDelay;
     options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
     options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
+    options.callback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
+    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
@@ -991,7 +999,24 @@
     }
     if(this.length > 0){
       for(var i=0; i<this.length; i++){
-        this[i][options.method](options);
+        //on the last cone, set the totalCallback
+        if(i === (this.length - 1)){
+          var lastConeOptions = helpers.cloneObject(options);
+          lastConeOptions.callback = (function(){
+            return function(cone){
+              if(options.callback !== null){
+                options.callback.call({},cone);
+              }
+              if(options.totalCallback !== null){
+                options.totalCallback.call({},that);
+              }
+            };
+          })(options);
+          this[i][options.method](lastConeOptions);
+        }
+        else{
+          this[i][options.method](options);
+        }
       }
     }
   };
@@ -1015,10 +1040,10 @@
   
   Cone.List.prototype.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
-    options.eachCallback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
-    options.eachDelay = (typeof options.eachDelay === 'undefined') ? 0 : options.eachDelay;
     options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
     options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
+    options.callback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
+    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
