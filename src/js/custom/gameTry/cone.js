@@ -45,7 +45,7 @@
     this.moveStep = typeof options.moveStep !== 'undefined' ? options.moveStep : 0.1;
     this.turnStep = typeof options.turn !== 'undefined' ? options.turnStep : 0.1;
     this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
-    this.color = typeof options.color !== 'undefined' ? hexToRgb(options.color) : {r: 0.564, g: 0, b: 0};//#900000
+    this.color = typeof options.color !== 'undefined' ? (isRgb(options.color) ? options.color : hexToRgb(options.color)) : {r: 0.564, g: 0, b: 0};//#900000
     options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
 
     //parent mesh to group all the others
@@ -233,6 +233,12 @@
     },
     getPosition:function(){
       return this.getMainMesh().position;
+    },
+    setColor: function(color){
+      if(isRgb(color) === false){
+        color = hexToRgb(color);
+      }
+      this.cylinder.material.diffuseColor = new BABYLON.Color3(color.r, color.g, color.b);
     },
     setAlpha: function(alpha){
       this.cylinder.material.alpha = alpha;
@@ -717,6 +723,13 @@
       g: parseInt(result[2], 16) / 256,
       b: parseInt(result[3], 16) / 256
     } : null;
+  };
+  
+  var isRgb = function(color){
+    if(typeof color !== 'undefined' && typeof color.r === 'number' && typeof color.g === 'number' && typeof color.b === 'number'){
+      return true;
+    }
+    return false;
   };
   
   var removeAllAnimations = function(cone){

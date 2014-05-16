@@ -47,7 +47,7 @@ window.onload = function() {
     //create cones
     coneMain = new Cone(scene,{name:"coneMain"});//global on purpose
     //test cones to check correct behavior
-    coneTest1 = new Cone(scene,{name:"coneTest1",color:'#3d9aff'});//blue
+    coneTest1 = new Cone(scene,{name:"coneTest1",color:{r:0.2,g:0.5,b:0.8}});//blue
     coneTest2 = new Cone(scene,{name:"coneTest2",color:'#ffd53d'});//yellow
     coneTest1.position.x = 10;
     coneTest2.position.z = -10;
