@@ -225,7 +225,6 @@
     },
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
-      removeAllAnimations(this);
       this._animationQueue.length = 0;
     },
     getAnimationQueue: function(){
@@ -292,254 +291,14 @@
     isAnimationRunning: function(){
       return this.isBumping() && this.isWidenningEyes() && this.isChangingAlpha();
     },
-    stopAllAnimationsRunning: function(){
-      if(this.isBumping()){
-        this.stopBump();
-      }
-      if(this.isWidenningEyes()){
-        this.stopWidenEyes();
-      }
-      if(this.isChangingAlpha()){
-        this.stopAnimateAlpha();
-      }
-    },
-    widenEyes: function(options){
-      var from, to, endState, eyesWidenState;
-      options = typeof options === 'undefined' ? {} : options;
-      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
-      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
-      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-      options.break = (typeof options.break === 'undefined') ? false : options.break;
-      if(options.loop !== false && options.callback !== null){
-        console.warn("Can't apply callback on looped animation");
-      }
-      if(options.close === true){
-        from = 50;
-        to = 100;
-        endState = false;
-        eyesWidenState = false;
-      }
-      else if(options.full === true){
-        from = 0;
-        to = 100;
-        endState = false;
-        eyesWidenState = false;
-      }
-      else{
-        from = 0;
-        to = 50;
-        endState = true;
-        eyesWidenState = true;
-      }
-      
-      if(options.break === true){
-        this.flushAnimationQueue();
-      }
-      
-      var index = this._animationQueue.push((function(that){
-        return function(){
-          //to avoid collision between animations @todo animation queue
-          that.stopAllAnimationsRunning();
-          removeAllAnimations(that);
-
-          addWidenEyesAnimation(that);
-          that.widenningEyes = true;
-          that.eyesWiden = false;
-          that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, options.loop, options.speed,function(){
-            that.widenningEyes = endState;
-            that.eyesWiden = eyesWidenState;
-            removeWidenEyesAnimation(that);
-            setTimeout(function(){//setTimeout needed
-              if(options.callback !== null){
-                options.callback.call({},that);
-              }
-              that._resolveAnimationQueue();
-            },options.delay);
-          });
-        };
-      })(this));
-
-      if(index === 1){
-        this._animationQueue[0]();
-      }
-      
-      return this;
-    },
-    unWidenEyes: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.close = true;
-      return this.widenEyes(options);
-    },
-    stopWidenEyes: function(){
-      this.parentEyes.getScene().stopAnimation(this.parentEyes);
-      removeWidenEyesAnimation(this);
-      this.resetWidenEyes();
-      return this;
-    },
-    resetWidenEyes: function(){
-      this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
-      this.parentEyes.position.x = PARENT_EYES_ORIGINAL_POSITION_X;
-      this.parentEyes.position.y = PARENT_EYES_ORIGINAL_POSITION_Y;
-      this.widenningEyes = false;
-    },
     isWidenningEyes: function(){
       return this.widenningEyes;
     },
     isEyesWiden: function(){
       return this.eyesWiden;
     },
-    bump: function(options) {
-      options = typeof options === 'undefined' ? {} : options;
-      options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
-      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
-      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
-      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-      options.break = (typeof options.break === 'undefined') ? false : options.break;
-      if(options.loop !== false && options.callback !== null){
-        console.warn("Can't apply callback on looped animation");
-      }
-      
-      if(options.break === true){
-        this.flushAnimationQueue();
-      }
-      
-      var index = this._animationQueue.push((function(that){
-        return function(){
-          //to avoid collision between animations @todo animation queue
-          that.stopAllAnimationsRunning();
-          removeAllAnimations(that);
-
-          addBumpAnimation(that,options.scale);
-          that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
-            that.resetBump();
-            removeBumpAnimation(that);
-            setTimeout(function(){//setTimeout needed
-              if(options.callback !== null){
-                options.callback.call({},that);
-              }
-              that._resolveAnimationQueue();
-            },options.delay);
-          });
-          that.bumping = true;
-        };
-      })(this));
-
-      if(index === 1){
-        this._animationQueue[0]();
-      }
-      
-      return this;
-    },
-    stopBump: function() {
-      this.cylinder.getScene().stopAnimation(this.cylinder);
-      this.resetBump();
-      removeBumpAnimation(this);
-      return this;
-    },
-    resetBump: function(){
-      this.cylinder.scaling.y = 1;
-      this.bumping = false;
-    },
     isBumping: function() {
       return this.bumping;
-    },
-    toggleBump: function(options) {
-      if (this.isBumping()) {
-        this.stopBump();
-      }
-      else {
-        this.bump(options);
-      }
-      return this;
-    },
-    animateAlpha: function(options){
-      var that = this;
-      options = typeof options === 'undefined' ? {} : options;
-      options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
-      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
-      options.loop = typeof options.loop === 'undefined' ? false : options.loop;
-      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-      options.break = (typeof options.break === 'undefined') ? false : options.break;
-      options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
-      options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
-      options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
-      if(options.loop !== false && options.callback !== null){
-        console.warn("Can't apply callback on looped animation");
-      }
-      
-      if(options.break === true){
-        this.flushAnimationQueue();
-      }
-      
-      var index = this._animationQueue.push((function(that){
-        return function(){
-          //to avoid collision between animations @todo animation queue
-          that.stopAllAnimationsRunning();
-          removeAllAnimations(that);
-
-          addAlphaAnimation(that,options);
-
-          var callback = function(cone){
-            if(cone.isChangingAlpha() === true){
-              removeAlphaAnimation(cone);
-              setTimeout(function(){//setTimeout needed
-                if(options.callback !== null){
-                  options.callback.call({},that);
-                }
-                that._resolveAnimationQueue();
-              },options.delay);
-            }
-            that.alphaAnimatingCylinder = false;
-            that.alphaAnimatingLeftEye = false;
-            that.alphaAnimatingRightEye = false;
-          };
-
-          if(options.cylinder === true){
-            that.alphaAnimatingCylinder = true;
-            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function(){
-              callback(that);
-            });
-          }
-          if(options.leftEye === true){
-            that.alphaAnimatingLeftEye = true;
-            that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, options.loop, options.speed, function(){
-              callback(that);
-            });
-          }
-          if(options.rightEye === true){
-            that.alphaAnimatingRightEye = true;
-            that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, options.loop, options.speed, function(){
-              callback(that);
-            });
-          }
-        };
-      })(this));
-
-      if(index === 1){
-        this._animationQueue[0]();
-      }
-      
-      return this;
-    },
-    stopAnimateAlpha: function(){
-      this.cylinder.getScene().stopAnimation(this.cylinder);
-      this.leftEye.getScene().stopAnimation(this.leftEye);
-      this.rightEye.getScene().stopAnimation(this.rightEye);
-      removeAlphaAnimation(this);
-      return this;
-    },
-    fadeIn: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.alpha = 1;
-      return this.animateAlpha(options);
-    },
-    fadeOut: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.alpha = 0;
-      return this.animateAlpha(options);
     },
     isChangingAlpha: function(){
       return this.alphaAnimatingCylinder && this.alphaAnimatingLeftEye && this.alphaAnimatingRightEye;
@@ -703,11 +462,263 @@
       };
       reccursiveTailingConesDiscovery(this);
       return fullTail;
-    },
-    fade: function(options){
-      
     }
   };
+  
+  //Those methods are added to the Cone.prototype below
+  var animationMethods = {
+    stopAllAnimationsRunning: function(){
+      if(this.isBumping()){
+        this.stopBump();
+      }
+      if(this.isWidenningEyes()){
+        this.stopWidenEyes();
+      }
+      if(this.isChangingAlpha()){
+        this.stopAnimateAlpha();
+      }
+      removeAllAnimations(this);
+      return this;
+    },
+    widenEyes: function(options){
+      var from, to, endState, eyesWidenState;
+      options = typeof options === 'undefined' ? {} : options;
+      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
+      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+      options.break = (typeof options.break === 'undefined') ? false : options.break;
+      if(options.loop !== false && options.callback !== null){
+        console.warn("Can't apply callback on looped animation");
+      }
+      if(options.close === true){
+        from = 50;
+        to = 100;
+        endState = false;
+        eyesWidenState = false;
+      }
+      else if(options.full === true){
+        from = 0;
+        to = 100;
+        endState = false;
+        eyesWidenState = false;
+      }
+      else{
+        from = 0;
+        to = 50;
+        endState = true;
+        eyesWidenState = true;
+      }
+      
+      if(options.break === true){
+        this.flushAnimationQueue();
+      }
+      
+      var index = this._animationQueue.push((function(that){
+        return function(){
+          //to avoid collision between animations @todo animation queue
+          that.stopAllAnimationsRunning();
+
+          addWidenEyesAnimation(that);
+          that.widenningEyes = true;
+          that.eyesWiden = false;
+          that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, options.loop, options.speed,function(){
+            that.widenningEyes = endState;
+            that.eyesWiden = eyesWidenState;
+            removeWidenEyesAnimation(that);
+            setTimeout(function(){//setTimeout needed
+              if(options.callback !== null){
+                options.callback.call({},that);
+              }
+              that._resolveAnimationQueue();
+            },options.delay);
+          });
+        };
+      })(this));
+
+      if(index === 1){
+        this._animationQueue[0]();
+      }
+      
+      return this;
+    },
+    unWidenEyes: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.close = true;
+      return this.widenEyes(options);
+    },
+    stopWidenEyes: function(){
+      this.parentEyes.getScene().stopAnimation(this.parentEyes);
+      removeWidenEyesAnimation(this);
+      this.resetWidenEyes();
+      return this;
+    },
+    resetWidenEyes: function(){
+      this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
+      this.parentEyes.position.x = PARENT_EYES_ORIGINAL_POSITION_X;
+      this.parentEyes.position.y = PARENT_EYES_ORIGINAL_POSITION_Y;
+      this.widenningEyes = false;
+      return this;
+    },
+    bump: function(options) {
+      options = typeof options === 'undefined' ? {} : options;
+      options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
+      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+      options.break = (typeof options.break === 'undefined') ? false : options.break;
+      if(options.loop !== false && options.callback !== null){
+        console.warn("Can't apply callback on looped animation");
+      }
+      
+      if(options.break === true){
+        this.flushAnimationQueue();
+      }
+      
+      var index = this._animationQueue.push((function(that){
+        return function(){
+          //to avoid collision between animations @todo animation queue
+          that.stopAllAnimationsRunning();
+
+          addBumpAnimation(that,options.scale);
+          that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
+            that.resetBump();
+            removeBumpAnimation(that);
+            setTimeout(function(){//setTimeout needed
+              if(options.callback !== null){
+                options.callback.call({},that);
+              }
+              that._resolveAnimationQueue();
+            },options.delay);
+          });
+          that.bumping = true;
+        };
+      })(this));
+
+      if(index === 1){
+        this._animationQueue[0]();
+      }
+      
+      return this;
+    },
+    stopBump: function() {
+      this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.resetBump();
+      removeBumpAnimation(this);
+      return this;
+    },
+    resetBump: function(){
+      this.cylinder.scaling.y = 1;
+      this.bumping = false;
+      return this;
+    },
+    toggleBump: function(options) {
+      if (this.isBumping()) {
+        this.stopBump();
+      }
+      else {
+        this.bump(options);
+      }
+      return this;
+    },
+    animateAlpha: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
+      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+      options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+      options.break = (typeof options.break === 'undefined') ? false : options.break;
+      options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
+      options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
+      options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
+      if(options.loop !== false && options.callback !== null){
+        console.warn("Can't apply callback on looped animation");
+      }
+      
+      if(options.break === true){
+        this.flushAnimationQueue();
+      }
+      
+      var index = this._animationQueue.push((function(that){
+        return function(){
+          //to avoid collision between animations @todo animation queue
+          that.stopAllAnimationsRunning();
+
+          addAlphaAnimation(that,options);
+
+          var callback = function(cone){
+            if(cone.isChangingAlpha() === true){
+              removeAlphaAnimation(cone);
+              setTimeout(function(){//setTimeout needed
+                if(options.callback !== null){
+                  options.callback.call({},that);
+                }
+                that._resolveAnimationQueue();
+              },options.delay);
+            }
+            that.alphaAnimatingCylinder = false;
+            that.alphaAnimatingLeftEye = false;
+            that.alphaAnimatingRightEye = false;
+          };
+
+          if(options.cylinder === true){
+            that.alphaAnimatingCylinder = true;
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function(){
+              callback(that);
+            });
+          }
+          if(options.leftEye === true){
+            that.alphaAnimatingLeftEye = true;
+            that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, options.loop, options.speed, function(){
+              callback(that);
+            });
+          }
+          if(options.rightEye === true){
+            that.alphaAnimatingRightEye = true;
+            that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, options.loop, options.speed, function(){
+              callback(that);
+            });
+          }
+        };
+      })(this));
+
+      if(index === 1){
+        this._animationQueue[0]();
+      }
+      
+      return this;
+    },
+    stopAnimateAlpha: function(){
+      this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.leftEye.getScene().stopAnimation(this.leftEye);
+      this.rightEye.getScene().stopAnimation(this.rightEye);
+      removeAlphaAnimation(this);
+      return this;
+    },
+    fadeIn: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.alpha = 1;
+      return this.animateAlpha(options);
+    },
+    fadeOut: function(options){
+      options = typeof options === 'undefined' ? {} : options;
+      options.alpha = 0;
+      return this.animateAlpha(options);
+    }
+  };
+  
+  //this is to keep an array of the methods opened to animation
+  var animationMethodsNameList = [];
+  
+  //add the animation methods to the Cone.prototype
+  (function($, methods){
+    for(var methodName in methods){
+      $[methodName] = methods[methodName];
+      animationMethodsNameList.push(methodName);
+    }
+  })(Cone.prototype, animationMethods);
 
   //Private methods
 
@@ -942,21 +953,6 @@
   
   /*** Cone.List ***/
   
-  var animationMethods = [
-    'widenEyes',
-    'unWidenEyes',
-    'bump',
-    'animateAlpha',
-    'fadeIn',
-    'fadeOut'
-  ];
-  
-  var stopAnimationMethods = [
-    'stopWidenEyes',
-    'stopBump',
-    'stopAnimateAlpha'
-  ];
-  
   /**
    * 
    * @param {Array[Cone]|Cone} coneList
@@ -995,7 +991,7 @@
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
-    if(animationMethods.indexOf(options.method) === -1 && stopAnimationMethods.indexOf(options.method) === -1){
+    if(animationMethodsNameList.indexOf(options.method) === -1){
       throw new Error('"'+options.method+'" : method not allowed');
     }
     if(this.length > 0){
@@ -1024,22 +1020,20 @@
     }
   };
   
-  var addConeListAnimateShortcuts = function(proto,methods){
+  //add the animation methods to the Cone.List.prototype
+  (function($,methodsName){
     var i;
-    for(i=0; i<methods.length; i++){
-      proto[methods[i]] = (function(methodName){
+    for(i=0; i<methodsName.length; i++){
+      $[methodsName[i]] = (function(methodName){
         return function(options){
           options = typeof options === 'undefined' ? {} : options;
           options.method = methodName;
           console.log(options, methodName);
           this.animate(options);
         };
-      })(methods[i]);
+      })(methodsName[i]);
     }
-  };
-  
-  addConeListAnimateShortcuts(Cone.List.prototype, animationMethods);
-  addConeListAnimateShortcuts(Cone.List.prototype, stopAnimationMethods);
+  })(Cone.List.prototype, animationMethodsNameList);
   
   Cone.List.prototype.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
