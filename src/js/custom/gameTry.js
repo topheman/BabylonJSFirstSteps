@@ -309,7 +309,8 @@ window.onload = function() {
           var coneName = pickingInfos.pickedMesh.name.split('-')[0];
           cones[coneName].instance.toggleBump({
             scale:cones[coneName].bumpSettings.scale,
-            speed:cones[coneName].bumpSettings.speed
+            speed:cones[coneName].bumpSettings.speed,
+            loop: true
           });
         }
       }
