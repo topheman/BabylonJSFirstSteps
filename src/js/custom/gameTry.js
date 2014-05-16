@@ -95,7 +95,7 @@ window.onload = function() {
     
     var coneIndex, previousOptions;
     for(coneIndex = conesArray.length; coneIndex > 0; coneIndex--){
-      console.log(coneIndex, previousOptions);
+//      console.log(coneIndex, previousOptions);
       previousOptions = (function(coneIndex, previousOptions){
         var options;
         if(coneIndex < conesArray.length){

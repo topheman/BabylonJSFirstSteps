@@ -712,10 +712,31 @@
   //this is to keep an array of the methods opened to animation
   var animationMethodsNameList = [];
   
+  /**
+   * Acts as a dispatcher for animation methods (those methods can alse be accessed directly)
+   * @param {Object} options
+   * @returns {Cone}
+   */
+  Cone.prototype.animate = function(options){
+    if(typeof options === 'undefined' || typeof options.method === 'undefined'){
+      throw new Error('options.method mandatory');
+    }
+    else if(animationMethodsNameList.indexOf(options.method) === -1){
+      throw new Error('"'+options.method+'" : method not allowed');
+    }
+    return animationMethods[options.method].call(this,options);
+  };
+  
   //add the animation methods to the Cone.prototype
   (function($, methods){
     for(var methodName in methods){
-      $[methodName] = methods[methodName];
+      $[methodName] = (function(methodNameToCall){
+        return function(options){
+          options = typeof options === 'undefined' ? {} : options;
+          options.method = methodNameToCall;
+          return this.animate(options);
+        };
+      })(methodName);
       animationMethodsNameList.push(methodName);
     }
   })(Cone.prototype, animationMethods);
