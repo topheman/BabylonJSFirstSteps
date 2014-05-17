@@ -27,8 +27,6 @@
   var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
   var PARENT_EYES_ORIGINAL_POSITION_X = 1;
   var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
-  var OPERATION_QUEUE_KIND_MOVE = 'moving';
-  var OPERATION_QUEUE_KIND_ANIMATION = 'animation';
     
   //Contructor
   var Cone = function(scene, options) {
@@ -208,8 +206,8 @@
     this._coneTailedBy = false;
     
     this._queue = {
-      animation : [],
-      moving : []
+      fx : [],
+      move : []
     };
     
   };
@@ -246,7 +244,7 @@
     },
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
-      this.clearQueue('animation');
+      this.clearQueue('fx');
       return this;
     },
     getPosition:function(){
@@ -316,8 +314,34 @@
       }
       return false;
     },
+    stopAllAnimationsRunning: function(){
+      if(this.isBumping()){
+        this.stopBump();
+      }
+      if(this.isWidenningEyes()){
+        this.stopWidenEyes();
+      }
+      if(this.isChangingAlpha()){
+        this.stopAnimateAlpha();
+      }
+      removeAllAnimations(this);
+      return this;
+    },
     isAnimationRunning: function(){
       return this.isBumping() && this.isWidenningEyes() && this.isChangingAlpha();
+    },
+    stopWidenEyes: function(){
+      this.parentEyes.getScene().stopAnimation(this.parentEyes);
+      removeWidenEyesAnimation(this);
+      this.resetWidenEyes();
+      return this;
+    },
+    resetWidenEyes: function(){
+      this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
+      this.parentEyes.position.x = PARENT_EYES_ORIGINAL_POSITION_X;
+      this.parentEyes.position.y = PARENT_EYES_ORIGINAL_POSITION_Y;
+      this.widenningEyes = false;
+      return this;
     },
     isWidenningEyes: function(){
       return this.widenningEyes;
@@ -325,8 +349,35 @@
     isEyesWiden: function(){
       return this.eyesWiden;
     },
+    stopBump: function() {
+      this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.resetBump();
+      removeBumpAnimation(this);
+      return this;
+    },
+    resetBump: function(){
+      this.cylinder.scaling.y = 1;
+      this.bumping = false;
+      return this;
+    },
+    toggleBump: function(options) {
+      if (this.isBumping()) {
+        this.stopBump();
+      }
+      else {
+        this.bump(options);
+      }
+      return this;
+    },
     isBumping: function() {
       return this.bumping;
+    },
+    stopAnimateAlpha: function(){
+      this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.leftEye.getScene().stopAnimation(this.leftEye);
+      this.rightEye.getScene().stopAnimation(this.rightEye);
+      removeAlphaAnimation(this);
+      return this;
     },
     isChangingAlpha: function(){
       return this.alphaAnimatingCylinder && this.alphaAnimatingLeftEye && this.alphaAnimatingRightEye;
@@ -499,19 +550,6 @@
   
   //Those methods are added to the Cone.prototype below
   var animationMethods = {
-    stopAllAnimationsRunning: function(){
-      if(this.isBumping()){
-        this.stopBump();
-      }
-      if(this.isWidenningEyes()){
-        this.stopWidenEyes();
-      }
-      if(this.isChangingAlpha()){
-        this.stopAnimateAlpha();
-      }
-      removeAllAnimations(this);
-      return this;
-    },
     widenEyes: function(options){
       var from, to, endState, eyesWidenState;
       options = typeof options === 'undefined' ? {} : options;
@@ -546,7 +584,7 @@
         this.flushAnimationQueue();
       }
       
-      var queue = this.queue('animation',(function(that){
+      var queue = this.queue('fx',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -562,7 +600,7 @@
               if(options.callback !== null){
                 options.callback.call({},that);
               }
-              that.dequeue('animation');
+              that.dequeue('fx');
             },options.delay);
           });
         };
@@ -578,19 +616,6 @@
       options = typeof options === 'undefined' ? {} : options;
       options.close = true;
       return this.widenEyes(options);
-    },
-    stopWidenEyes: function(){
-      this.parentEyes.getScene().stopAnimation(this.parentEyes);
-      removeWidenEyesAnimation(this);
-      this.resetWidenEyes();
-      return this;
-    },
-    resetWidenEyes: function(){
-      this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
-      this.parentEyes.position.x = PARENT_EYES_ORIGINAL_POSITION_X;
-      this.parentEyes.position.y = PARENT_EYES_ORIGINAL_POSITION_Y;
-      this.widenningEyes = false;
-      return this;
     },
     bump: function(options) {
       options = typeof options === 'undefined' ? {} : options;
@@ -608,7 +633,7 @@
         this.flushAnimationQueue();
       }
       
-      var queue = this.queue('animation',(function(that){
+      var queue = this.queue('fx',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -621,7 +646,7 @@
               if(options.callback !== null){
                 options.callback.call({},that);
               }
-              that.dequeue('animation');
+              that.dequeue('fx');
             },options.delay);
           });
           that.bumping = true;
@@ -632,26 +657,6 @@
         queue[0]();
       }
       
-      return this;
-    },
-    stopBump: function() {
-      this.cylinder.getScene().stopAnimation(this.cylinder);
-      this.resetBump();
-      removeBumpAnimation(this);
-      return this;
-    },
-    resetBump: function(){
-      this.cylinder.scaling.y = 1;
-      this.bumping = false;
-      return this;
-    },
-    toggleBump: function(options) {
-      if (this.isBumping()) {
-        this.stopBump();
-      }
-      else {
-        this.bump(options);
-      }
       return this;
     },
     animateAlpha: function(options){
@@ -673,7 +678,7 @@
         this.flushAnimationQueue();
       }
       
-      var queue = this.queue('animation',(function(that){
+      var queue = this.queue('fx',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -687,7 +692,7 @@
                 if(options.callback !== null){
                   options.callback.call({},that);
                 }
-                that.dequeue('animation');
+                that.dequeue('fx');
               },options.delay);
             }
             that.alphaAnimatingCylinder = false;
@@ -720,13 +725,6 @@
         queue[0]();
       }
       
-      return this;
-    },
-    stopAnimateAlpha: function(){
-      this.cylinder.getScene().stopAnimation(this.cylinder);
-      this.leftEye.getScene().stopAnimation(this.leftEye);
-      this.rightEye.getScene().stopAnimation(this.rightEye);
-      removeAlphaAnimation(this);
       return this;
     },
     fadeIn: function(options){
