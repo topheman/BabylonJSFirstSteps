@@ -210,6 +210,9 @@
       move : []
     };
     
+    //used for .then() to know on which queue add the callback
+    this._lastQueueNameCalled = 'fx';
+    
   };
 
   //Instance methode shared on the prototype
@@ -264,16 +267,46 @@
         if(this._queue[queueName].length === 1){
           this.dequeue(queueName);
         }
+        this._lastQueueNameCalled = queueName;
         result = this;
       }
       else if(callback instanceof Array){
         this._queue[queueName] = callback;
+        this._lastQueueNameCalled = queueName;
         result = this._queue[queueName];
       }
       else{
         result = this._queue[queueName];
       }
       return result;
+    },
+    /**
+     * Shortcut for .queue()
+     * Adds callback to the last used queue
+     * @param {function} callback
+     * @returns {Cone}
+     */
+    then: function(callback){
+      if(typeof callback !== 'function'){
+        throw new Error('callback must be a function');
+      }
+      return this.queue(this._lastQueueNameCalled,callback);
+    },
+    /**
+     * 
+     * @param {number} delay
+     * @returns {Cone}
+     */
+    delay: function(delay){
+      if(typeof delay !== 'number'){
+        throw new Error('delay must be a number');
+      }
+      this.then(function(next){
+        setTimeout(function(){
+          next();
+        },delay);
+      });
+      return this;
     },
     clearQueue: function(queueName){
       this._queue[queueName] = [];
@@ -622,7 +655,7 @@
           this.flushAnimationQueue();
         }
 
-        var queue = this.queue('fx',(function(that){
+        this.queue('fx',(function(that){
           return function(){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
@@ -643,10 +676,6 @@
             });
           };
         })(this));
-
-//        if(queue.length === 1){
-//          queue[0]();
-//        }
 
         return this;
       },
@@ -671,7 +700,7 @@
           this.flushAnimationQueue();
         }
 
-        var queue = this.queue('fx',(function(that){
+        this.queue('fx',(function(that){
           return function(){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
@@ -690,10 +719,6 @@
             that.bumping = true;
           };
         })(this));
-
-//        if(queue.length === 1){
-//          queue[0]();
-//        }
 
         return this;
       },
@@ -716,7 +741,7 @@
           this.flushAnimationQueue();
         }
 
-        var queue = this.queue('fx',(function(that){
+        this.queue('fx',(function(that){
           return function(){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
@@ -758,10 +783,6 @@
             }
           };
         })(this));
-
-//        if(queue.length === 1){
-//          queue[0]();
-//        }
 
         return this;
       },
