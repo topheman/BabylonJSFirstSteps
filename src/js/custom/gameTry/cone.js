@@ -214,32 +214,69 @@
 
   //Instance methode shared on the prototype
   Cone.fn = Cone.prototype = {
-    dequeue: function(kind){
-      if(typeof this._queue[kind] === 'undefined'){
-        throw new Error('No queue "'+kind+'" found');
+    /**
+     * Launches the next callback in the queue then removes it from the queue
+     * @param {string} queueName
+     * @returns {Cone}
+     */
+    dequeue: function(queueName){
+      var next = function(){}, that = this;
+      if(typeof this._queue[queueName] === 'undefined'){
+        throw new Error('No queue "'+queueName+'" found');
       }
-      if(this._queue[kind].length > 0){
-        this._queue[kind].shift();
-      }
-      if(this._queue[kind].length > 0){
-        this._queue[kind][0]();
-      }
+      setTimeout(function(){
+        if(that._queue[queueName].length > 0){
+          if(that._queue[queueName].length > 1){
+            next = (function(queueName){
+              return function(){
+                that.dequeue(queueName);
+              };
+            })(queueName);
+          }
+          that._queue[queueName][0].call({},next);
+        }
+        if(that._queue[queueName].length > 0){
+          that._queue[queueName].shift();
+        }
+      },0);
+      
       return this;
     },
-    queue: function(kind, callback){
-      if(typeof this._queue[kind] === 'undefined'){
-        this._queue[kind] = [];
+    /**
+     * Call it only with the queueName to get the queue
+     * Call it with queueName + callback : registers the callback in the queue
+     *  the callback tacks a "next" parameter to launch the next callbacj in the queue
+     * Call it with queueName + array of callback to replace the queue
+     * @param {string} queueName
+     * @param {function|Array[function]} callback @optional
+     * @returns {Cone|Array[function]}
+     */
+    queue: function(queueName, callback){
+      var result, next = function(){}, that = this;
+      if(typeof this._queue[queueName] === 'undefined'){
+        if(typeof callback === 'undefined'){
+          console.warn(queueName+' is not registered');
+        }
+        result = this._queue[queueName] = [];
       }
       if(typeof callback === 'function'){
-        this._queue[kind].push(callback);
+        this._queue[queueName].push(callback);
+        if(this._queue[queueName].length === 1){
+          this.dequeue(queueName);
+        }
+        result = this;
       }
-      if(callback instanceof Array){
-        this._queue[kind] = callback;
+      else if(callback instanceof Array){
+        this._queue[queueName] = callback;
+        result = this._queue[queueName];
       }
-      return this._queue[kind];
+      else{
+        result = this._queue[queueName];
+      }
+      return result;
     },
-    clearQueue: function(kind){
-      this._queue[kind] = [];
+    clearQueue: function(queueName){
+      this._queue[queueName] = [];
       return this;
     },
     flushAnimationQueue: function(){
@@ -550,192 +587,200 @@
   
   //Those methods are added to the Cone.prototype below
   var animationMethods = {
-    widenEyes: function(options){
-      var from, to, endState, eyesWidenState;
-      options = typeof options === 'undefined' ? {} : options;
-      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
-      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
-      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-      options.break = (typeof options.break === 'undefined') ? false : options.break;
-      if(options.loop !== false && options.callback !== null){
-        console.warn("Can't apply callback on looped animation");
-      }
-      if(options.close === true){
-        from = 50;
-        to = 100;
-        endState = false;
-        eyesWidenState = false;
-      }
-      else if(options.full === true){
-        from = 0;
-        to = 100;
-        endState = false;
-        eyesWidenState = false;
-      }
-      else{
-        from = 0;
-        to = 50;
-        endState = true;
-        eyesWidenState = true;
-      }
-      
-      if(options.break === true){
-        this.flushAnimationQueue();
-      }
-      
-      var queue = this.queue('fx',(function(that){
-        return function(){
-          //to avoid collision between animations @todo animation queue
-          that.stopAllAnimationsRunning();
+    'fx': {
+      widenEyes: function(options){
+        var from, to, endState, eyesWidenState;
+        options = typeof options === 'undefined' ? {} : options;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
+        options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop !== false && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+        if(options.close === true){
+          from = 50;
+          to = 100;
+          endState = false;
+          eyesWidenState = false;
+        }
+        else if(options.full === true){
+          from = 0;
+          to = 100;
+          endState = false;
+          eyesWidenState = false;
+        }
+        else{
+          from = 0;
+          to = 50;
+          endState = true;
+          eyesWidenState = true;
+        }
 
-          addWidenEyesAnimation(that);
-          that.widenningEyes = true;
-          that.eyesWiden = false;
-          that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, options.loop, options.speed,function(){
-            that.widenningEyes = endState;
-            that.eyesWiden = eyesWidenState;
-            removeWidenEyesAnimation(that);
-            setTimeout(function(){
-              if(options.callback !== null){
-                options.callback.call({},that);
-              }
-              that.dequeue('fx');
-            },options.delay);
-          });
-        };
-      })(this));
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
 
-      if(queue.length === 1){
-        queue[0]();
-      }
-      
-      return this;
-    },
-    unWidenEyes: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.close = true;
-      return this.widenEyes(options);
-    },
-    bump: function(options) {
-      options = typeof options === 'undefined' ? {} : options;
-      options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
-      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
-      options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
-      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-      options.break = (typeof options.break === 'undefined') ? false : options.break;
-      if(options.loop !== false && options.callback !== null){
-        console.warn("Can't apply callback on looped animation");
-      }
-      
-      if(options.break === true){
-        this.flushAnimationQueue();
-      }
-      
-      var queue = this.queue('fx',(function(that){
-        return function(){
-          //to avoid collision between animations @todo animation queue
-          that.stopAllAnimationsRunning();
+        var queue = this.queue('fx',(function(that){
+          return function(){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
 
-          addBumpAnimation(that,options.scale);
-          that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
-            that.resetBump();
-            removeBumpAnimation(that);
-            setTimeout(function(){
-              if(options.callback !== null){
-                options.callback.call({},that);
-              }
-              that.dequeue('fx');
-            },options.delay);
-          });
-          that.bumping = true;
-        };
-      })(this));
-
-      if(queue.length === 1){
-        queue[0]();
-      }
-      
-      return this;
-    },
-    animateAlpha: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
-      options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
-      options.loop = typeof options.loop === 'undefined' ? false : options.loop;
-      options.callback = (typeof options.callback !== 'function') ? null : options.callback;
-      options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-      options.break = (typeof options.break === 'undefined') ? false : options.break;
-      options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
-      options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
-      options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
-      if(options.loop !== false && options.callback !== null){
-        console.warn("Can't apply callback on looped animation");
-      }
-      
-      if(options.break === true){
-        this.flushAnimationQueue();
-      }
-      
-      var queue = this.queue('fx',(function(that){
-        return function(){
-          //to avoid collision between animations @todo animation queue
-          that.stopAllAnimationsRunning();
-
-          addAlphaAnimation(that,options);
-
-          var callback = function(cone){
-            if(cone.isChangingAlpha() === true){
-              removeAlphaAnimation(cone);
+            addWidenEyesAnimation(that);
+            that.widenningEyes = true;
+            that.eyesWiden = false;
+            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, options.loop, options.speed,function(){
+              that.widenningEyes = endState;
+              that.eyesWiden = eyesWidenState;
+              removeWidenEyesAnimation(that);
               setTimeout(function(){
                 if(options.callback !== null){
                   options.callback.call({},that);
                 }
                 that.dequeue('fx');
               },options.delay);
-            }
-            that.alphaAnimatingCylinder = false;
-            that.alphaAnimatingLeftEye = false;
-            that.alphaAnimatingRightEye = false;
+            });
           };
+        })(this));
 
-          if(options.cylinder === true){
-            that.alphaAnimatingCylinder = true;
-            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function(){
-              callback(that);
-            });
-          }
-          if(options.leftEye === true){
-            that.alphaAnimatingLeftEye = true;
-            that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, options.loop, options.speed, function(){
-              callback(that);
-            });
-          }
-          if(options.rightEye === true){
-            that.alphaAnimatingRightEye = true;
-            that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, options.loop, options.speed, function(){
-              callback(that);
-            });
-          }
-        };
-      })(this));
+//        if(queue.length === 1){
+//          queue[0]();
+//        }
 
-      if(queue.length === 1){
-        queue[0]();
+        return this;
+      },
+      unWidenEyes: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        options.close = true;
+        return this.widenEyes(options);
+      },
+      bump: function(options) {
+        options = typeof options === 'undefined' ? {} : options;
+        options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop !== false && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
+
+        var queue = this.queue('fx',(function(that){
+          return function(){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
+
+            addBumpAnimation(that,options.scale);
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
+              that.resetBump();
+              removeBumpAnimation(that);
+              setTimeout(function(){
+                if(options.callback !== null){
+                  options.callback.call({},that);
+                }
+                that.dequeue('fx');
+              },options.delay);
+            });
+            that.bumping = true;
+          };
+        })(this));
+
+//        if(queue.length === 1){
+//          queue[0]();
+//        }
+
+        return this;
+      },
+      animateAlpha: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
+        options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
+        options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
+        if(options.loop !== false && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
+
+        var queue = this.queue('fx',(function(that){
+          return function(){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
+
+            addAlphaAnimation(that,options);
+
+            var callback = function(cone){
+              if(cone.isChangingAlpha() === true){
+                removeAlphaAnimation(cone);
+                setTimeout(function(){
+                  if(options.callback !== null){
+                    options.callback.call({},that);
+                  }
+                  that.dequeue('fx');
+                },options.delay);
+              }
+              that.alphaAnimatingCylinder = false;
+              that.alphaAnimatingLeftEye = false;
+              that.alphaAnimatingRightEye = false;
+            };
+
+            if(options.cylinder === true){
+              that.alphaAnimatingCylinder = true;
+              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function(){
+                callback(that);
+              });
+            }
+            if(options.leftEye === true){
+              that.alphaAnimatingLeftEye = true;
+              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, options.loop, options.speed, function(){
+                callback(that);
+              });
+            }
+            if(options.rightEye === true){
+              that.alphaAnimatingRightEye = true;
+              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, options.loop, options.speed, function(){
+                callback(that);
+              });
+            }
+          };
+        })(this));
+
+//        if(queue.length === 1){
+//          queue[0]();
+//        }
+
+        return this;
+      },
+      fadeIn: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        options.alpha = 1;
+        return this.animateAlpha(options);
+      },
+      fadeOut: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        options.alpha = 0;
+        return this.animateAlpha(options);
       }
-      
-      return this;
     },
-    fadeIn: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.alpha = 1;
-      return this.animateAlpha(options);
-    },
-    fadeOut: function(options){
-      options = typeof options === 'undefined' ? {} : options;
-      options.alpha = 0;
-      return this.animateAlpha(options);
+    'move':{
+      moveTo: function(options){
+        console.warn('.moveTo not yet implemented');
+        return this;
+      }
     }
   };
   
@@ -754,20 +799,23 @@
     else if(animationMethodsNameList.indexOf(options.method) === -1){
       throw new Error('"'+options.method+'" : method not allowed');
     }
-    return animationMethods[options.method].call(this,options);
+    var queueName = 'fx';//@todo find the exact queueName for the method
+    return animationMethods[queueName][options.method].call(this,options);
   };
   
   //add the animation methods to the Cone.prototype
   (function($, methods){
-    for(var methodName in methods){
-      $[methodName] = (function(methodNameToCall){
-        return function(options){
-          options = typeof options === 'undefined' ? {} : options;
-          options.method = methodNameToCall;
-          return this.animate(options);
-        };
-      })(methodName);
-      animationMethodsNameList.push(methodName);
+    for(var queueName in methods){
+      for(var methodName in methods[queueName]){
+        $[methodName] = (function(methodNameToCall){
+          return function(options){
+            options = typeof options === 'undefined' ? {} : options;
+            options.method = methodNameToCall;
+            return this.animate(options);
+          };
+        })(methodName);
+        animationMethodsNameList.push(methodName);
+      }
     }
   })(Cone.fn, animationMethods);
 
