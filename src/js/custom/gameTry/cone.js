@@ -208,8 +208,8 @@
     this._coneTailedBy = false;
     
     this._queue = {
-      fx : [],
-      move : []
+      animation : [],
+      moving : []
     };
     
   };
@@ -240,19 +240,9 @@
       }
       return this._queue[kind];
     },
-    _resolveAnimationQueue: function(){
-      console.log('_resolveAnimationQueue');
-      this.dequeue('fx');
-    },
-    _pushToAnimationQueue: function(animationLauncher){
-      this.queue('fx',animationLauncher);
-    },
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
-      this.queue('fx',[]);
-    },
-    getAnimationQueue: function(){
-      return this.queue('fx');
+      this.queue('animation',[]);
     },
     getPosition:function(){
       return this.getMainMesh().position;
@@ -538,7 +528,7 @@
         this.flushAnimationQueue();
       }
       
-      var queue = this.queue('fx',(function(that){
+      var queue = this.queue('animation',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -554,7 +544,7 @@
               if(options.callback !== null){
                 options.callback.call({},that);
               }
-              that._resolveAnimationQueue();
+              that.dequeue('animation');
             },options.delay);
           });
         };
@@ -600,7 +590,7 @@
         this.flushAnimationQueue();
       }
       
-      var queue = this.queue('fx',(function(that){
+      var queue = this.queue('animation',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -613,7 +603,7 @@
               if(options.callback !== null){
                 options.callback.call({},that);
               }
-              that._resolveAnimationQueue();
+              that.dequeue('animation');
             },options.delay);
           });
           that.bumping = true;
@@ -665,7 +655,7 @@
         this.flushAnimationQueue();
       }
       
-      var queue = this.queue('fx',(function(that){
+      var queue = this.queue('animation',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -679,7 +669,7 @@
                 if(options.callback !== null){
                   options.callback.call({},that);
                 }
-                that._resolveAnimationQueue();
+                that.dequeue('animation');
               },options.delay);
             }
             that.alphaAnimatingCylinder = false;
