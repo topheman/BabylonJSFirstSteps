@@ -215,7 +215,7 @@
   };
 
   //Instance methode shared on the prototype
-  Cone.prototype = {
+  Cone.fn = Cone.prototype = {
     dequeue: function(kind){
       if(typeof this._queue[kind] === 'undefined'){
         throw new Error('No queue "'+kind+'" found');
@@ -226,7 +226,7 @@
       if(this._queue[kind].length > 0){
         this._queue[kind][0]();
       }
-      return this._queue[kind];
+      return this;
     },
     queue: function(kind, callback){
       if(typeof this._queue[kind] === 'undefined'){
@@ -240,9 +240,14 @@
       }
       return this._queue[kind];
     },
+    clearQueue: function(kind){
+      this._queue[kind] = [];
+      return this;
+    },
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
-      this.queue('animation',[]);
+      this.clearQueue('animation');
+      return this;
     },
     getPosition:function(){
       return this.getMainMesh().position;
@@ -252,35 +257,44 @@
         color = hexToRgb(color);
       }
       this.cylinder.material.diffuseColor = new BABYLON.Color3(color.r, color.g, color.b);
+      return this;
     },
     setAlpha: function(alpha){
       this.cylinder.material.alpha = alpha;
       this.leftEye.material.alpha = alpha;
       this.rightEye.material.alpha = alpha;
+      return this;
     },
     moveForward: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
+      return this;
     },
     moveBack: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
+      return this;
     },
     moveLeft: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
+      return this;
     },
     moveRight: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
+      return this;
     },
     turnLeft: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
+      return this;
     },
     turnRight: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
+      return this;
     },
     registerToShadowGenerator: function(shadowGenerator) {
       var renderList = shadowGenerator.getShadowMap().renderList;
       renderList.push(this.cylinder);
       renderList.push(this.leftEye);
       renderList.push(this.rightEye);
+      return this;
     },
     squint: function() {
       if (this.rightEye.material.diffuseTexture.uOffset < 0.08) {
@@ -319,12 +333,14 @@
     },
     setMoveStep: function(moveStep) {
       this.moveStep = moveStep;
+      return this;
     },
     getMoveStep: function() {
       return this.moveStep;
     },
     setTurnStep: function(turnStep) {
       this.turnStep = turnStep;
+      return this;
     },
     getTurnStep: function() {
       return this.turnStep;
@@ -396,12 +412,14 @@
     lookAt: function(point){
       point.y = this.getMainMesh().position.y;
       this.getMainMesh().lookAt(point,Math.PI/2);
+      return this;
     },
     follow: function(point){
       if(point && point.subtract(this.getPosition()).length() > 0.05){
         this.lookAt(point);
         this.moveForward();
       }
+      return this;
     },
     //@todo implement a hasMoved tag to know if the instance has moved (update it in a registerBeforeRenderLoop)
     /**
@@ -731,7 +749,7 @@
    * @param {Object} options
    * @returns {Cone}
    */
-  Cone.prototype.animate = function(options){
+  Cone.fn.animate = function(options){
     if(typeof options === 'undefined' || typeof options.method === 'undefined'){
       throw new Error('options.method mandatory');
     }
@@ -753,7 +771,7 @@
       })(methodName);
       animationMethodsNameList.push(methodName);
     }
-  })(Cone.prototype, animationMethods);
+  })(Cone.fn, animationMethods);
 
   //Private methods
 
@@ -1013,9 +1031,9 @@
     }
   };
   
-  Cone.List.prototype = [];
+  Cone.List.fn = Cone.List.prototype = [];
   
-  Cone.List.prototype.animate = function(options){
+  Cone.List.fn.animate = function(options){
     var that = this;
     options = typeof options === 'undefined' ? {} : options;
     options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
@@ -1068,9 +1086,9 @@
         };
       })(methodsName[i]);
     }
-  })(Cone.List.prototype, animationMethodsNameList);
+  })(Cone.List.fn, animationMethodsNameList);
   
-  Cone.List.prototype.animateCascade = function(options){
+  Cone.List.fn.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
     options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
     options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
