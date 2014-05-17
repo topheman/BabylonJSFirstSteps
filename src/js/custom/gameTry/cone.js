@@ -246,10 +246,12 @@
       return this;
     },
     /**
-     * Call it only with the queueName to get the queue
+     * Call it only with the queueName : returns the queue
      * Call it with queueName + callback : registers the callback in the queue
      *  the callback tacks a "next" parameter to launch the next callbacj in the queue
+     *  and returns the cone to chain
      * Call it with queueName + array of callback to replace the queue
+     *  and returns the cone to chain
      * @param {string} queueName
      * @param {function|Array[function]} callback @optional
      * @returns {Cone|Array[function]}
@@ -258,10 +260,12 @@
       var result, next = function(){}, that = this;
       if(typeof this._queue[queueName] === 'undefined'){
         if(typeof callback === 'undefined'){
-          console.warn(queueName+' is not registered');
+          if(this.warnings === true){
+            console.warn('queue "'+queueName+'" is not registered');
+          }
         }
         result = this._queue[queueName] = [];
-      }
+        }
       if(typeof callback === 'function'){
         this._queue[queueName].push(callback);
         if(this._queue[queueName].length === 1){
@@ -297,11 +301,24 @@
      * @param {number} delay
      * @returns {Cone}
      */
-    delay: function(delay){
+    delay: function(){
+      var delay, queueName = null;
+      //case only a delay was specified
+      if(arguments.length === 1){
+        queueName = this._lastQueueNameCalled;
+        delay = arguments[0];
+      }
+      else if(arguments.length === 2){
+        queueName = arguments[0];
+        delay = arguments[1];
+      }
       if(typeof delay !== 'number'){
         throw new Error('delay must be a number');
       }
-      this.then(function(next){
+      if(queueName !== null && typeof queueName !== 'string'){
+        throw new Error('queueName must be a string');
+      }
+      this.queue(queueName,function(next){
         setTimeout(function(){
           next();
         },delay);
@@ -836,12 +853,29 @@
     }
   })(Cone.fn, animationMethods);
 
+  //you can set this off, not to see the warnings
+  Cone.fn.warnings = true;
+
   //Private methods
   
+  /**
+   * 
+   * @param {string} methodName
+   * @returns {Boolean}
+   */
   var animationMethodExists = function(methodName){
+    return !!getAnimationMethodQueueName(methodName);
+  };
+  
+  /**
+   * 
+   * @param {string} methodName
+   * @returns {Boolean|string}
+   */
+  var getAnimationMethodQueueName = function(methodName){
     for(var queueName in animationMethods){
       if(typeof animationMethods[queueName][methodName] !== 'undefined'){
-        return true;
+        return queueName;
       }
     }
     return false;

@@ -118,6 +118,37 @@ window.onload = function() {
     
     conesArray[0].fadeIn(previousOptions);
     
+    //custom user chainable queues
+    coneTest2.queue('color');
+    coneTest2.delay('color',4000)
+      .then(function(next){ coneTest2.setColor('#00C510');next() })
+      .delay(1000)
+      .then(function(next){ coneTest2.setColor('#C56E00');next() })
+      .then(function(next){ coneTest2.bump({callback:next})})
+      .then(function(next){ coneTest2.setColor('#ffd53d');next() })
+      .delay(1000)
+      .then(function(next){ coneTest2.setColor('#00D500');next() })
+      .then(function(next){ coneTest2.widenEyes({full:true,speed:1,callback:next}); })
+      .then(function(next){ coneTest2.setColor('#ffd53d');next() });
+      
+    
+//    coneTest2.queue('color',function(next){
+//      setTimeout(function(){
+//        coneTest2.setColor('#00C510');
+//        next();
+//      },4000);
+//    }).queue('color',function(next){
+//      setTimeout(function(){
+//        coneTest2.setColor('#C56E00');
+//        next();
+//      },2000);
+//    }).queue('color',function(next){
+//      setTimeout(function(){
+//        coneTest2.setColor('#ffd53d');
+//        next();
+//      },2000);
+//    });
+    
 //    coneMain.fadeIn({
 //      callback:function(){
 //        coneTest1.fadeIn({
