@@ -43,6 +43,8 @@ window.onload = function() {
     
     ground.isPickable = true;
 //    ground.isVisible = false;
+    ground.material = new BABYLON.StandardMaterial("ground-texture", scene);
+    ground.material.backFaceCulling = true;
     
     //create cones
     coneMain = new Cone(scene,{name:"coneMain"});//global on purpose

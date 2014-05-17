@@ -1036,6 +1036,7 @@
       var result = mesh.animations.map(function(item, index) {
         return item.name;
       });
+      return result;
     },
     /**
      * @unused
@@ -1070,6 +1071,8 @@
       return result;
     }
   };
+  
+  Cone.helpers = helpers;
   
   /*** Cone.List ***/
   
