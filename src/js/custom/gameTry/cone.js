@@ -805,9 +805,6 @@
     }
   };
   
-  //this is to keep an array of the methods opened to animation
-  var animationMethodsNameList = [];
-  
   /**
    * Acts as a dispatcher for animation methods (those methods can also be accessed directly)
    * @param {Object} options
@@ -817,7 +814,7 @@
     if(typeof options === 'undefined' || typeof options.method === 'undefined'){
       throw new Error('options.method mandatory');
     }
-    else if(animationMethodsNameList.indexOf(options.method) === -1){
+    else if(animationMethodExists(options.method) === false){
       throw new Error('"'+options.method+'" : method not allowed');
     }
     var queueName = 'fx';//@todo find the exact queueName for the method
@@ -835,12 +832,20 @@
             return this.animate(options);
           };
         })(methodName);
-        animationMethodsNameList.push(methodName);
       }
     }
   })(Cone.fn, animationMethods);
 
   //Private methods
+  
+  var animationMethodExists = function(methodName){
+    for(var queueName in animationMethods){
+      if(typeof animationMethods[queueName][methodName] !== 'undefined'){
+        return true;
+      }
+    }
+    return false;
+  };
 
   /**
    * this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
@@ -1114,7 +1119,7 @@
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
-    if(animationMethodsNameList.indexOf(options.method) === -1){
+    if(animationMethodExists(options.method) === false){
       throw new Error('"'+options.method+'" : method not allowed');
     }
     if(this.length > 0){
@@ -1144,19 +1149,21 @@
   };
   
   //add the animation methods to the Cone.List.prototype
-  (function($,methodsName){
-    var i;
-    for(i=0; i<methodsName.length; i++){
-      $[methodsName[i]] = (function(methodName){
-        return function(options){
-          options = typeof options === 'undefined' ? {} : options;
-          options.method = methodName;
-          console.log(options, methodName);
-          this.animate(options);
-        };
-      })(methodsName[i]);
+  (function($,animationMethods){
+    var i, queueName, methodName;
+    for(queueName in animationMethods){
+      for(methodName in animationMethods[queueName]){
+        $[methodName] = (function(curMethodName){
+          return function(options){
+            options = typeof options === 'undefined' ? {} : options;
+            options.method = curMethodName;
+            console.log(options, curMethodName);
+            this.animate(options);
+          };
+        })(methodName);
+      }
     }
-  })(Cone.List.fn, animationMethodsNameList);
+  })(Cone.List.fn, animationMethods);
   
   Cone.List.fn.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
