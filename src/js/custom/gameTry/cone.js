@@ -27,6 +27,8 @@
   var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
   var PARENT_EYES_ORIGINAL_POSITION_X = 1;
   var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
+  var OPERATION_QUEUE_KIND_MOVE = 'moving';
+  var OPERATION_QUEUE_KIND_ANIMATION = 'animation';
     
   //Contructor
   var Cone = function(scene, options) {
@@ -205,30 +207,52 @@
     this._coneTailing = false;
     this._coneTailedBy = false;
     
-    this._animationQueue = [];
+    this._queue = {
+      fx : [],
+      move : []
+    };
     
   };
 
   //Instance methode shared on the prototype
   Cone.prototype = {
+    dequeue: function(kind){
+      if(typeof this._queue[kind] === 'undefined'){
+        throw new Error('No queue "'+kind+'" found');
+      }
+      if(this._queue[kind].length > 0){
+        this._queue[kind].shift();
+      }
+      if(this._queue[kind].length > 0){
+        this._queue[kind][0]();
+      }
+      return this._queue[kind];
+    },
+    queue: function(kind, callback){
+      if(typeof this._queue[kind] === 'undefined'){
+        this._queue[kind] = [];
+      }
+      if(typeof callback === 'function'){
+        this._queue[kind].push(callback);
+      }
+      if(callback instanceof Array){
+        this._queue[kind] = callback;
+      }
+      return this._queue[kind];
+    },
     _resolveAnimationQueue: function(){
       console.log('_resolveAnimationQueue');
-      if(this._animationQueue.length > 0){
-        this._animationQueue.shift();
-      }
-      if(this._animationQueue.length > 0){
-        this._animationQueue[0]();
-      }
+      this.dequeue('fx');
     },
     _pushToAnimationQueue: function(animationLauncher){
-      this._animationQueue.push(animationLauncher);
+      this.queue('fx',animationLauncher);
     },
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
-      this._animationQueue.length = 0;
+      this.queue('fx',[]);
     },
     getAnimationQueue: function(){
-      return this._animationQueue;
+      return this.queue('fx');
     },
     getPosition:function(){
       return this.getMainMesh().position;
@@ -514,7 +538,7 @@
         this.flushAnimationQueue();
       }
       
-      var index = this._animationQueue.push((function(that){
+      var queue = this.queue('fx',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -526,7 +550,7 @@
             that.widenningEyes = endState;
             that.eyesWiden = eyesWidenState;
             removeWidenEyesAnimation(that);
-            setTimeout(function(){//setTimeout needed
+            setTimeout(function(){
               if(options.callback !== null){
                 options.callback.call({},that);
               }
@@ -536,8 +560,8 @@
         };
       })(this));
 
-      if(index === 1){
-        this._animationQueue[0]();
+      if(queue.length === 1){
+        queue[0]();
       }
       
       return this;
@@ -576,7 +600,7 @@
         this.flushAnimationQueue();
       }
       
-      var index = this._animationQueue.push((function(that){
+      var queue = this.queue('fx',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -585,7 +609,7 @@
           that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
             that.resetBump();
             removeBumpAnimation(that);
-            setTimeout(function(){//setTimeout needed
+            setTimeout(function(){
               if(options.callback !== null){
                 options.callback.call({},that);
               }
@@ -596,8 +620,8 @@
         };
       })(this));
 
-      if(index === 1){
-        this._animationQueue[0]();
+      if(queue.length === 1){
+        queue[0]();
       }
       
       return this;
@@ -641,7 +665,7 @@
         this.flushAnimationQueue();
       }
       
-      var index = this._animationQueue.push((function(that){
+      var queue = this.queue('fx',(function(that){
         return function(){
           //to avoid collision between animations @todo animation queue
           that.stopAllAnimationsRunning();
@@ -651,7 +675,7 @@
           var callback = function(cone){
             if(cone.isChangingAlpha() === true){
               removeAlphaAnimation(cone);
-              setTimeout(function(){//setTimeout needed
+              setTimeout(function(){
                 if(options.callback !== null){
                   options.callback.call({},that);
                 }
@@ -684,8 +708,8 @@
         };
       })(this));
 
-      if(index === 1){
-        this._animationQueue[0]();
+      if(queue.length === 1){
+        queue[0]();
       }
       
       return this;
@@ -713,7 +737,7 @@
   var animationMethodsNameList = [];
   
   /**
-   * Acts as a dispatcher for animation methods (those methods can alse be accessed directly)
+   * Acts as a dispatcher for animation methods (those methods can also be accessed directly)
    * @param {Object} options
    * @returns {Cone}
    */
