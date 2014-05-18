@@ -261,12 +261,10 @@
       return this;
     },
     /**
-     * Call it only with the queueName : returns the queue
-     * Call it with queueName + callback : registers the callback in the queue
-     *  the callback tacks a "next" parameter to launch the next callback in the queue
-     *  and returns the cone to chain
-     * Call it with queueName + array of callback to replace the queue
-     *  and returns the cone to chain
+     * * Call it only with the queueName : **Returns the queue**.
+     * * Call it with queueName + callback : registers the callback in the queue. This
+     * callback has a "next" parameter to launch the next callback in the queue. **Returns the cone to chain**.
+     * * Call it with queueName + array of callback to replace the queue. **Returns the cone to chain**
      * @memberOf Cone#
      * @param {string} queueName
      * @param {function|Array<function>} callback @optional
@@ -301,7 +299,8 @@
       return result;
     },
     /**
-     * Shortcut for .queue()
+     * Shortcut for {@link Cone#queue|.queue()}
+     * 
      * Adds callback to the last used queue
      * @memberOf Cone#
      * @param {function} callback
@@ -690,6 +689,7 @@
     },
     /**
      * @memberOf Cone#
+     * @param {Cone} cone
      * @returns {number}
      */
     getDistance: function(cone){
@@ -697,6 +697,7 @@
     },
     /**
      * Checks if two cones intersect (based on the bottom diameter)
+     * 
      * If a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)
      * 
      * @memberOf Cone#
@@ -770,9 +771,9 @@
     },
     //@todo implement a hasMoved tag to know if the instance has moved (update it in a registerBeforeRenderLoop)
     /**
-     * Attaches this cone to the one passed in parameter
-     * If you try to tail a cone already followed by another, your cone will follow the last one in the tail
-     * It returns the cone you end up tailing
+     * * Attaches this cone to the one passed in parameter
+     * * If you try to tail a cone already followed by another, your cone will follow the last one in the tail
+     * * Returns the cone you end up tailing
      * @memberOf Cone#
      * @param {Cone} cone
      * @param {Object} options
@@ -856,11 +857,13 @@
        * 
        * @memberOf Cone#
        * @param {Object} options
-       * @param {number} options.speed @optional
-       * @param {boolean} options.loop @optional
-       * @param {function} options.callback @optional
-       * @param {number} options.delay @optional
-       * @param {boolean} options.break @optional
+       * @param {number} options.speed 5 by default @optional
+       * @param {boolean} options.loop false by default @optional
+       * @param {function} options.callback null by default @optional
+       * @param {number} options.delay 0 by default @optional
+       * @param {boolean} options.break false by default @optional
+       * @param {boolean} options.full false by default @optional
+       * @param {boolean} options.close false by default @optional
        * @returns {Cone}
        */
       widenEyes: function(options){
