@@ -1,6 +1,6 @@
 {
   "plugins": [ "plugins/markdown" ],
   "opts": {
-    "destination" : "./src/js/custom/gameTry/doc"
+    "destination" : "./src/js/custom/gameTry/jsdoc"
   }
 }
