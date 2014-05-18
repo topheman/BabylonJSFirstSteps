@@ -15,5 +15,8 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/topheman/BabylonJSFirstSteps.git"
+  },
+  "scripts": {
+    "doc" : "jsdoc ./src/js/custom/gameTry/cone.js -d ./src/js/custom/gameTry/doc"
   }
 }

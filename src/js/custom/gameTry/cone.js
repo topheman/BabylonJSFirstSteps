@@ -233,6 +233,7 @@
   Cone.fn = Cone.prototype = {
     /**
      * Launches the next callback in the queue then removes it from the queue
+     * @memberOf Cone#
      * @param {string} queueName
      * @returns {Cone}
      */
@@ -266,9 +267,10 @@
      *  and returns the cone to chain
      * Call it with queueName + array of callback to replace the queue
      *  and returns the cone to chain
+     * @memberOf Cone#
      * @param {string} queueName
-     * @param {function|Array[function]} callback @optional
-     * @returns {Cone|Array[function]}
+     * @param {function|Array<function>} callback @optional
+     * @returns {Cone|Array<function>}
      */
     queue: function(queueName, callback){
       var result;
@@ -301,6 +303,7 @@
     /**
      * Shortcut for .queue()
      * Adds callback to the last used queue
+     * @memberOf Cone#
      * @param {function} callback
      * @returns {Cone}
      */
@@ -311,8 +314,11 @@
       return this.queue(this._lastQueueNameCalled,callback);
     },
     /**
+     * @todo problem with doc
      * Delays the next event in the queue of "delay" ms.
      * You can force the queue name
+     * 
+     * @memberOf Cone#
      * 
      * @signature function(delay)
      * @param {number} delay
@@ -349,6 +355,7 @@
     },
     /**
      * Clears the queue
+     * @memberOf Cone#
      * @param {string} queueName
      * @returns {Cone}
      */
@@ -359,6 +366,7 @@
     /**
      * Stops all the animations on the fx queue then clears the queue
      * (all other queues continue)
+     * @memberOf Cone#
      * @returns {Cone}
      */
     flushAnimationQueue: function(){
@@ -368,6 +376,7 @@
     },
     /**
      * Returns cone position
+     * @memberOf Cone#
      * @returns {BABYLON.Vector3}
      */
     getPosition:function(){
@@ -376,6 +385,7 @@
     /**
      * Sets the color of the cylinder
      * Accepts hexa or rgb color
+     * @memberOf Cone#
      * @param {string|object} color
      * @returns Cone}
      */
@@ -388,6 +398,7 @@
     },
     /**
      * Sets the alpha on all the cone
+     * @memberOf Cone#
      * @param {number} alpha
      * @returns {Cone}
      */
@@ -399,6 +410,7 @@
     },
     /**
      * Moves the cone forward of one moveStep
+     * @memberOf Cone#
      * @returns {Cone}
      */
     moveForward: function() {
@@ -407,6 +419,7 @@
     },
     /**
      * Moves the cone backwards of one moveStep
+     * @memberOf Cone#
      * @returns {Cone}
      */
     moveBack: function() {
@@ -415,6 +428,7 @@
     },
     /**
      * Moves the cone left of one moveStep
+     * @memberOf Cone#
      * @returns {Cone}
      */
     moveLeft: function() {
@@ -423,6 +437,7 @@
     },
     /**
      * Moves the cone right of one moveStep
+     * @memberOf Cone#
      * @returns {Cone}
      */
     moveRight: function() {
@@ -431,6 +446,7 @@
     },
     /**
      * Turns the cone left of one turnStep
+     * @memberOf Cone#
      * @returns {Cone}
      */
     turnLeft: function() {
@@ -439,6 +455,7 @@
     },
     /**
      * Turns the cone right of one turnStep
+     * @memberOf Cone#
      * @returns {Cone}
      */
     turnRight: function() {
@@ -447,6 +464,7 @@
     },
     /**
      * Registers the cone to a BABYLON.ShadowGenerator to be able to render shadows on the shadow map
+     * @memberOf Cone#
      * @param {BABYLON.ShadowGenerator} shadowGenerator
      * @returns {Cone}
      */
@@ -461,6 +479,7 @@
      * Squints the eyes of one step
      * Returns true if the eyes are not all squinted
      * Returns false if they are and stop squint
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     squint: function() {
@@ -477,6 +496,7 @@
      * Unsquints the eyes of one step
      * Returns true if the eyes are not all unsquinted
      * Returns false if they are and stop squint
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     unSquint: function() {
@@ -491,6 +511,7 @@
     },
     /**
      * Stops all the fx animations
+     * @memberOf Cone#
      * @returns {Cone}
      */
     stopAllAnimationsRunning: function(){
@@ -508,6 +529,7 @@
     },
     /**
      * Returns true if an fx animation is running
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     isAnimationRunning: function(){
@@ -515,6 +537,7 @@
     },
     /**
      * Stops eyes fx animation
+     * @memberOf Cone#
      * @returns {Cone}
      */
     stopWidenEyes: function(){
@@ -525,6 +548,7 @@
     },
     /**
      * Reset eyes to orginal scale and position
+     * @memberOf Cone#
      * @returns {Cone}
      */
     resetWidenEyes: function(){
@@ -536,6 +560,7 @@
     },
     /**
      * Returns true if the cone is widenning eyes
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     isWidenningEyes: function(){
@@ -543,6 +568,7 @@
     },
     /**
      * Returns true if the cone has its eyes widen
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     isEyesWiden: function(){
@@ -550,6 +576,7 @@
     },
     /**
      * Stops cylinder fx animation
+     * @memberOf Cone#
      * @returns {Cone}
      */
     stopBump: function() {
@@ -560,6 +587,7 @@
     },
     /**
      * Reset cylinder to orginal scale and position
+     * @memberOf Cone#
      * @returns {Cone}
      */
     resetBump: function(){
@@ -568,6 +596,7 @@
       return this;
     },
     /**
+     * @memberOf Cone#
      * @param {Object} options
      * @returns {Cone}
      */
@@ -581,12 +610,14 @@
       return this;
     },
     /**
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     isBumping: function() {
       return this.bumping;
     },
     /**
+     * @memberOf Cone#
      * @returns {Cone}
      */
     stopAnimateAlpha: function(){
@@ -598,12 +629,14 @@
     },
     /**
      * Returns true if alpha is animating on the cone
+     * @memberOf Cone#
      * @returns {Boolean}
      */
     isChangingAlpha: function(){
       return this.alphaAnimatingCylinder && this.alphaAnimatingLeftEye && this.alphaAnimatingRightEye;
     },
     /**
+     * @memberOf Cone#
      * @param {number} moveStep
      * @returns {Cone}
      */
@@ -612,12 +645,14 @@
       return this;
     },
     /**
+     * @memberOf Cone#
      * @returns {number}
      */
     getMoveStep: function() {
       return this.moveStep;
     },
     /**
+     * @memberOf Cone#
      * @param {number} turnStep
      * @returns {Cone}
      */
@@ -626,30 +661,35 @@
       return this;
     },
     /**
+     * @memberOf Cone#
      * @returns {number}
      */
     getTurnStep: function() {
       return this.turnStep;
     },
     /**
+     * @memberOf Cone#
      * @returns {number}
      */
     getHeight: function(){
       return this._size.height*this.cylinder.scaling.y*this.scaling.y;
     },
     /**
+     * @memberOf Cone#
      * @returns {number}
      */
     getTopDiameter: function(){
       return this._size.topDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
     /**
+     * @memberOf Cone#
      * @returns {number}
      */
     getBottomDiameter: function(){
       return this._size.bottomDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
     /**
+     * @memberOf Cone#
      * @returns {number}
      */
     getDistance: function(cone){
@@ -658,6 +698,8 @@
     /**
      * Checks if two cones intersect (based on the bottom diameter)
      * If a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)
+     * 
+     * @memberOf Cone#
      * @param {Cone} cone
      * @returns {Boolean}
      */
@@ -670,6 +712,7 @@
     },
     /**
      * 
+     * @memberOf Cone#
      * @param {BABYLON.Mesh} ground (plane)
      * @param {Boolean} replace if you wan't not only to check the limit but also keep the cone inside it
      * @returns {Boolean}
@@ -703,6 +746,7 @@
       return result;
     },
     /**
+     * @memberOf Cone#
      * @param {BABYLON.Vector3} point
      * @returns {Cone}
      */
@@ -713,6 +757,7 @@
     },
     /**
      * Moves the cone towards "point" of one moveStep
+     * @memberOf Cone#
      * @param {BABYLON.Vector3} point
      * @returns {Cone}
      */
@@ -728,6 +773,7 @@
      * Attaches this cone to the one passed in parameter
      * If you try to tail a cone already followed by another, your cone will follow the last one in the tail
      * It returns the cone you end up tailing
+     * @memberOf Cone#
      * @param {Cone} cone
      * @param {Object} options
      * @returns {Cone}
@@ -758,6 +804,7 @@
     },
     /**
      * Detaches your cone, returns the cone it was tailing
+     * @memberOf Cone#
      * @returns {Cone}
      */
     unTail: function(){
@@ -769,6 +816,7 @@
     },
     /**
      * Returns the cone instance which this cone is tailing or false in none
+     * @memberOf Cone#
      * @returns {Boolean|Cone}
      */
     isTailing: function(){
@@ -776,6 +824,7 @@
     },
     /**
      * Returns the cone instance which this cone is tailed by or false in none
+     * @memberOf Cone#
      * @returns {Boolean|Cone}
      */
     isTailed: function(){
@@ -783,7 +832,8 @@
     },
     /**
      * Returns an array of the cones tailing this one
-     * @returns {Array[Cone]}
+     * @memberOf Cone#
+     * @returns {Array<Cone>}
      */
     getFullTail: function(){
       var fullTail = [], reccursiveTailingConesDiscovery;
@@ -802,6 +852,17 @@
   //Those methods are added to the Cone.prototype below
   var animationMethods = {
     'fx': {
+      /**
+       * 
+       * @memberOf Cone#
+       * @param {Object} options
+       * @param {number} options.speed @optional
+       * @param {boolean} options.loop @optional
+       * @param {function} options.callback @optional
+       * @param {number} options.delay @optional
+       * @param {boolean} options.break @optional
+       * @returns {Cone}
+       */
       widenEyes: function(options){
         var from, to, endState, eyesWidenState;
         options = typeof options === 'undefined' ? {} : options;
@@ -988,6 +1049,8 @@
   
   /**
    * Acts as a dispatcher for animation methods (those methods can also be accessed directly)
+   * @todo doc problem
+   * @memberOf Cone#
    * @param {Object} options
    * @returns {Cone}
    */
@@ -1228,10 +1291,13 @@
   /**
    * Bunch of methods I didn't find inside BabylonJS, that I coded for myself
    * please tell me if they exist
+   * @namespace Cone.helpers
+   * @name Cone.helpers
    */
   var helpers = {
     /**
      * @unused
+     * @memberOf Cone.helpers
      * @param {BABYLON.Mesh} mesh
      * @returns {Array}
      */
@@ -1243,6 +1309,7 @@
     },
     /**
      * @unused
+     * @memberOf Cone.helpers
      * @param {BABYLON.Mesh} mesh
      * @param {String} animationName
      * @returns {Boolean}
@@ -1253,6 +1320,7 @@
     /**
      * Removes the animation from the mesh
      * returns true if the animation was removed / false if there was no animation to remove
+     * @memberOf Cone.helpers
      * @param {BABYLON.Mesh} mesh
      * @param {String} animationName
      * @returns {Boolean}
@@ -1266,6 +1334,11 @@
         return false;
       }
     },
+    /**
+     * Clone object (simple, not deep reccursive)
+     * @param {Object} obj
+     * @returns {Object}
+     */
     cloneObject: function(obj){
       var result = {}, key;
       for(key in obj){
@@ -1275,6 +1348,9 @@
     }
   };
   
+  /**
+   * @alias Cone.helpers
+   */
   Cone.helpers = helpers;
   
   /**
@@ -1282,7 +1358,7 @@
    * @class Cone.List
    * @name Cone.List
    * @classdesc Cone.List class
-   * @param {Array[Cone]|Cone} coneList
+   * @param {Array<Cone>|Cone} coneList
    * @returns {Cone.List}
    */
   Cone.List = function(coneList){
@@ -1374,7 +1450,7 @@
       throw new Error('method needs to be specified');
     }
   };
-
+  
   return Cone;
 
 });
