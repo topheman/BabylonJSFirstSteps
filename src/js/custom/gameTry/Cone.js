@@ -830,10 +830,13 @@
     },
     /**
      * @memberOf Cone#
-     * @param {BABYLON.Vector3} point
+     * @param {BABYLON.Vector3|Cone} point
      * @returns {Cone}
      */
     lookAt: function(point){
+      if(point instanceof Cone){
+        point = new BABYLON.Vector3(point.getPosition().x,point.getPosition().y,point.getPosition().z);
+      }
       point.y = this.getMainMesh().position.y;
       this.getMainMesh().lookAt(point,Math.PI/2);
       return this;
@@ -841,10 +844,13 @@
     /**
      * Moves the cone towards "point" of one moveStep
      * @memberOf Cone#
-     * @param {BABYLON.Vector3} point
+     * @param {BABYLON.Vector3|Cone} point
      * @returns {Cone}
      */
     follow: function(point){
+      if(point instanceof Cone){
+        point = new BABYLON.Vector3(point.getPosition().x,point.getPosition().y,point.getPosition().z);
+      }
       if(point && point.subtract(this.getPosition()).length() > 0.05){
         this.lookAt(point);
         this.moveForward();
@@ -1149,6 +1155,7 @@
   };
 
   /**
+   * @private
    * @param {Cone} cone
    * @param {Number} scale description
    */
@@ -1172,6 +1179,7 @@
   };
   
   /**
+   * @private
    * @param {Cone} cone
    */
   var removeBumpAnimation = function(cone){
@@ -1232,7 +1240,7 @@
   };
   
   /**
-   * 
+   * @private
    * @param {Cone} cone
    */
   var removeWidenEyesAnimation = function(cone){
@@ -1242,7 +1250,7 @@
   };
   
   /**
-   * 
+   * @private
    * @param {Cone} cone
    * @param {Object} options
    */
@@ -1464,9 +1472,30 @@
     }
   })(Cone.List.fn, animationMethods);
   
-  var changeStateDispatcher = function(methodName, args){
-    
+  /**
+   * @private
+   * @param {Cone.List} coneList
+   * @param {string} methodName
+   * @param {Array} args
+   * @returns {Cone.List}
+   */
+  var changeStateDispatcher = function(coneList, methodName, args){
+    return coneList.each(function(cone){
+      stateFullMethods[methodName].apply(cone,args);
+    });
   };
+  
+  //add the stateFull methods to the COne.List.prototype
+  (function($, methods){
+    for(var methodName in methods){
+      $[methodName] = (function(methodName){
+        return function(){
+          return changeStateDispatcher(this, methodName, arguments);
+        };
+      })(methodName);
+    }
+  })(Cone.List.fn, stateFullMethods);
+  
   
   Cone.List.fn.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;

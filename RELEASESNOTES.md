@@ -1,6 +1,11 @@
 RELEASES NOTES
 ==============
 
+#0.2.1
+
+* Cone.List animations chainable
+* statefull methods accessible to Cone.List (like setAlpha, setColor ...)
+
 #v0.2.0
 
 * added Cone.intersectsGroundLimits()
