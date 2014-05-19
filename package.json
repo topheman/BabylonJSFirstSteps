@@ -17,6 +17,6 @@
     "url": "http://github.com/topheman/BabylonJSFirstSteps.git"
   },
   "scripts": {
-    "jsdoc" : "jsdoc ./src/js/custom/gameTry/Cone.js -c jsdoc.conf.json ./src/js/custom/gameTry/Cone.md"
+    "yuidoc" : "yuidoc --norecurse -c yuidoc.json"
   }
 }

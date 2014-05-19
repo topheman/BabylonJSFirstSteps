@@ -1,0 +1,1335 @@
+{
+    "project": {
+        "name": "Cone.js",
+        "description": "A little class to manage 3d cones in BabylonJS",
+        "url": "http://labs.topheman.com/babylonjs"
+    },
+    "files": {
+        "src\\js\\custom\\gameTry\\Cone.js": {
+            "name": "src\\js\\custom\\gameTry\\Cone.js",
+            "modules": {
+                "Cone": 1
+            },
+            "classes": {
+                "Cone": 1,
+                "Cone.helpers": 1,
+                "Cone.List": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Cone": {
+            "name": "Cone",
+            "submodules": {},
+            "classes": {
+                "Cone": 1,
+                "Cone.helpers": 1,
+                "Cone.List": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1462
+        }
+    },
+    "classes": {
+        "Cone": {
+            "name": "Cone",
+            "shortname": "Cone",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Cone",
+            "namespace": "",
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 34,
+            "description": "Creates a new cone",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "",
+                    "type": "BABYLON.Scene"
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            }
+        },
+        "Cone.helpers": {
+            "name": "Cone.helpers",
+            "shortname": "Cone.helpers",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Cone",
+            "namespace": "",
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1396,
+            "description": "Bunch of methods I didn't find inside BabylonJS, that I coded for myself.\n Please tell me if they exist"
+        },
+        "Cone.List": {
+            "name": "Cone.List",
+            "shortname": "Cone.List",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Cone",
+            "namespace": "",
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1462,
+            "description": "Creates a new cone list",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "coneList",
+                    "description": "",
+                    "type": "Array<Cone>|Cone"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone.List"
+            }
+        }
+    },
+    "classitems": [
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 45,
+            "description": "Original sizes",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "{Object] _size",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 125,
+            "description": "x postion of the cone in the space",
+            "itemtype": "property",
+            "name": "position.x",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 130,
+            "description": "y postion of the cone in the space",
+            "itemtype": "property",
+            "name": "position.y",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 135,
+            "description": "z postion of the cone in the space",
+            "itemtype": "property",
+            "name": "position.z",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 170,
+            "description": "x rotation of the cone in the space",
+            "itemtype": "property",
+            "name": "rotation.x",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 175,
+            "description": "y rotation of the cone in the space",
+            "itemtype": "property",
+            "name": "rotation.y",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 180,
+            "description": "z rotation of the cone in the space",
+            "itemtype": "property",
+            "name": "rotation.z",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 215,
+            "description": "x scaling of the cone",
+            "itemtype": "property",
+            "name": "scaling.x",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 220,
+            "description": "y scaling of the cone",
+            "itemtype": "property",
+            "name": "scaling.y",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 225,
+            "description": "z scaling of the cone",
+            "itemtype": "property",
+            "name": "scaling.z",
+            "type": "number",
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 280,
+            "description": "Launches the next callback in the queue then removes it from the queue",
+            "itemtype": "method",
+            "name": "dequeue",
+            "params": [
+                {
+                    "name": "queueName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 309,
+            "description": "* Call it only with the queueName : **Returns the queue**.\n* Call it with queueName + callback : registers the callback in the queue. This\ncallback has a \"next\" parameter to launch the next callback in the queue. **Returns the cone to chain**.\n* Call it with queueName + array of callback to replace the queue. **Returns the cone to chain**",
+            "itemtype": "method",
+            "name": "queue",
+            "params": [
+                {
+                    "name": "queueName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "@optional",
+                    "type": "Function|Array<function>"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone|Array<function>"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 348,
+            "description": "Shortcut for {@link Cone#queue|.queue()}\n\nAdds callback to the last used queue",
+            "itemtype": "method",
+            "name": "then",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 363,
+            "todo": [
+                "problem with doc\nDelays the next event in the queue of \"delay\" ms.\nYou can force the queue name"
+            ],
+            "itemtype": "method",
+            "name": "delay",
+            "params": [
+                {
+                    "name": "queueName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "delay",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 397,
+            "description": "Clears the queue",
+            "itemtype": "method",
+            "name": "clearQueue",
+            "params": [
+                {
+                    "name": "queueName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 408,
+            "description": "Stops all the animations on the fx queue then clears the queue\n(all other queues continue)",
+            "itemtype": "method",
+            "name": "flushAnimationQueue",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 420,
+            "description": "Returns cone position",
+            "itemtype": "method",
+            "name": "getPosition",
+            "return": {
+                "description": "",
+                "type": "BABYLON.Vector3"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 429,
+            "description": "Returns true if an fx animation is running",
+            "itemtype": "method",
+            "name": "isAnimationRunning",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 438,
+            "description": "Returns true if the cone is widenning eyes",
+            "itemtype": "method",
+            "name": "isWidenningEyes",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 447,
+            "description": "Returns true if the cone has its eyes widen",
+            "itemtype": "method",
+            "name": "isEyesWiden",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 456,
+            "itemtype": "method",
+            "name": "isBumping",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 463,
+            "description": "Returns true if alpha is animating on the cone",
+            "itemtype": "method",
+            "name": "isChangingAlpha",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 472,
+            "itemtype": "method",
+            "name": "getMoveStep",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 479,
+            "itemtype": "method",
+            "name": "getTurnStep",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 486,
+            "itemtype": "method",
+            "name": "getHeight",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 493,
+            "itemtype": "method",
+            "name": "getTopDiameter",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 500,
+            "itemtype": "method",
+            "name": "getBottomDiameter",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 507,
+            "itemtype": "method",
+            "name": "getDistance",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 515,
+            "description": "Checks if two cones intersect (based on the bottom diameter)\n\nIf a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)",
+            "itemtype": "method",
+            "name": "intersectsCone",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 531,
+            "itemtype": "method",
+            "name": "intersectsGroundLimits",
+            "params": [
+                {
+                    "name": "ground",
+                    "description": "(plane)",
+                    "type": "BABYLON.Mesh"
+                },
+                {
+                    "name": "replace",
+                    "description": "if you wan't not only to check the limit but also keep the cone inside it",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 567,
+            "description": "* Attaches this cone to the one passed in parameter\n* If you try to tail a cone already followed by another, your cone will follow the last one in the tail\n* Returns the cone you end up tailing",
+            "itemtype": "method",
+            "name": "tail",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 601,
+            "description": "Detaches your cone, returns the cone it was tailing",
+            "itemtype": "method",
+            "name": "unTail",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 614,
+            "description": "Returns the cone instance which this cone is tailing or false in none",
+            "itemtype": "method",
+            "name": "isTailing",
+            "return": {
+                "description": "",
+                "type": "Boolean|Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 623,
+            "description": "Returns the cone instance which this cone is tailed by or false in none",
+            "itemtype": "method",
+            "name": "isTailed",
+            "return": {
+                "description": "",
+                "type": "Boolean|Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 632,
+            "description": "Returns an array of the cones tailing this one",
+            "itemtype": "method",
+            "name": "getFullTail",
+            "return": {
+                "description": "",
+                "type": "Array<Cone>"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 653,
+            "description": "Registers the cone to a BABYLON.ShadowGenerator to be able to render shadows on the shadow map",
+            "itemtype": "method",
+            "name": "registerToShadowGenerator",
+            "params": [
+                {
+                    "name": "shadowGenerator",
+                    "description": "",
+                    "type": "BABYLON.ShadowGenerator"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 667,
+            "description": "Squints the eyes of one step\nReturns true if the eyes are not all squinted\nReturns false if they are and stop squint",
+            "itemtype": "method",
+            "name": "squint",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 685,
+            "description": "Unsquints the eyes of one step\nReturns true if the eyes are not all unsquinted\nReturns false if they are and stop squint",
+            "itemtype": "method",
+            "name": "unSquint",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 703,
+            "description": "Sets the color of the cylinder\nAccepts hexa or rgb color",
+            "itemtype": "method",
+            "name": "setColor",
+            "params": [
+                {
+                    "name": "color",
+                    "description": "",
+                    "type": "String|object"
+                }
+            ],
+            "return": {
+                "description": "Cone}"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 718,
+            "description": "Sets the alpha on all the cone",
+            "itemtype": "method",
+            "name": "setAlpha",
+            "params": [
+                {
+                    "name": "alpha",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 731,
+            "description": "Moves the cone forward of one moveStep",
+            "itemtype": "method",
+            "name": "moveForward",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 741,
+            "description": "Moves the cone backwards of one moveStep",
+            "itemtype": "method",
+            "name": "moveBack",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 751,
+            "description": "Moves the cone left of one moveStep",
+            "itemtype": "method",
+            "name": "moveLeft",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 761,
+            "description": "Moves the cone right of one moveStep",
+            "itemtype": "method",
+            "name": "moveRight",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 771,
+            "description": "Turns the cone left of one turnStep",
+            "itemtype": "method",
+            "name": "turnLeft",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 781,
+            "description": "Turns the cone right of one turnStep",
+            "itemtype": "method",
+            "name": "turnRight",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 791,
+            "description": "Stops all the fx animations",
+            "itemtype": "method",
+            "name": "stopAllAnimationsRunning",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 810,
+            "description": "Stops eyes fx animation",
+            "itemtype": "method",
+            "name": "stopWidenEyes",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 822,
+            "description": "Reset eyes to orginal scale and position",
+            "itemtype": "method",
+            "name": "resetWidenEyes",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 835,
+            "description": "Stops cylinder fx animation",
+            "itemtype": "method",
+            "name": "stopBump",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 847,
+            "description": "Reset cylinder to orginal scale and position",
+            "itemtype": "method",
+            "name": "resetBump",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 858,
+            "itemtype": "method",
+            "name": "toggleBump",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 872,
+            "itemtype": "method",
+            "name": "stopAnimateAlpha",
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 883,
+            "itemtype": "method",
+            "name": "setMoveStep",
+            "params": [
+                {
+                    "name": "moveStep",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 892,
+            "itemtype": "method",
+            "name": "setTurnStep",
+            "params": [
+                {
+                    "name": "turnStep",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 901,
+            "itemtype": "method",
+            "name": "lookAt",
+            "params": [
+                {
+                    "name": "point",
+                    "description": "",
+                    "type": "BABYLON.Vector3|Cone"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 914,
+            "description": "Moves the cone towards \"point\" of one moveStep",
+            "itemtype": "method",
+            "name": "follow",
+            "params": [
+                {
+                    "name": "point",
+                    "description": "",
+                    "type": "BABYLON.Vector3|Cone"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 943,
+            "itemtype": "method",
+            "name": "widenEyes",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "speed=5",
+                            "description": "@optional",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "loop=false",
+                            "description": "@optional",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "callback=null",
+                            "description": "@optional",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "delay=0",
+                            "description": "@optional",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "break=false",
+                            "description": "@optional",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "full=false",
+                            "description": "@optional",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "close=false",
+                            "description": "@optional",
+                            "type": "Boolean"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1140,
+            "description": "Acts as a dispatcher for animation methods (those methods can also be accessed directly)",
+            "todo": [
+                "doc problem"
+            ],
+            "itemtype": "method",
+            "name": "animate",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1179,
+            "itemtype": "method",
+            "name": "animationMethodExists",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "methodName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1190,
+            "itemtype": "method",
+            "name": "getAnimationMethodQueueName",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "methodName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean|string"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1206,
+            "description": "this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb",
+            "itemtype": "method",
+            "name": "hexToRgb",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1236,
+            "itemtype": "method",
+            "name": "addBumpAnimation",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                },
+                {
+                    "name": "scale",
+                    "description": "description",
+                    "type": "Number"
+                }
+            ],
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1262,
+            "itemtype": "method",
+            "name": "removeBumpAnimation",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                }
+            ],
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1324,
+            "itemtype": "method",
+            "name": "removeWidenEyesAnimation",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                }
+            ],
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1335,
+            "itemtype": "method",
+            "name": "addAlphaAnimation",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cone",
+                    "description": "",
+                    "type": "Cone"
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1404,
+            "itemtype": "method",
+            "name": "getAnimationNamesFromMesh",
+            "static": 1,
+            "params": [
+                {
+                    "name": "mesh",
+                    "description": "",
+                    "type": "BABYLON.Mesh"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "Cone.helpers",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1416,
+            "itemtype": "method",
+            "name": "isAnimationRegistered",
+            "static": 1,
+            "params": [
+                {
+                    "name": "mesh",
+                    "description": "",
+                    "type": "BABYLON.Mesh"
+                },
+                {
+                    "name": "animationName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone.helpers",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1426,
+            "itemtype": "method",
+            "name": "removeAnimationFromMesh",
+            "static": "Removes the animation from the mesh\nreturns true if the animation was removed / false if there was no animation to remove",
+            "params": [
+                {
+                    "name": "mesh",
+                    "description": "",
+                    "type": "BABYLON.Mesh"
+                },
+                {
+                    "name": "animationName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Cone.helpers",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1444,
+            "itemtype": "method",
+            "name": "cloneObject",
+            "static": "Clone object (simple, not deep reccursive)",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "Cone.helpers",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1492,
+            "description": "Loops through the cone list providing a callback like `function(cone, index){}`\n\nReturn false in the callback to stop the loop",
+            "itemtype": "method",
+            "name": "each",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone.List"
+            },
+            "class": "Cone.List",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1512,
+            "description": "Run any animate methods such as :\n\n* animateAlpha\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n\nJust specify it in `options.method`. Those methods are also accessible via the same shortcuts like would use on a cone.\n\nYou can do `myConeList.fadeIn().fadeOut()` as well as `myConeList.animate({method:'fadeIn'}).animate({method:'fadeOut'})`",
+            "itemtype": "method",
+            "name": "animate",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "same options as the ones on the cone for each animation method",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone.List"
+            },
+            "class": "Cone.List",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\custom\\gameTry\\Cone.js",
+            "line": 1587,
+            "itemtype": "method",
+            "name": "changeStateDispatcher",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "coneList",
+                    "description": "",
+                    "type": "Cone.List"
+                },
+                {
+                    "name": "methodName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone.List"
+            },
+            "class": "Cone.List",
+            "module": "Cone"
+        }
+    ],
+    "warnings": []
+}

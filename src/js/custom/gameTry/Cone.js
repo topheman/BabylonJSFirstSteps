@@ -3,8 +3,7 @@
  * http://labs.topheman.com/
  * http://twitter.com/topheman
  * 
- * @dependency BabylonJS - https://github.com/BabylonJS/Babylon.js
- * 
+ * @requires BabylonJS - https://github.com/BabylonJS/Babylon.js
  */
 
 (function(ConeExport) {
@@ -20,8 +19,11 @@
 })(function() {
 "use strict";
   
-  /*** Constants ***/
-
+  /**
+   * @module Cone
+   */
+  
+  //Constants
   var CONE_CYLINDER_TOP_DIAMETER = 2;
   var CONE_CYLINDER_BOTTOM_DIAMETER = 5;
   var CONE_CYLINDER_HEIGHT = 5;
@@ -31,13 +33,11 @@
     
   /**
    * Creates a new cone
-   * @name Cone
    * @class Cone
-   * @classdesc Cone class
    * @constructor
    * @param {BABYLON.Scene} scene
    * @param {Object} options
-   * @returns {Cone}
+   * @return {Cone}
    */
   var Cone = function(scene, options) {
     options = typeof options === 'object' ? options : {};
@@ -45,6 +45,7 @@
     /**
      * Original sizes
      * @private
+     * @property {Object] _size
      */
     this._size = {
       topDiameter : CONE_CYLINDER_TOP_DIAMETER,
@@ -121,6 +122,21 @@
     //emulate getter
 
     //emulate getters setters on position babylonjs style
+    /**
+     * x postion of the cone in the space
+     * @property position.x
+     * @type number
+     */
+    /**
+     * y postion of the cone in the space
+     * @property position.y
+     * @type number
+     */
+    /**
+     * z postion of the cone in the space
+     * @property position.z
+     * @type number
+     */
     var position = {};
     Object.defineProperties(position, {
       'x': {
@@ -151,6 +167,21 @@
     this.position = position;
     
     //emulate getters setters on rotation babylonjs style
+    /**
+     * x rotation of the cone in the space
+     * @property rotation.x
+     * @type number
+     */
+    /**
+     * y rotation of the cone in the space
+     * @property rotation.y
+     * @type number
+     */
+    /**
+     * z rotation of the cone in the space
+     * @property rotation.z
+     * @type number
+     */
     var rotation = {};
     Object.defineProperties(rotation, {
       'x': {
@@ -181,6 +212,21 @@
     this.rotation = rotation;
     
     //emulate getters setters on rotation babylonjs style
+    /**
+     * x scaling of the cone
+     * @property scaling.x
+     * @type number
+     */
+    /**
+     * y scaling of the cone
+     * @property scaling.y
+     * @type number
+     */
+    /**
+     * z scaling of the cone
+     * @property scaling.z
+     * @type number
+     */
     var scaling = {};
     Object.defineProperties(scaling, {
       'x': {
@@ -233,9 +279,9 @@
   Cone.fn = Cone.prototype = {
     /**
      * Launches the next callback in the queue then removes it from the queue
-     * @memberOf Cone#
+     * @method dequeue
      * @param {string} queueName
-     * @returns {Cone}
+     * @return {Cone}
      */
     dequeue: function(queueName){
       var next = function(){}, that = this;
@@ -265,10 +311,11 @@
      * * Call it with queueName + callback : registers the callback in the queue. This
      * callback has a "next" parameter to launch the next callback in the queue. **Returns the cone to chain**.
      * * Call it with queueName + array of callback to replace the queue. **Returns the cone to chain**
-     * @memberOf Cone#
+     * 
+     * @method queue
      * @param {string} queueName
      * @param {function|Array<function>} callback @optional
-     * @returns {Cone|Array<function>}
+     * @return {Cone|Array<function>}
      */
     queue: function(queueName, callback){
       var result;
@@ -302,9 +349,10 @@
      * Shortcut for {@link Cone#queue|.queue()}
      * 
      * Adds callback to the last used queue
-     * @memberOf Cone#
+     * 
+     * @method then
      * @param {function} callback
-     * @returns {Cone}
+     * @return {Cone}
      */
     then: function(callback){
       if(typeof callback !== 'function'){
@@ -317,16 +365,10 @@
      * Delays the next event in the queue of "delay" ms.
      * You can force the queue name
      * 
-     * @memberOf Cone#
-     * 
-     * @signature function(delay)
-     * @param {number} delay
-     * @returns {Cone}
-     * 
-     * @signature function(queueName,delay)
+     * @method delay
      * @param {string} queueName
      * @param {number} delay
-     * @returns {Cone}
+     * @return {Cone}
      */
     delay: function(){
       var delay, queueName = null;
@@ -354,9 +396,10 @@
     },
     /**
      * Clears the queue
-     * @memberOf Cone#
+     * 
+     * @method clearQueue
      * @param {string} queueName
-     * @returns {Cone}
+     * @return {Cone}
      */
     clearQueue: function(queueName){
       this._queue[queueName] = [];
@@ -365,8 +408,9 @@
     /**
      * Stops all the animations on the fx queue then clears the queue
      * (all other queues continue)
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method flushAnimationQueue
+     * @return {Cone}
      */
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
@@ -375,90 +419,95 @@
     },
     /**
      * Returns cone position
-     * @memberOf Cone#
-     * @returns {BABYLON.Vector3}
+     * 
+     * @method getPosition
+     * @return {BABYLON.Vector3}
      */
     getPosition:function(){
       return this.getMainMesh().position;
     },
     /**
      * Returns true if an fx animation is running
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * 
+     * @method isAnimationRunning
+     * @return {Boolean}
      */
     isAnimationRunning: function(){
       return this.isBumping() && this.isWidenningEyes() && this.isChangingAlpha();
     },
     /**
      * Returns true if the cone is widenning eyes
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * 
+     * @method isWidenningEyes
+     * @return {Boolean}
      */
     isWidenningEyes: function(){
       return this.widenningEyes;
     },
     /**
      * Returns true if the cone has its eyes widen
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * 
+     * @method isEyesWiden
+     * @return {Boolean}
      */
     isEyesWiden: function(){
       return this.eyesWiden;
     },
     /**
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * @method isBumping
+     * @return {Boolean}
      */
     isBumping: function() {
       return this.bumping;
     },
     /**
      * Returns true if alpha is animating on the cone
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * 
+     * @method isChangingAlpha
+     * @return {Boolean}
      */
     isChangingAlpha: function(){
       return this.alphaAnimatingCylinder && this.alphaAnimatingLeftEye && this.alphaAnimatingRightEye;
     },
     /**
-     * @memberOf Cone#
-     * @returns {number}
+     * @method getMoveStep
+     * @return {number}
      */
     getMoveStep: function() {
       return this.moveStep;
     },
     /**
-     * @memberOf Cone#
-     * @returns {number}
+     * @method getTurnStep
+     * @return {number}
      */
     getTurnStep: function() {
       return this.turnStep;
     },
     /**
-     * @memberOf Cone#
-     * @returns {number}
+     * @method getHeight
+     * @return {number}
      */
     getHeight: function(){
       return this._size.height*this.cylinder.scaling.y*this.scaling.y;
     },
     /**
-     * @memberOf Cone#
-     * @returns {number}
+     * @method getTopDiameter
+     * @return {number}
      */
     getTopDiameter: function(){
       return this._size.topDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
     /**
-     * @memberOf Cone#
-     * @returns {number}
+     * @method getBottomDiameter
+     * @return {number}
      */
     getBottomDiameter: function(){
       return this._size.bottomDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
     /**
-     * @memberOf Cone#
+     * @method getDistance
      * @param {Cone} cone
-     * @returns {number}
+     * @return {number}
      */
     getDistance: function(cone){
       return Math.sqrt((this.position.x - cone.position.x)*(this.position.x - cone.position.x)+(this.position.z - cone.position.z)*(this.position.z - cone.position.z));
@@ -468,9 +517,9 @@
      * 
      * If a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)
      * 
-     * @memberOf Cone#
+     * @method intersectsCone
      * @param {Cone} cone
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     intersectsCone: function(cone){
       var distance = this.getDistance(cone);
@@ -481,10 +530,10 @@
     },
     /**
      * 
-     * @memberOf Cone#
+     * @method intersectsGroundLimits
      * @param {BABYLON.Mesh} ground (plane)
      * @param {Boolean} replace if you wan't not only to check the limit but also keep the cone inside it
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     intersectsGroundLimits: function(ground,replace){
       var boundingInfos = ground.getBoundingInfo(), result = false;
@@ -519,10 +568,11 @@
      * * Attaches this cone to the one passed in parameter
      * * If you try to tail a cone already followed by another, your cone will follow the last one in the tail
      * * Returns the cone you end up tailing
-     * @memberOf Cone#
+     * 
+     * @method tail
      * @param {Cone} cone
      * @param {Object} options
-     * @returns {Cone}
+     * @return {Cone}
      */
     tail: function(cone,options){
       var fullTail;
@@ -550,8 +600,9 @@
     },
     /**
      * Detaches your cone, returns the cone it was tailing
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method unTail
+     * @return {Cone}
      */
     unTail: function(){
       var cone = this._coneTailing;
@@ -562,24 +613,27 @@
     },
     /**
      * Returns the cone instance which this cone is tailing or false in none
-     * @memberOf Cone#
-     * @returns {Boolean|Cone}
+     * 
+     * @method isTailing
+     * @return {Boolean|Cone}
      */
     isTailing: function(){
       return this._coneTailing;
     },
     /**
      * Returns the cone instance which this cone is tailed by or false in none
-     * @memberOf Cone#
-     * @returns {Boolean|Cone}
+     * 
+     * @method isTailed
+     * @return {Boolean|Cone}
      */
     isTailed: function(){
       return this._coneTailedBy;
     },
     /**
      * Returns an array of the cones tailing this one
-     * @memberOf Cone#
-     * @returns {Array<Cone>}
+     * 
+     * @method getFullTail
+     * @return {Array<Cone>}
      */
     getFullTail: function(){
       var fullTail = [], reccursiveTailingConesDiscovery;
@@ -598,9 +652,10 @@
   var stateFullMethods = {
     /**
      * Registers the cone to a BABYLON.ShadowGenerator to be able to render shadows on the shadow map
-     * @memberOf Cone#
+     * 
+     * @method registerToShadowGenerator
      * @param {BABYLON.ShadowGenerator} shadowGenerator
-     * @returns {Cone}
+     * @return {Cone}
      */
     registerToShadowGenerator: function(shadowGenerator) {
       var renderList = shadowGenerator.getShadowMap().renderList;
@@ -613,8 +668,9 @@
      * Squints the eyes of one step
      * Returns true if the eyes are not all squinted
      * Returns false if they are and stop squint
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * 
+     * @method squint
+     * @return {Boolean}
      */
     squint: function() {
       if (this.rightEye.material.diffuseTexture.uOffset < 0.08) {
@@ -630,8 +686,9 @@
      * Unsquints the eyes of one step
      * Returns true if the eyes are not all unsquinted
      * Returns false if they are and stop squint
-     * @memberOf Cone#
-     * @returns {Boolean}
+     * 
+     * @method unSquint
+     * @return {Boolean}
      */
     unSquint: function() {
       if (this.rightEye.material.diffuseTexture.uOffset > 0) {
@@ -646,9 +703,10 @@
     /**
      * Sets the color of the cylinder
      * Accepts hexa or rgb color
-     * @memberOf Cone#
+     * 
+     * @method setColor
      * @param {string|object} color
-     * @returns Cone}
+     * @return Cone}
      */
     setColor: function(color){
       if(isRgb(color) === false){
@@ -659,9 +717,10 @@
     },
     /**
      * Sets the alpha on all the cone
-     * @memberOf Cone#
+     * 
+     * @method setAlpha
      * @param {number} alpha
-     * @returns {Cone}
+     * @return {Cone}
      */
     setAlpha: function(alpha){
       this.cylinder.material.alpha = alpha;
@@ -671,8 +730,9 @@
     },
     /**
      * Moves the cone forward of one moveStep
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method moveForward
+     * @return {Cone}
      */
     moveForward: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
@@ -680,8 +740,9 @@
     },
     /**
      * Moves the cone backwards of one moveStep
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method moveBack
+     * @return {Cone}
      */
     moveBack: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
@@ -689,8 +750,9 @@
     },
     /**
      * Moves the cone left of one moveStep
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method moveLeft
+     * @return {Cone}
      */
     moveLeft: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
@@ -698,8 +760,9 @@
     },
     /**
      * Moves the cone right of one moveStep
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method moveRight
+     * @return {Cone}
      */
     moveRight: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
@@ -707,8 +770,9 @@
     },
     /**
      * Turns the cone left of one turnStep
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method turnLeft
+     * @return {Cone}
      */
     turnLeft: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
@@ -716,8 +780,9 @@
     },
     /**
      * Turns the cone right of one turnStep
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method turnRight
+     * @return {Cone}
      */
     turnRight: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
@@ -725,8 +790,9 @@
     },
     /**
      * Stops all the fx animations
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method stopAllAnimationsRunning
+     * @return {Cone}
      */
     stopAllAnimationsRunning: function(){
       if(this.isBumping()){
@@ -743,8 +809,9 @@
     },
     /**
      * Stops eyes fx animation
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method stopWidenEyes
+     * @return {Cone}
      */
     stopWidenEyes: function(){
       this.parentEyes.getScene().stopAnimation(this.parentEyes);
@@ -754,8 +821,9 @@
     },
     /**
      * Reset eyes to orginal scale and position
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method resetWidenEyes
+     * @return {Cone}
      */
     resetWidenEyes: function(){
       this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
@@ -766,8 +834,9 @@
     },
     /**
      * Stops cylinder fx animation
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method stopBump
+     * @return {Cone}
      */
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
@@ -777,8 +846,9 @@
     },
     /**
      * Reset cylinder to orginal scale and position
-     * @memberOf Cone#
-     * @returns {Cone}
+     * 
+     * @method resetBump
+     * @return {Cone}
      */
     resetBump: function(){
       this.cylinder.scaling.y = 1;
@@ -786,9 +856,9 @@
       return this;
     },
     /**
-     * @memberOf Cone#
+     * @method toggleBump
      * @param {Object} options
-     * @returns {Cone}
+     * @return {Cone}
      */
     toggleBump: function(options) {
       if (this.isBumping()) {
@@ -800,8 +870,8 @@
       return this;
     },
     /**
-     * @memberOf Cone#
-     * @returns {Cone}
+     * @method stopAnimateAlpha
+     * @return {Cone}
      */
     stopAnimateAlpha: function(){
       this.cylinder.getScene().stopAnimation(this.cylinder);
@@ -811,27 +881,27 @@
       return this;
     },
     /**
-     * @memberOf Cone#
+     * @method setMoveStep
      * @param {number} moveStep
-     * @returns {Cone}
+     * @return {Cone}
      */
     setMoveStep: function(moveStep) {
       this.moveStep = moveStep;
       return this;
     },
     /**
-     * @memberOf Cone#
+     * @method setTurnStep
      * @param {number} turnStep
-     * @returns {Cone}
+     * @return {Cone}
      */
     setTurnStep: function(turnStep) {
       this.turnStep = turnStep;
       return this;
     },
     /**
-     * @memberOf Cone#
+     * @method lookAt
      * @param {BABYLON.Vector3|Cone} point
-     * @returns {Cone}
+     * @return {Cone}
      */
     lookAt: function(point){
       if(point instanceof Cone){
@@ -843,9 +913,10 @@
     },
     /**
      * Moves the cone towards "point" of one moveStep
-     * @memberOf Cone#
+     * 
+     * @method follow
      * @param {BABYLON.Vector3|Cone} point
-     * @returns {Cone}
+     * @return {Cone}
      */
     follow: function(point){
       if(point instanceof Cone){
@@ -871,16 +942,16 @@
     'fx': {
       /**
        * 
-       * @memberOf Cone#
+       * @method widenEyes
        * @param {Object} options
-       * @param {number} options.speed 5 by default @optional
-       * @param {boolean} options.loop false by default @optional
-       * @param {function} options.callback null by default @optional
-       * @param {number} options.delay 0 by default @optional
-       * @param {boolean} options.break false by default @optional
-       * @param {boolean} options.full false by default @optional
-       * @param {boolean} options.close false by default @optional
-       * @returns {Cone}
+       * @param {number} options.speed=5 @optional
+       * @param {boolean} options.loop=false @optional
+       * @param {function} options.callback=null @optional
+       * @param {number} options.delay=0 @optional
+       * @param {boolean} options.break=false @optional
+       * @param {boolean} options.full=false @optional
+       * @param {boolean} options.close=false @optional
+       * @return {Cone}
        */
       widenEyes: function(options){
         var from, to, endState, eyesWidenState;
@@ -1069,9 +1140,10 @@
   /**
    * Acts as a dispatcher for animation methods (those methods can also be accessed directly)
    * @todo doc problem
-   * @memberOf Cone#
+   * 
+   * @method animate
    * @param {Object} options
-   * @returns {Cone}
+   * @return {Cone}
    */
   Cone.fn.animate = function(options){
     if(typeof options === 'undefined' || typeof options.method === 'undefined'){
@@ -1106,8 +1178,10 @@
   
   /**
    * 
+   * @method animationMethodExists
+   * @private
    * @param {string} methodName
-   * @returns {Boolean}
+   * @return {Boolean}
    */
   var animationMethodExists = function(methodName){
     return !!getAnimationMethodQueueName(methodName);
@@ -1115,8 +1189,10 @@
   
   /**
    * 
+   * @method getAnimationMethodQueueName
+   * @private
    * @param {string} methodName
-   * @returns {Boolean|string}
+   * @return {Boolean|string}
    */
   var getAnimationMethodQueueName = function(methodName){
     for(var queueName in animationMethods){
@@ -1129,8 +1205,11 @@
 
   /**
    * this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+   * 
+   * @method hexToRgb
+   * @private
    * @param {String} hex
-   * @returns {Object}
+   * @return {Object}
    */
   var hexToRgb = function(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -1155,6 +1234,8 @@
   };
 
   /**
+   * 
+   * @method addBumpAnimation
    * @private
    * @param {Cone} cone
    * @param {Number} scale description
@@ -1179,6 +1260,7 @@
   };
   
   /**
+   * @method removeBumpAnimation
    * @private
    * @param {Cone} cone
    */
@@ -1240,6 +1322,7 @@
   };
   
   /**
+   * @method removeWidenEyesAnimation
    * @private
    * @param {Cone} cone
    */
@@ -1250,6 +1333,7 @@
   };
   
   /**
+   * @method addAlphaAnimation
    * @private
    * @param {Cone} cone
    * @param {Object} options
@@ -1310,17 +1394,18 @@
   };
 
   /**
-   * Bunch of methods I didn't find inside BabylonJS, that I coded for myself
-   * please tell me if they exist
-   * @namespace Cone.helpers
-   * @name Cone.helpers
+   * 
+   * Bunch of methods I didn't find inside BabylonJS, that I coded for myself.
+   * Please tell me if they exist
+   * 
+   * @class Cone.helpers
    */
   var helpers = {
     /**
-     * @unused
-     * @memberOf Cone.helpers
+     * @method getAnimationNamesFromMesh
+     * @static
      * @param {BABYLON.Mesh} mesh
-     * @returns {Array}
+     * @return {Array}
      */
     getAnimationNamesFromMesh: function(mesh) {
       var result = mesh.animations.map(function(item, index) {
@@ -1329,22 +1414,23 @@
       return result;
     },
     /**
-     * @unused
-     * @memberOf Cone.helpers
+     * @method isAnimationRegistered
+     * @static
      * @param {BABYLON.Mesh} mesh
      * @param {String} animationName
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     isAnimationRegistered: function(mesh, animationName) {
       return helpers.getAnimationNamesFromMesh(mesh).indexOf(animationName) > -1;
     },
     /**
+     * @method removeAnimationFromMesh
+     * @static
      * Removes the animation from the mesh
      * returns true if the animation was removed / false if there was no animation to remove
-     * @memberOf Cone.helpers
      * @param {BABYLON.Mesh} mesh
      * @param {String} animationName
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     removeAnimationFromMesh: function(mesh, animationName) {
       if (mesh.animations.length > 0) {
@@ -1356,9 +1442,11 @@
       }
     },
     /**
+     * @method cloneObject
+     * @static
      * Clone object (simple, not deep reccursive)
      * @param {Object} obj
-     * @returns {Object}
+     * @return {Object}
      */
     cloneObject: function(obj){
       var result = {}, key;
@@ -1369,18 +1457,15 @@
     }
   };
   
-  /**
-   * @alias Cone.helpers
-   */
   Cone.helpers = helpers;
   
   /**
    * Creates a new cone list
+   * 
    * @class Cone.List
-   * @name Cone.List
-   * @classdesc Cone.List class
+   * @constructor
    * @param {Array<Cone>|Cone} coneList
-   * @returns {Cone.List}
+   * @return {Cone.List}
    */
   Cone.List = function(coneList){
     var MESSAGE_ERROR = 'Cone.List only accepts Cone object or Array of Cone objects';
@@ -1404,6 +1489,15 @@
   
   Cone.List.fn = Cone.List.prototype = [];
   
+  /**
+   * Loops through the cone list providing a callback like `function(cone, index){}`
+   * 
+   * Return false in the callback to stop the loop
+   * 
+   * @method each
+   * @param {function} callback
+   * @return {Cone.List}
+   */
   Cone.List.fn.each = function(callback){
     if(this.length > 0){
       for(var i=0; i<this.length; i++){
@@ -1415,6 +1509,24 @@
     return this;
   };
   
+  /**
+   * Run any animate methods such as :
+   * 
+   * * animateAlpha
+   * * bump
+   * * fadeIn
+   * * fadeOut
+   * * unWidenEyes
+   * * widenEyes
+   * 
+   * Just specify it in `options.method`. Those methods are also accessible via the same shortcuts like would use on a cone.
+   * 
+   * You can do `myConeList.fadeIn().fadeOut()` as well as `myConeList.animate({method:'fadeIn'}).animate({method:'fadeOut'})`
+   * 
+   * @method animate
+   * @param {Object} options same options as the ones on the cone for each animation method
+   * @return {Cone.List}
+   */
   Cone.List.fn.animate = function(options){
     var that = this;
     options = typeof options === 'undefined' ? {} : options;
@@ -1473,11 +1585,12 @@
   })(Cone.List.fn, animationMethods);
   
   /**
+   * @method changeStateDispatcher
    * @private
    * @param {Cone.List} coneList
    * @param {string} methodName
    * @param {Array} args
-   * @returns {Cone.List}
+   * @return {Cone.List}
    */
   var changeStateDispatcher = function(coneList, methodName, args){
     return coneList.each(function(cone){
