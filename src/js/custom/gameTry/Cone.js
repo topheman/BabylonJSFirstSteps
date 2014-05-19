@@ -1424,6 +1424,7 @@
         }
       }
     }
+    return this;
   };
   
   //add the animation methods to the Cone.List.prototype
@@ -1435,8 +1436,7 @@
           return function(options){
             options = typeof options === 'undefined' ? {} : options;
             options.method = curMethodName;
-            console.log(options, curMethodName);
-            this.animate(options);
+            return this.animate(options);
           };
         })(methodName);
       }
