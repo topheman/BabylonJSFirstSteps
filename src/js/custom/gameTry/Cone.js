@@ -30,6 +30,7 @@
   var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
   var PARENT_EYES_ORIGINAL_POSITION_X = 1;
   var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
+  var DEFAULT_FOLLOW_STEP_PRECISION = 0.5;
     
   /**
    * Creates a new cone
@@ -272,6 +273,8 @@
     
     //used for .then() to know on which queue add the callback
     this._lastQueueNameCalled = 'fx';
+    
+    this._currentMoveBeforeRenderLoopCallback = null;
     
   };
 
@@ -916,15 +919,22 @@
      * 
      * @method follow
      * @param {BABYLON.Vector3|Cone} point
+     * @param {function} callback executed when the cone gets to point
      * @return {Cone}
      */
-    follow: function(point){
+    follow: function(point,callback){
       if(point instanceof Cone){
         point = new BABYLON.Vector3(point.getPosition().x,point.getPosition().y,point.getPosition().z);
       }
-      if(point && point.subtract(this.getPosition()).length() > 0.05){
+      if(point && point.subtract(this.getPosition()).length() > DEFAULT_FOLLOW_STEP_PRECISION){
         this.lookAt(point);
         this.moveForward();
+      }
+      else{
+        this.position.x = point.x;
+        this.position.y = point.y;
+        this.position.z = point.z;
+        callback();
       }
       return this;
     }
@@ -1131,7 +1141,32 @@
     },
     'move':{
       moveTo: function(options){
-        console.warn('.moveTo not yet implemented');
+        options = typeof options === 'undefined' ? {} : options;
+        options.position = typeof options.position === 'undefined' ? 0 : options.position;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(typeof options.position === 'undefined'){
+          throw new Error('options.position mandatory. accepts Cone, BABYLON.Vector3, {x,y,z}, {x,z}');
+        }
+        else if(options.position instanceof Cone){
+          options.position = new BABYLON.Vector3(options.position.getPosition().x,options.position.getPosition().y,options.position.getPosition().z);
+        }
+        if( (options.position instanceof BABYLON.Vector3 || typeof options.position === 'object') && typeof options.position.x !== 'undefined' && typeof options.position.z !== 'undefined'){
+          options.position.y = typeof options.position.y === 'undefined' ? this.getPosition().y : options.position.y;
+          options.position = new BABYLON.Vector3(options.position.x,options.position.y,options.position.z);
+        }
+        this.queue('move',(function(that){
+          var currentMoveBeforeRenderLoopCallback = function(){
+            that.follow(options.position,function(){
+              that.getMainMesh().getScene().unregisterBeforeRender(currentMoveBeforeRenderLoopCallback);
+              that.dequeue('move');
+            });
+          };
+          return function(){
+            that.getMainMesh().getScene().registerBeforeRender(currentMoveBeforeRenderLoopCallback);
+          };
+        })(this));
         return this;
       }
     }
@@ -1152,7 +1187,7 @@
     else if(animationMethodExists(options.method) === false){
       throw new Error('"'+options.method+'" : method not allowed');
     }
-    var queueName = 'fx';//@todo find the exact queueName for the method
+    var queueName = getAnimationMethodQueueName(options.method);//@todo find the exact queueName for the method
     return animationMethods[queueName][options.method].call(this,options);
   };
   
