@@ -124,6 +124,7 @@
   var PARENT_EYES_ORIGINAL_SCALING_Y = 1.5;
   var PARENT_EYES_ORIGINAL_POSITION_X = 1;
   var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
+  var DEFAULT_FOLLOW_STEP_PRECISION = 0.5;
     
   /**
    * Creates a new cone
@@ -367,6 +368,8 @@
     //used for .then() to know on which queue add the callback
     this._lastQueueNameCalled = &#x27;fx&#x27;;
     
+    this._currentMoveBeforeRenderLoopCallback = null;
+    
   };
 
   //Instance methode shared on the prototype
@@ -376,6 +379,7 @@
      * @method dequeue
      * @param {string} queueName
      * @return {Cone}
+     * @chainable
      */
     dequeue: function(queueName){
       var next = function(){}, that = this;
@@ -408,8 +412,9 @@
      * 
      * @method queue
      * @param {string} queueName
-     * @param {function|Array&lt;function&gt;} callback @optional
+     * @param {function|Array&lt;function&gt;} [callback] use the next param like : &#x60;function(next){ myCone.fadeOut().delay(1000).then(next); }&#x60;
      * @return {Cone|Array&lt;function&gt;}
+     * @chainable
      */
     queue: function(queueName, callback){
       var result;
@@ -440,13 +445,23 @@
       return result;
     },
     /**
-     * Shortcut for {@link Cone#queue|.queue()}
-     * 
      * Adds callback to the last used queue
      * 
      * @method then
-     * @param {function} callback
+     * @param {function} callback &#x60;function(next){}&#x60;
      * @return {Cone}
+     * @chainable
+     * @example &#x60;&#x60;&#x60;js
+     * var myCone = new Cone(scene);
+     * myCone
+     *   .fadeOut()
+     *   .fadeIn()
+     *   .delay(1000)
+     *   .widenEyes()
+     *   .unWidenEyes()
+     *   .then(function(next){myCone.setColor(&#x27;#900000&#x27;); next()})
+     *   .bump();
+     * &#x60;&#x60;&#x60;
      */
     then: function(callback){
       if(typeof callback !== &#x27;function&#x27;){
@@ -455,14 +470,17 @@
       return this.queue(this._lastQueueNameCalled,callback);
     },
     /**
-     * @todo problem with doc
      * Delays the next event in the queue of &quot;delay&quot; ms.
-     * You can force the queue name
+     * 
+     * You can force the queue name.
+     * 
+     * Can also be used without the &#x60;queueName&#x60; if you&#x27;re alredy chaining on the right queue like : &#x60;myCone.fadeOut().delay(2000).fadeIn()&#x60;
      * 
      * @method delay
      * @param {string} queueName
      * @param {number} delay
      * @return {Cone}
+     * @chainable
      */
     delay: function(){
       var delay, queueName = null;
@@ -494,6 +512,7 @@
      * @method clearQueue
      * @param {string} queueName
      * @return {Cone}
+     * @chainable
      */
     clearQueue: function(queueName){
       this._queue[queueName] = [];
@@ -505,6 +524,7 @@
      * 
      * @method flushAnimationQueue
      * @return {Cone}
+     * @chainable
      */
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
@@ -665,7 +685,8 @@
      * 
      * @method tail
      * @param {Cone} cone
-     * @param {Object} options
+     * @param {Object} [options]
+     * @param {number} [options.distance] By default the sum of the radiuses of the cones
      * @return {Cone}
      */
     tail: function(cone,options){
@@ -724,13 +745,13 @@
       return this._coneTailedBy;
     },
     /**
-     * Returns an array of the cones tailing this one
+     * Returns a Cone.List of the cones tailing this one
      * 
      * @method getFullTail
-     * @return {Array&lt;Cone&gt;}
+     * @return {Cone.List}
      */
     getFullTail: function(){
-      var fullTail = [], reccursiveTailingConesDiscovery;
+      var fullTail = new Cone.List, reccursiveTailingConesDiscovery;
       reccursiveTailingConesDiscovery = function(cone){
         var tailingCone = cone.isTailed();
         if(tailingCone !== false){
@@ -750,6 +771,7 @@
      * @method registerToShadowGenerator
      * @param {BABYLON.ShadowGenerator} shadowGenerator
      * @return {Cone}
+     * @chainable
      */
     registerToShadowGenerator: function(shadowGenerator) {
       var renderList = shadowGenerator.getShadowMap().renderList;
@@ -800,7 +822,8 @@
      * 
      * @method setColor
      * @param {string|object} color
-     * @return Cone}
+     * @return {Cone}
+     * @chainable
      */
     setColor: function(color){
       if(isRgb(color) === false){
@@ -815,6 +838,7 @@
      * @method setAlpha
      * @param {number} alpha
      * @return {Cone}
+     * @chainable
      */
     setAlpha: function(alpha){
       this.cylinder.material.alpha = alpha;
@@ -827,6 +851,7 @@
      * 
      * @method moveForward
      * @return {Cone}
+     * @chainable
      */
     moveForward: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
@@ -837,6 +862,7 @@
      * 
      * @method moveBack
      * @return {Cone}
+     * @chainable
      */
     moveBack: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
@@ -847,6 +873,7 @@
      * 
      * @method moveLeft
      * @return {Cone}
+     * @chainable
      */
     moveLeft: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
@@ -857,6 +884,7 @@
      * 
      * @method moveRight
      * @return {Cone}
+     * @chainable
      */
     moveRight: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
@@ -867,6 +895,7 @@
      * 
      * @method turnLeft
      * @return {Cone}
+     * @chainable
      */
     turnLeft: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
@@ -877,6 +906,7 @@
      * 
      * @method turnRight
      * @return {Cone}
+     * @chainable
      */
     turnRight: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
@@ -887,6 +917,7 @@
      * 
      * @method stopAllAnimationsRunning
      * @return {Cone}
+     * @chainable
      */
     stopAllAnimationsRunning: function(){
       if(this.isBumping()){
@@ -906,6 +937,7 @@
      * 
      * @method stopWidenEyes
      * @return {Cone}
+     * @chainable
      */
     stopWidenEyes: function(){
       this.parentEyes.getScene().stopAnimation(this.parentEyes);
@@ -918,6 +950,7 @@
      * 
      * @method resetWidenEyes
      * @return {Cone}
+     * @chainable
      */
     resetWidenEyes: function(){
       this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
@@ -931,6 +964,7 @@
      * 
      * @method stopBump
      * @return {Cone}
+     * @chainable
      */
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
@@ -943,6 +977,7 @@
      * 
      * @method resetBump
      * @return {Cone}
+     * @chainable
      */
     resetBump: function(){
       this.cylinder.scaling.y = 1;
@@ -953,6 +988,7 @@
      * @method toggleBump
      * @param {Object} options
      * @return {Cone}
+     * @chainable
      */
     toggleBump: function(options) {
       if (this.isBumping()) {
@@ -966,6 +1002,7 @@
     /**
      * @method stopAnimateAlpha
      * @return {Cone}
+     * @chainable
      */
     stopAnimateAlpha: function(){
       this.cylinder.getScene().stopAnimation(this.cylinder);
@@ -978,6 +1015,7 @@
      * @method setMoveStep
      * @param {number} moveStep
      * @return {Cone}
+     * @chainable
      */
     setMoveStep: function(moveStep) {
       this.moveStep = moveStep;
@@ -987,6 +1025,7 @@
      * @method setTurnStep
      * @param {number} turnStep
      * @return {Cone}
+     * @chainable
      */
     setTurnStep: function(turnStep) {
       this.turnStep = turnStep;
@@ -996,6 +1035,7 @@
      * @method lookAt
      * @param {BABYLON.Vector3|Cone} point
      * @return {Cone}
+     * @chainable
      */
     lookAt: function(point){
       if(point instanceof Cone){
@@ -1010,15 +1050,25 @@
      * 
      * @method follow
      * @param {BABYLON.Vector3|Cone} point
+     * @param {function}[callback] callback executed when the cone gets to point &#x60;function(point){}&#x60;
      * @return {Cone}
+     * @chainable
      */
-    follow: function(point){
+    follow: function(point,callback){
       if(point instanceof Cone){
         point = new BABYLON.Vector3(point.getPosition().x,point.getPosition().y,point.getPosition().z);
       }
-      if(point &amp;&amp; point.subtract(this.getPosition()).length() &gt; 0.05){
+      if(point &amp;&amp; point.subtract(this.getPosition()).length() &gt; DEFAULT_FOLLOW_STEP_PRECISION){
         this.lookAt(point);
         this.moveForward();
+      }
+      else{
+        this.position.x = point.x;
+        this.position.y = point.y;
+        this.position.z = point.z;
+        if(typeof callback === &#x27;function&#x27;){
+          callback.call({},point);
+        }
       }
       return this;
     }
@@ -1037,15 +1087,16 @@
       /**
        * 
        * @method widenEyes
-       * @param {Object} options
-       * @param {number} options.speed=5 @optional
-       * @param {boolean} options.loop=false @optional
-       * @param {function} options.callback=null @optional
-       * @param {number} options.delay=0 @optional
-       * @param {boolean} options.break=false @optional
-       * @param {boolean} options.full=false @optional
-       * @param {boolean} options.close=false @optional
+       * @param {Object} [options]
+       * @param {number} [options.speed=5] 
+       * @param {boolean|number} [options.loop=false] 
+       * @param {function} [options.callback=null] &#x60;function(cone){}&#x60;
+       * @param {number} [options.delay=0] 
+       * @param {boolean} [options.break=false] 
+       * @param {boolean} [options.full=false] 
+       * @param {boolean} [options.close=false] 
        * @return {Cone}
+       * @chainable
        */
       widenEyes: function(options){
         var from, to, endState, eyesWidenState;
@@ -1055,7 +1106,7 @@
         options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
         options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
         options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
-        if(options.loop !== false &amp;&amp; options.callback !== null){
+        if(options.loop === true &amp;&amp; options.callback !== null){
           console.warn(&quot;Can&#x27;t apply callback on looped animation&quot;);
         }
         if(options.close === true){
@@ -1089,7 +1140,7 @@
             addWidenEyesAnimation(that);
             that.widenningEyes = true;
             that.eyesWiden = false;
-            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, options.loop, options.speed,function(){
+            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed,function(){
               that.widenningEyes = endState;
               that.eyesWiden = eyesWidenState;
               removeWidenEyesAnimation(that);
@@ -1118,7 +1169,7 @@
         options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
         options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
         options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
-        if(options.loop !== false &amp;&amp; options.callback !== null){
+        if(options.loop === true &amp;&amp; options.callback !== null){
           console.warn(&quot;Can&#x27;t apply callback on looped animation&quot;);
         }
 
@@ -1132,7 +1183,7 @@
             that.stopAllAnimationsRunning();
 
             addBumpAnimation(that,options.scale);
-            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function() {
               that.resetBump();
               removeBumpAnimation(that);
               setTimeout(function(){
@@ -1159,7 +1210,7 @@
         options.cylinder = typeof options.cylinder === &#x27;undefined&#x27; ? true : options.cylinder;
         options.leftEye = typeof options.leftEye === &#x27;undefined&#x27; ? true : options.leftEye;
         options.rightEye = typeof options.rightEye === &#x27;undefined&#x27; ? true : options.rightEye;
-        if(options.loop !== false &amp;&amp; options.callback !== null){
+        if(options.loop === true &amp;&amp; options.callback !== null){
           console.warn(&quot;Can&#x27;t apply callback on looped animation&quot;);
         }
 
@@ -1191,19 +1242,19 @@
 
             if(options.cylinder === true){
               that.alphaAnimatingCylinder = true;
-              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function(){
+              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
             if(options.leftEye === true){
               that.alphaAnimatingLeftEye = true;
-              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, options.loop, options.speed, function(){
+              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
             if(options.rightEye === true){
               that.alphaAnimatingRightEye = true;
-              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, options.loop, options.speed, function(){
+              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
@@ -1225,19 +1276,66 @@
     },
     &#x27;move&#x27;:{
       moveTo: function(options){
-        console.warn(&#x27;.moveTo not yet implemented&#x27;);
+        options = typeof options === &#x27;undefined&#x27; ? {} : options;
+        options.position = typeof options.position === &#x27;undefined&#x27; ? 0 : options.position;
+        options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
+        options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
+        options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
+        if(typeof options.position === &#x27;undefined&#x27;){
+          throw new Error(&#x27;options.position mandatory. accepts Cone, BABYLON.Vector3, {x,y,z}, {x,z}&#x27;);
+        }
+        else if(options.position instanceof Cone){
+          options.position = new BABYLON.Vector3(options.position.getPosition().x,options.position.getPosition().y,options.position.getPosition().z);
+        }
+        if( (options.position instanceof BABYLON.Vector3 || typeof options.position === &#x27;object&#x27;) &amp;&amp; typeof options.position.x !== &#x27;undefined&#x27; &amp;&amp; typeof options.position.z !== &#x27;undefined&#x27;){
+          options.position.y = typeof options.position.y === &#x27;undefined&#x27; ? this.getPosition().y : options.position.y;
+          options.position = new BABYLON.Vector3(options.position.x,options.position.y,options.position.z);
+        }
+        this.queue(&#x27;move&#x27;,(function(that){
+          var currentMoveBeforeRenderLoopCallback = function(){
+            that.follow(options.position,function(){
+              that.getMainMesh().getScene().unregisterBeforeRender(currentMoveBeforeRenderLoopCallback);
+              that.dequeue(&#x27;move&#x27;);
+            });
+          };
+          return function(){
+            that.getMainMesh().getScene().registerBeforeRender(currentMoveBeforeRenderLoopCallback);
+          };
+        })(this));
         return this;
       }
     }
   };
-  
   /**
-   * Acts as a dispatcher for animation methods (those methods can also be accessed directly)
-   * @todo doc problem
+   * Run any animate methods such as :
+   * 
+   * * animateAlpha
+   * * bump
+   * * fadeIn
+   * * fadeOut
+   * * unWidenEyes
+   * * widenEyes
+   * 
+   * Just specify it in &#x60;options.method&#x60;. Those methods are also accessible directly via shorcuts on the {{#crossLink &quot;Cone&quot;}}Cone{{/crossLink}} instance.
    * 
    * @method animate
    * @param {Object} options
+   * @param {String} options.method
    * @return {Cone}
+   * @chainable
+   * 
+   * @example &#x60;&#x60;&#x60;js
+   * //you can use the .animate() dispatcher as well as the shortcuts, directly on a cone instance :
+   * var myCone = new Cone(scene);
+   * myCone
+   *   .fadeOut()
+   *   .fadeIn()
+   *   .delay(1000)
+   *   .widenEyes()
+   *   .unWidenEyes()
+   *   .then(function(next){myCone.setColor(&#x27;#900000&#x27;); next()})
+   *   .bump();
+   * &#x60;&#x60;&#x60;
    */
   Cone.fn.animate = function(options){
     if(typeof options === &#x27;undefined&#x27; || typeof options.method === &#x27;undefined&#x27;){
@@ -1246,7 +1344,7 @@
     else if(animationMethodExists(options.method) === false){
       throw new Error(&#x27;&quot;&#x27;+options.method+&#x27;&quot; : method not allowed&#x27;);
     }
-    var queueName = &#x27;fx&#x27;;//@todo find the exact queueName for the method
+    var queueName = getAnimationMethodQueueName(options.method);//@todo find the exact queueName for the method
     return animationMethods[queueName][options.method].call(this,options);
   };
   
@@ -1258,7 +1356,23 @@
           return function(options){
             options = typeof options === &#x27;undefined&#x27; ? {} : options;
             options.method = methodNameToCall;
-            return this.animate(options);
+            if(typeof options.loop === &#x27;number&#x27; &amp;&amp; options.loop &gt; 1){
+              for(var i=0;i&lt;options.loop;i++){
+                (function(cone,timeToAssign,optionsPassed){
+                  var optionsToUse = Cone.helpers.cloneObject(optionsPassed);
+                  if(typeof options.callback === &#x27;function&#x27;){
+                    optionsToUse.callback = function(){
+                      return options.callback.call({},cone,timeToAssign);
+                    };
+                  }
+                  cone.animate(optionsToUse);
+                })(this,i,options);
+              }
+              return this;
+            }
+            else{
+              return this.animate(options);
+            }
           };
         })(methodName);
       }
@@ -1314,6 +1428,12 @@
     } : null;
   };
   
+  /**
+   * @method isRgb
+   * @private
+   * @param {Object} color
+   * @return {Boolean}
+   */
   var isRgb = function(color){
     if(typeof color !== &#x27;undefined&#x27; &amp;&amp; typeof color.r === &#x27;number&#x27; &amp;&amp; typeof color.g === &#x27;number&#x27; &amp;&amp; typeof color.b === &#x27;number&#x27;){
       return true;
@@ -1321,6 +1441,12 @@
     return false;
   };
   
+  /**
+   * @method removeAllAnimations
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
   var removeAllAnimations = function(cone){
     removeBumpAnimation(cone);
     removeWidenEyesAnimation(cone);
@@ -1333,6 +1459,7 @@
    * @private
    * @param {Cone} cone
    * @param {Number} scale description
+   * @return {undefined}
    */
   var addBumpAnimation = function(cone,scale) {
     var bumpAnimation = new BABYLON.Animation(&quot;bumpAnimation&quot;, &quot;scaling.y&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
@@ -1357,11 +1484,18 @@
    * @method removeBumpAnimation
    * @private
    * @param {Cone} cone
+   * @return {undefined}
    */
   var removeBumpAnimation = function(cone){
     helpers.removeAnimationFromMesh(cone.cylinder, &quot;bumpAnimation&quot;);
   };
   
+  /**
+   * @method addWidenEyesAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
   var addWidenEyesAnimation = function(cone){
     var parentEyesAnimationScalingY = new BABYLON.Animation(&quot;parentEyesAnimationScalingY&quot;, &quot;scaling.y&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var parentEyesAnimationScalingYKeys = [];
@@ -1419,6 +1553,7 @@
    * @method removeWidenEyesAnimation
    * @private
    * @param {Cone} cone
+   * @return {undefined}
    */
   var removeWidenEyesAnimation = function(cone){
     helpers.removeAnimationFromMesh(cone.parentEyes, &quot;parentEyesAnimationScalingY&quot;);
@@ -1431,6 +1566,7 @@
    * @private
    * @param {Cone} cone
    * @param {Object} options
+   * @return {undefined}
    */
   var addAlphaAnimation = function(cone,options){
     
@@ -1481,6 +1617,12 @@
     
   };
   
+  /**
+   * @method removeAlphaAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
   var removeAlphaAnimation = function(cone){
     helpers.removeAnimationFromMesh(cone.cylinder, &quot;cylinderAlphaAnimation&quot;);
     helpers.removeAnimationFromMesh(cone.leftEye, &quot;leftEyeAlphaAnimation&quot;);
@@ -1591,6 +1733,7 @@
    * @method each
    * @param {function} callback
    * @return {Cone.List}
+   * @chainable
    */
   Cone.List.fn.each = function(callback){
     if(this.length &gt; 0){
@@ -1613,52 +1756,41 @@
    * * unWidenEyes
    * * widenEyes
    * 
-   * Just specify it in &#x60;options.method&#x60;. Those methods are also accessible via the same shortcuts like would use on a cone.
-   * 
-   * You can do &#x60;myConeList.fadeIn().fadeOut()&#x60; as well as &#x60;myConeList.animate({method:&#x27;fadeIn&#x27;}).animate({method:&#x27;fadeOut&#x27;})&#x60;
+   * Just specify it in &#x60;options.method&#x60;. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink &quot;Cone&quot;}}Cone{{/crossLink}} instance.
    * 
    * @method animate
    * @param {Object} options same options as the ones on the cone for each animation method
+   * @param {String} options.method
    * @return {Cone.List}
+   * @chainable
+   * 
+   * @example &#x60;&#x60;&#x60;js
+   * //you can use the .animate() dispatcher as well as the shortcuts, directly on a conelist :
+   * var myConeList = new ConeList([myCone1,myCone2,myCone3]);
+   * myConeList
+   *   .fadeOut()
+   *   .fadeIn()
+   *   .delay(1000)
+   *   .widenEyes()
+   *   .unWidenEyes()
+   *   .then(function(next){myConeList.setColor(&#x27;#900000&#x27;); next()})
+   *   .bump();
+   * &#x60;&#x60;&#x60;
    */
   Cone.List.fn.animate = function(options){
-    var that = this;
     options = typeof options === &#x27;undefined&#x27; ? {} : options;
-    options.totalCallback = typeof options.callback !== &#x27;function&#x27; ? null : options.callback;
-    options.totalLoop = (typeof options.loop === &#x27;undefined&#x27;) ? true : options.loop;
-    options.callback = typeof options.eachCallback !== &#x27;function&#x27; ? null : options.eachCallback;
-    options.totalDelay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-    options.delay = (typeof options.eachDelay === &#x27;undefined&#x27;) ? 0 : options.eachDelay;
+    options.loop = (typeof options.loop === &#x27;undefined&#x27;) ? false : options.loop;
+    options.callback = typeof options.callback !== &#x27;function&#x27; ? null : options.callback;
+    options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
     if(typeof options.method === &#x27;undefined&#x27;){
       throw new Error(&#x27;method needs to be specified&#x27;);
     }
     if(animationMethodExists(options.method) === false){
       throw new Error(&#x27;&quot;&#x27;+options.method+&#x27;&quot; : method not allowed&#x27;);
     }
-    if(this.length &gt; 0){
-      for(var i=0; i&lt;this.length; i++){
-        //on the last cone, set the totalCallback
-        if(i === (this.length - 1)){
-          var lastConeOptions = helpers.cloneObject(options);
-          lastConeOptions.callback = (function(){
-            return function(cone){
-              if(options.callback !== null){
-                options.callback.call({},cone);
-              }
-              if(options.totalCallback !== null){
-                setTimeout(function(){
-                  options.totalCallback.call({},that);
-                },options.totalDelay);
-              }
-            };
-          })(options);
-          this[i][options.method](lastConeOptions);
-        }
-        else{
-          this[i][options.method](options);
-        }
-      }
-    }
+    this.each(function(cone){
+      cone[options.method](options);
+    });
     return this;
   };
   

@@ -285,6 +285,7 @@
      * @method dequeue
      * @param {string} queueName
      * @return {Cone}
+     * @chainable
      */
     dequeue: function(queueName){
       var next = function(){}, that = this;
@@ -317,8 +318,9 @@
      * 
      * @method queue
      * @param {string} queueName
-     * @param {function|Array<function>} callback @optional
+     * @param {function|Array<function>} [callback] use the next param like : `function(next){ myCone.fadeOut().delay(1000).then(next); }`
      * @return {Cone|Array<function>}
+     * @chainable
      */
     queue: function(queueName, callback){
       var result;
@@ -349,13 +351,23 @@
       return result;
     },
     /**
-     * Shortcut for {@link Cone#queue|.queue()}
-     * 
      * Adds callback to the last used queue
      * 
      * @method then
-     * @param {function} callback
+     * @param {function} callback `function(next){}`
      * @return {Cone}
+     * @chainable
+     * @example ```js
+     * var myCone = new Cone(scene);
+     * myCone
+     *   .fadeOut()
+     *   .fadeIn()
+     *   .delay(1000)
+     *   .widenEyes()
+     *   .unWidenEyes()
+     *   .then(function(next){myCone.setColor('#900000'); next()})
+     *   .bump();
+     * ```
      */
     then: function(callback){
       if(typeof callback !== 'function'){
@@ -364,14 +376,17 @@
       return this.queue(this._lastQueueNameCalled,callback);
     },
     /**
-     * @todo problem with doc
      * Delays the next event in the queue of "delay" ms.
-     * You can force the queue name
+     * 
+     * You can force the queue name.
+     * 
+     * Can also be used without the `queueName` if you're alredy chaining on the right queue like : `myCone.fadeOut().delay(2000).fadeIn()`
      * 
      * @method delay
      * @param {string} queueName
      * @param {number} delay
      * @return {Cone}
+     * @chainable
      */
     delay: function(){
       var delay, queueName = null;
@@ -403,6 +418,7 @@
      * @method clearQueue
      * @param {string} queueName
      * @return {Cone}
+     * @chainable
      */
     clearQueue: function(queueName){
       this._queue[queueName] = [];
@@ -414,6 +430,7 @@
      * 
      * @method flushAnimationQueue
      * @return {Cone}
+     * @chainable
      */
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
@@ -574,7 +591,8 @@
      * 
      * @method tail
      * @param {Cone} cone
-     * @param {Object} options
+     * @param {Object} [options]
+     * @param {number} [options.distance] By default the sum of the radiuses of the cones
      * @return {Cone}
      */
     tail: function(cone,options){
@@ -633,13 +651,13 @@
       return this._coneTailedBy;
     },
     /**
-     * Returns an array of the cones tailing this one
+     * Returns a Cone.List of the cones tailing this one
      * 
      * @method getFullTail
-     * @return {Array<Cone>}
+     * @return {Cone.List}
      */
     getFullTail: function(){
-      var fullTail = [], reccursiveTailingConesDiscovery;
+      var fullTail = new Cone.List, reccursiveTailingConesDiscovery;
       reccursiveTailingConesDiscovery = function(cone){
         var tailingCone = cone.isTailed();
         if(tailingCone !== false){
@@ -659,6 +677,7 @@
      * @method registerToShadowGenerator
      * @param {BABYLON.ShadowGenerator} shadowGenerator
      * @return {Cone}
+     * @chainable
      */
     registerToShadowGenerator: function(shadowGenerator) {
       var renderList = shadowGenerator.getShadowMap().renderList;
@@ -709,7 +728,8 @@
      * 
      * @method setColor
      * @param {string|object} color
-     * @return Cone}
+     * @return {Cone}
+     * @chainable
      */
     setColor: function(color){
       if(isRgb(color) === false){
@@ -724,6 +744,7 @@
      * @method setAlpha
      * @param {number} alpha
      * @return {Cone}
+     * @chainable
      */
     setAlpha: function(alpha){
       this.cylinder.material.alpha = alpha;
@@ -736,6 +757,7 @@
      * 
      * @method moveForward
      * @return {Cone}
+     * @chainable
      */
     moveForward: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, this.moveStep, BABYLON.Space.LOCAL);
@@ -746,6 +768,7 @@
      * 
      * @method moveBack
      * @return {Cone}
+     * @chainable
      */
     moveBack: function() {
       this.getMainMesh().translate(BABYLON.Axis.X, -this.moveStep, BABYLON.Space.LOCAL);
@@ -756,6 +779,7 @@
      * 
      * @method moveLeft
      * @return {Cone}
+     * @chainable
      */
     moveLeft: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, this.moveStep, BABYLON.Space.LOCAL);
@@ -766,6 +790,7 @@
      * 
      * @method moveRight
      * @return {Cone}
+     * @chainable
      */
     moveRight: function() {
       this.getMainMesh().translate(BABYLON.Axis.Z, -this.moveStep, BABYLON.Space.LOCAL);
@@ -776,6 +801,7 @@
      * 
      * @method turnLeft
      * @return {Cone}
+     * @chainable
      */
     turnLeft: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, -this.turnStep, BABYLON.Space.LOCAL);
@@ -786,6 +812,7 @@
      * 
      * @method turnRight
      * @return {Cone}
+     * @chainable
      */
     turnRight: function() {
       this.getMainMesh().rotate(BABYLON.Axis.Y, this.turnStep, BABYLON.Space.LOCAL);
@@ -796,6 +823,7 @@
      * 
      * @method stopAllAnimationsRunning
      * @return {Cone}
+     * @chainable
      */
     stopAllAnimationsRunning: function(){
       if(this.isBumping()){
@@ -815,6 +843,7 @@
      * 
      * @method stopWidenEyes
      * @return {Cone}
+     * @chainable
      */
     stopWidenEyes: function(){
       this.parentEyes.getScene().stopAnimation(this.parentEyes);
@@ -827,6 +856,7 @@
      * 
      * @method resetWidenEyes
      * @return {Cone}
+     * @chainable
      */
     resetWidenEyes: function(){
       this.parentEyes.scaling.y = PARENT_EYES_ORIGINAL_SCALING_Y;
@@ -840,6 +870,7 @@
      * 
      * @method stopBump
      * @return {Cone}
+     * @chainable
      */
     stopBump: function() {
       this.cylinder.getScene().stopAnimation(this.cylinder);
@@ -852,6 +883,7 @@
      * 
      * @method resetBump
      * @return {Cone}
+     * @chainable
      */
     resetBump: function(){
       this.cylinder.scaling.y = 1;
@@ -862,6 +894,7 @@
      * @method toggleBump
      * @param {Object} options
      * @return {Cone}
+     * @chainable
      */
     toggleBump: function(options) {
       if (this.isBumping()) {
@@ -875,6 +908,7 @@
     /**
      * @method stopAnimateAlpha
      * @return {Cone}
+     * @chainable
      */
     stopAnimateAlpha: function(){
       this.cylinder.getScene().stopAnimation(this.cylinder);
@@ -887,6 +921,7 @@
      * @method setMoveStep
      * @param {number} moveStep
      * @return {Cone}
+     * @chainable
      */
     setMoveStep: function(moveStep) {
       this.moveStep = moveStep;
@@ -896,6 +931,7 @@
      * @method setTurnStep
      * @param {number} turnStep
      * @return {Cone}
+     * @chainable
      */
     setTurnStep: function(turnStep) {
       this.turnStep = turnStep;
@@ -905,6 +941,7 @@
      * @method lookAt
      * @param {BABYLON.Vector3|Cone} point
      * @return {Cone}
+     * @chainable
      */
     lookAt: function(point){
       if(point instanceof Cone){
@@ -919,8 +956,9 @@
      * 
      * @method follow
      * @param {BABYLON.Vector3|Cone} point
-     * @param {function} callback executed when the cone gets to point
+     * @param {function}[callback] callback executed when the cone gets to point `function(point){}`
      * @return {Cone}
+     * @chainable
      */
     follow: function(point,callback){
       if(point instanceof Cone){
@@ -934,7 +972,9 @@
         this.position.x = point.x;
         this.position.y = point.y;
         this.position.z = point.z;
-        callback();
+        if(typeof callback === 'function'){
+          callback.call({},point);
+        }
       }
       return this;
     }
@@ -953,15 +993,16 @@
       /**
        * 
        * @method widenEyes
-       * @param {Object} options
-       * @param {number} options.speed=5 @optional
-       * @param {boolean} options.loop=false @optional
-       * @param {function} options.callback=null @optional
-       * @param {number} options.delay=0 @optional
-       * @param {boolean} options.break=false @optional
-       * @param {boolean} options.full=false @optional
-       * @param {boolean} options.close=false @optional
+       * @param {Object} [options]
+       * @param {number} [options.speed=5] 
+       * @param {boolean|number} [options.loop=false] 
+       * @param {function} [options.callback=null] `function(cone){}`
+       * @param {number} [options.delay=0] 
+       * @param {boolean} [options.break=false] 
+       * @param {boolean} [options.full=false] 
+       * @param {boolean} [options.close=false] 
        * @return {Cone}
+       * @chainable
        */
       widenEyes: function(options){
         var from, to, endState, eyesWidenState;
@@ -1171,14 +1212,36 @@
       }
     }
   };
-  
   /**
-   * Acts as a dispatcher for animation methods (those methods can also be accessed directly)
-   * @todo doc problem
+   * Run any animate methods such as :
+   * 
+   * * animateAlpha
+   * * bump
+   * * fadeIn
+   * * fadeOut
+   * * unWidenEyes
+   * * widenEyes
+   * 
+   * Just specify it in `options.method`. Those methods are also accessible directly via shorcuts on the {{#crossLink "Cone"}}Cone{{/crossLink}} instance.
    * 
    * @method animate
    * @param {Object} options
+   * @param {String} options.method
    * @return {Cone}
+   * @chainable
+   * 
+   * @example ```js
+   * //you can use the .animate() dispatcher as well as the shortcuts, directly on a cone instance :
+   * var myCone = new Cone(scene);
+   * myCone
+   *   .fadeOut()
+   *   .fadeIn()
+   *   .delay(1000)
+   *   .widenEyes()
+   *   .unWidenEyes()
+   *   .then(function(next){myCone.setColor('#900000'); next()})
+   *   .bump();
+   * ```
    */
   Cone.fn.animate = function(options){
     if(typeof options === 'undefined' || typeof options.method === 'undefined'){
@@ -1271,6 +1334,12 @@
     } : null;
   };
   
+  /**
+   * @method isRgb
+   * @private
+   * @param {Object} color
+   * @return {Boolean}
+   */
   var isRgb = function(color){
     if(typeof color !== 'undefined' && typeof color.r === 'number' && typeof color.g === 'number' && typeof color.b === 'number'){
       return true;
@@ -1278,6 +1347,12 @@
     return false;
   };
   
+  /**
+   * @method removeAllAnimations
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
   var removeAllAnimations = function(cone){
     removeBumpAnimation(cone);
     removeWidenEyesAnimation(cone);
@@ -1290,6 +1365,7 @@
    * @private
    * @param {Cone} cone
    * @param {Number} scale description
+   * @return {undefined}
    */
   var addBumpAnimation = function(cone,scale) {
     var bumpAnimation = new BABYLON.Animation("bumpAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
@@ -1314,11 +1390,18 @@
    * @method removeBumpAnimation
    * @private
    * @param {Cone} cone
+   * @return {undefined}
    */
   var removeBumpAnimation = function(cone){
     helpers.removeAnimationFromMesh(cone.cylinder, "bumpAnimation");
   };
   
+  /**
+   * @method addWidenEyesAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
   var addWidenEyesAnimation = function(cone){
     var parentEyesAnimationScalingY = new BABYLON.Animation("parentEyesAnimationScalingY", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var parentEyesAnimationScalingYKeys = [];
@@ -1376,6 +1459,7 @@
    * @method removeWidenEyesAnimation
    * @private
    * @param {Cone} cone
+   * @return {undefined}
    */
   var removeWidenEyesAnimation = function(cone){
     helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationScalingY");
@@ -1388,6 +1472,7 @@
    * @private
    * @param {Cone} cone
    * @param {Object} options
+   * @return {undefined}
    */
   var addAlphaAnimation = function(cone,options){
     
@@ -1438,6 +1523,12 @@
     
   };
   
+  /**
+   * @method removeAlphaAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
   var removeAlphaAnimation = function(cone){
     helpers.removeAnimationFromMesh(cone.cylinder, "cylinderAlphaAnimation");
     helpers.removeAnimationFromMesh(cone.leftEye, "leftEyeAlphaAnimation");
@@ -1548,6 +1639,7 @@
    * @method each
    * @param {function} callback
    * @return {Cone.List}
+   * @chainable
    */
   Cone.List.fn.each = function(callback){
     if(this.length > 0){
@@ -1570,13 +1662,26 @@
    * * unWidenEyes
    * * widenEyes
    * 
-   * Just specify it in `options.method`. Those methods are also accessible via the same shortcuts like would use on a cone.
-   * 
-   * You can do `myConeList.fadeIn().fadeOut()` as well as `myConeList.animate({method:'fadeIn'}).animate({method:'fadeOut'})`
+   * Just specify it in `options.method`. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink "Cone"}}Cone{{/crossLink}} instance.
    * 
    * @method animate
    * @param {Object} options same options as the ones on the cone for each animation method
+   * @param {String} options.method
    * @return {Cone.List}
+   * @chainable
+   * 
+   * @example ```js
+   * //you can use the .animate() dispatcher as well as the shortcuts, directly on a conelist :
+   * var myConeList = new ConeList([myCone1,myCone2,myCone3]);
+   * myConeList
+   *   .fadeOut()
+   *   .fadeIn()
+   *   .delay(1000)
+   *   .widenEyes()
+   *   .unWidenEyes()
+   *   .then(function(next){myConeList.setColor('#900000'); next()})
+   *   .bump();
+   * ```
    */
   Cone.List.fn.animate = function(options){
     options = typeof options === 'undefined' ? {} : options;

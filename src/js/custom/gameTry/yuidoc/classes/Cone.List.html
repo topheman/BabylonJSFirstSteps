@@ -96,7 +96,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_js_custom_gameTry_Cone.js.html#l1462"><code>src\js\custom\gameTry\Cone.js:1462</code></a>
+            Defined in: <a href="../files/src_js_custom_gameTry_Cone.js.html#l1604"><code>src\js\custom\gameTry\Cone.js:1604</code></a>
         </div>
     
 
@@ -165,7 +165,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1462"><code>src\js\custom\gameTry\Cone.js:1462</code></a>
+        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1604"><code>src\js\custom\gameTry\Cone.js:1604</code></a>
         
         </p>
 
@@ -315,6 +315,8 @@
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -329,7 +331,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1512"><code>src\js\custom\gameTry\Cone.js:1512</code></a>
+        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1655"><code>src\js\custom\gameTry\Cone.js:1655</code></a>
         
         </p>
 
@@ -349,8 +351,7 @@
 <li>unWidenEyes</li>
 <li>widenEyes</li>
 </ul>
-<p>Just specify it in <code>options.method</code>. Those methods are also accessible via the same shortcuts like would use on a cone.</p>
-<p>You can do <code>myConeList.fadeIn().fadeOut()</code> as well as <code>myConeList.animate({method:&#39;fadeIn&#39;}).animate({method:&#39;fadeOut&#39;})</code></p>
+<p>Just specify it in <code>options.method</code>. Those methods are also accessible via the same shortcuts like you would use on a <a href="../classes/Cone.html" class="crosslink">Cone</a> instance.</p>
 
     </div>
 
@@ -374,6 +375,23 @@
                     </div>
 
                     
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">method</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
                 </li>
             
             </ul>
@@ -394,6 +412,24 @@
         </div>
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code class="lang-js">//you can use the .animate() dispatcher as well as the shortcuts, directly on a conelist :
+var myConeList = new ConeList([myCone1,myCone2,myCone3]);
+myConeList
+  .fadeOut()
+  .fadeIn()
+  .delay(1000)
+  .widenEyes()
+  .unWidenEyes()
+  .then(function(next){myConeList.setColor(&#39;#900000&#39;); next()})
+  .bump();</code></pre>
+
+            </div>
+        </div>
     
 </div>
 
@@ -458,7 +494,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1587"><code>src\js\custom\gameTry\Cone.js:1587</code></a>
+        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1719"><code>src\js\custom\gameTry\Cone.js:1719</code></a>
         
         </p>
 
@@ -577,6 +613,8 @@
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -591,7 +629,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1492"><code>src\js\custom\gameTry\Cone.js:1492</code></a>
+        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1634"><code>src\js\custom\gameTry\Cone.js:1634</code></a>
         
         </p>
 
