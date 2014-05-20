@@ -961,7 +961,7 @@
         options.callback = (typeof options.callback !== 'function') ? null : options.callback;
         options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
         options.break = (typeof options.break === 'undefined') ? false : options.break;
-        if(options.loop !== false && options.callback !== null){
+        if(options.loop === true && options.callback !== null){
           console.warn("Can't apply callback on looped animation");
         }
         if(options.close === true){
@@ -995,7 +995,7 @@
             addWidenEyesAnimation(that);
             that.widenningEyes = true;
             that.eyesWiden = false;
-            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, options.loop, options.speed,function(){
+            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, typeof options.loop === 'number' ? false : options.loop, options.speed,function(){
               that.widenningEyes = endState;
               that.eyesWiden = eyesWidenState;
               removeWidenEyesAnimation(that);
@@ -1024,7 +1024,7 @@
         options.callback = (typeof options.callback !== 'function') ? null : options.callback;
         options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
         options.break = (typeof options.break === 'undefined') ? false : options.break;
-        if(options.loop !== false && options.callback !== null){
+        if(options.loop === true && options.callback !== null){
           console.warn("Can't apply callback on looped animation");
         }
 
@@ -1038,7 +1038,7 @@
             that.stopAllAnimationsRunning();
 
             addBumpAnimation(that,options.scale);
-            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function() {
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
               that.resetBump();
               removeBumpAnimation(that);
               setTimeout(function(){
@@ -1065,7 +1065,7 @@
         options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
         options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
         options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
-        if(options.loop !== false && options.callback !== null){
+        if(options.loop === true && options.callback !== null){
           console.warn("Can't apply callback on looped animation");
         }
 
@@ -1097,19 +1097,19 @@
 
             if(options.cylinder === true){
               that.alphaAnimatingCylinder = true;
-              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, options.loop, options.speed, function(){
+              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
             if(options.leftEye === true){
               that.alphaAnimatingLeftEye = true;
-              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, options.loop, options.speed, function(){
+              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
             if(options.rightEye === true){
               that.alphaAnimatingRightEye = true;
-              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, options.loop, options.speed, function(){
+              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
@@ -1164,7 +1164,23 @@
           return function(options){
             options = typeof options === 'undefined' ? {} : options;
             options.method = methodNameToCall;
-            return this.animate(options);
+            if(typeof options.loop === 'number' && options.loop > 1){
+              for(var i=0;i<options.loop;i++){
+                (function(cone,timeToAssign,optionsPassed){
+                  var optionsToUse = Cone.helpers.cloneObject(optionsPassed);
+                  if(typeof options.callback === 'function'){
+                    optionsToUse.callback = function(){
+                      return options.callback.call({},cone,timeToAssign);
+                    };
+                  }
+                  cone.animate(optionsToUse);
+                })(this,i,options);
+              }
+              return this;
+            }
+            else{
+              return this.animate(options);
+            }
           };
         })(methodName);
       }
@@ -1528,43 +1544,19 @@
    * @return {Cone.List}
    */
   Cone.List.fn.animate = function(options){
-    var that = this;
     options = typeof options === 'undefined' ? {} : options;
-    options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
-    options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
-    options.callback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
-    options.totalDelay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-    options.delay = (typeof options.eachDelay === 'undefined') ? 0 : options.eachDelay;
+    options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+    options.callback = typeof options.callback !== 'function' ? null : options.callback;
+    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
     if(animationMethodExists(options.method) === false){
       throw new Error('"'+options.method+'" : method not allowed');
     }
-    if(this.length > 0){
-      for(var i=0; i<this.length; i++){
-        //on the last cone, set the totalCallback
-        if(i === (this.length - 1)){
-          var lastConeOptions = helpers.cloneObject(options);
-          lastConeOptions.callback = (function(){
-            return function(cone){
-              if(options.callback !== null){
-                options.callback.call({},cone);
-              }
-              if(options.totalCallback !== null){
-                setTimeout(function(){
-                  options.totalCallback.call({},that);
-                },options.totalDelay);
-              }
-            };
-          })(options);
-          this[i][options.method](lastConeOptions);
-        }
-        else{
-          this[i][options.method](options);
-        }
-      }
-    }
+    this.each(function(cone){
+      cone[options.method](options);
+    });
     return this;
   };
   
