@@ -739,6 +739,20 @@
       return this;
     },
     /**
+     * Sets the scale on all the cone
+     * 
+     * @method setScale
+     * @param {number} scale
+     * @returns {Cone}
+     * @chainable
+     */
+    setScale: function(scale){
+      this.getMainMesh().scaling.x = scale;
+      this.getMainMesh().scaling.y = scale;
+      this.getMainMesh().scaling.z = scale;
+      return this;
+    },
+    /**
      * Sets the alpha on all the cone
      * 
      * @method setAlpha
@@ -1169,6 +1183,44 @@
 
         return this;
       },
+      animateScale: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        options.scale = typeof options.scale === 'undefined' ? 1 : options.scale;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
+        
+        this.queue('fx',(function(that){
+          return function (){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
+            addScaleAnimation(that,options);
+            that.getMainMesh().getScene().beginAnimation(that.getMainMesh(), 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+              setTimeout(function(){
+                if(options.callback !== null){
+                  options.callback.call({},that);
+                }
+                that.dequeue('fx');
+              },options.delay);
+            });
+            
+          };
+        })(this));
+        
+        return this;
+      },
+      animateColor: function(options){
+        
+      },
       fadeIn: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.alpha = 1;
@@ -1183,7 +1235,6 @@
     'move':{
       moveTo: function(options){
         options = typeof options === 'undefined' ? {} : options;
-        options.position = typeof options.position === 'undefined' ? 0 : options.position;
         options.callback = (typeof options.callback !== 'function') ? null : options.callback;
         options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
         options.break = (typeof options.break === 'undefined') ? false : options.break;
@@ -1520,6 +1571,56 @@
       rightEyeAlphaAnimation.setKeys(rightEyeAlphaAnimationKeys);
       cone.rightEye.animations.push(rightEyeAlphaAnimation);
     }
+    
+  };
+  
+  /**
+   * @method addScaleAnimation
+   * @private
+   * @param {Cone} cone
+   * @param {Object} options
+   * @return {undefined}
+   */
+  var addScaleAnimation = function(cone, options){
+
+    var mainMeshAnimationScalingX = new BABYLON.Animation("mainMeshAnimationScalingX", "scaling.x", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingXKeys = [];
+    mainMeshAnimationScalingXKeys.push({
+      frame: 0,
+      value: cone.scaling.x
+    });
+    mainMeshAnimationScalingXKeys.push({
+      frame: 100,
+      value: options.scale
+    });
+    mainMeshAnimationScalingX.setKeys(mainMeshAnimationScalingXKeys);
+    cone.getMainMesh().animations.push(mainMeshAnimationScalingX);
+
+    var mainMeshAnimationScalingY = new BABYLON.Animation("mainMeshAnimationScalingX", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingYKeys = [];
+    mainMeshAnimationScalingYKeys.push({
+      frame: 0,
+      value: cone.scaling.x
+    });
+    mainMeshAnimationScalingYKeys.push({
+      frame: 100,
+      value: options.scale
+    });
+    mainMeshAnimationScalingY.setKeys(mainMeshAnimationScalingYKeys);
+    cone.getMainMesh().animations.push(mainMeshAnimationScalingY);
+
+    var mainMeshAnimationScalingZ = new BABYLON.Animation("mainMeshAnimationScalingX", "scaling.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingZKeys = [];
+    mainMeshAnimationScalingZKeys.push({
+      frame: 0,
+      value: cone.scaling.x
+    });
+    mainMeshAnimationScalingZKeys.push({
+      frame: 100,
+      value: options.scale
+    });
+    mainMeshAnimationScalingZ.setKeys(mainMeshAnimationScalingZKeys);
+    cone.getMainMesh().animations.push(mainMeshAnimationScalingZ);
     
   };
   
