@@ -1203,7 +1203,8 @@
           return function (){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
-            addScaleAnimation(that,options);
+            
+            addScaleAnimation(that,options);            
             that.getMainMesh().getScene().beginAnimation(that.getMainMesh(), 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
               setTimeout(function(){
                 if(options.callback !== null){
@@ -1219,7 +1220,42 @@
         return this;
       },
       animateColor: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        if(typeof options.color === 'undefined'){
+          throw new Error('options.color mandatory');
+        }
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
         
+        this.queue('fx',(function(that){
+          return function (){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
+            
+            addColorAnimation(that,options);
+            that.cylinder.getScene().beginAnimation(that.cylinder.material, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+              setTimeout(function(){
+                if(options.callback !== null){
+                  options.callback.call({},that);
+                }
+                that.dequeue('fx');
+              },options.delay);
+            });
+            
+          };
+        })(this));
+        
+        return this;
       },
       fadeIn: function(options){
         options = typeof options === 'undefined' ? {} : options;
@@ -1408,6 +1444,8 @@
     removeBumpAnimation(cone);
     removeWidenEyesAnimation(cone);
     removeAlphaAnimation(cone);
+    removeColorAnimation(cone);
+    removeScaleAnimation(cone);
   };
 
   /**
@@ -1575,6 +1613,18 @@
   };
   
   /**
+   * @method removeAlphaAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
+  var removeAlphaAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderAlphaAnimation");
+    helpers.removeAnimationFromMesh(cone.leftEye, "leftEyeAlphaAnimation");
+    helpers.removeAnimationFromMesh(cone.rightEye, "rightEyeAlphaAnimation");
+  };
+  
+  /**
    * @method addScaleAnimation
    * @private
    * @param {Cone} cone
@@ -1596,7 +1646,7 @@
     mainMeshAnimationScalingX.setKeys(mainMeshAnimationScalingXKeys);
     cone.getMainMesh().animations.push(mainMeshAnimationScalingX);
 
-    var mainMeshAnimationScalingY = new BABYLON.Animation("mainMeshAnimationScalingX", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingY = new BABYLON.Animation("mainMeshAnimationScalingY", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var mainMeshAnimationScalingYKeys = [];
     mainMeshAnimationScalingYKeys.push({
       frame: 0,
@@ -1609,7 +1659,7 @@
     mainMeshAnimationScalingY.setKeys(mainMeshAnimationScalingYKeys);
     cone.getMainMesh().animations.push(mainMeshAnimationScalingY);
 
-    var mainMeshAnimationScalingZ = new BABYLON.Animation("mainMeshAnimationScalingX", "scaling.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingZ = new BABYLON.Animation("mainMeshAnimationScalingZ", "scaling.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var mainMeshAnimationScalingZKeys = [];
     mainMeshAnimationScalingZKeys.push({
       frame: 0,
@@ -1625,15 +1675,78 @@
   };
   
   /**
-   * @method removeAlphaAnimation
+   * @method removeScaleAnimation
    * @private
    * @param {Cone} cone
    * @return {undefined}
    */
-  var removeAlphaAnimation = function(cone){
-    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderAlphaAnimation");
-    helpers.removeAnimationFromMesh(cone.leftEye, "leftEyeAlphaAnimation");
-    helpers.removeAnimationFromMesh(cone.rightEye, "rightEyeAlphaAnimation");
+  var removeScaleAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "mainMeshAnimationScalingX");
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "mainMeshAnimationScalingY");
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "mainMeshAnimationScalingZ");
+  };
+  
+  /**
+   * @todo since under development
+   * @method addColorAnimation
+   * @private
+   * @param {Cone} cone
+   * @param {Object} options
+   * @return {undefined}
+   */
+  var addColorAnimation = function(cone, options){
+    
+    var cylinderColorAnimationR = new BABYLON.Animation("cylinderColorAnimationR", "diffuseColor.r", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var cylinderColorAnimationRKeys = [];
+    cylinderColorAnimationRKeys.push({
+      frame: 0,
+      value: cone.cylinder.material.diffuseColor.r
+    });
+    cylinderColorAnimationRKeys.push({
+      frame: 100,
+      value: options.color.r
+    });
+    cylinderColorAnimationR.setKeys(cylinderColorAnimationRKeys);
+    cone.cylinder.material.animations.push(cylinderColorAnimationR);
+    
+    var cylinderColorAnimationG = new BABYLON.Animation("cylinderColorAnimationG", "diffuseColor.g", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var cylinderColorAnimationGKeys = [];
+    cylinderColorAnimationGKeys.push({
+      frame: 0,
+      value: cone.cylinder.material.diffuseColor.r
+    });
+    cylinderColorAnimationGKeys.push({
+      frame: 100,
+      value: options.color.g
+    });
+    cylinderColorAnimationG.setKeys(cylinderColorAnimationGKeys);
+    cone.cylinder.material.animations.push(cylinderColorAnimationG);
+    
+    var cylinderColorAnimationB = new BABYLON.Animation("cylinderColorAnimationB", "diffuseColor.r", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var cylinderColorAnimationBKeys = [];
+    cylinderColorAnimationBKeys.push({
+      frame: 0,
+      value: cone.cylinder.material.diffuseColor.r
+    });
+    cylinderColorAnimationBKeys.push({
+      frame: 100,
+      value: options.color.b
+    });
+    cylinderColorAnimationB.setKeys(cylinderColorAnimationBKeys);
+    cone.cylinder.material.animations.push(cylinderColorAnimationB);
+    
+  };
+  
+  /**
+   * @method removeColorAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
+  var removeColorAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimationR");
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimationG");
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimationB");
   };
 
   /**
