@@ -61,7 +61,7 @@
     this.moveStep = typeof options.moveStep !== 'undefined' ? options.moveStep : 0.1;
     this.turnStep = typeof options.turn !== 'undefined' ? options.turnStep : 0.1;
     this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
-    this.color = typeof options.color !== 'undefined' ? (isRgb(options.color) ? options.color : hexToRgb(options.color)) : {r: 0.564, g: 0, b: 0};//#900000
+    this.color = typeof options.color !== 'undefined' ? ( isRgb(options.color) ? options.color : hexToRgb(options.color) ) : {r: 0.564, g: 0, b: 0};//#900000
     options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
 
     //parent mesh to group all the others
@@ -1224,6 +1224,10 @@
         if(typeof options.color === 'undefined'){
           throw new Error('options.color mandatory');
         }
+        if(isRgb(options.color) === false){
+          options.color = hexToRgb(options.color);
+        }
+        options.color = new BABYLON.Color3(options.color.r, options.color.g, options.color.b);
         options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
         options.loop = typeof options.loop === 'undefined' ? false : options.loop;
         options.callback = (typeof options.callback !== 'function') ? null : options.callback;
@@ -1243,7 +1247,7 @@
             that.stopAllAnimationsRunning();
             
             addColorAnimation(that,options);
-            that.cylinder.getScene().beginAnimation(that.cylinder.material, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
               setTimeout(function(){
                 if(options.callback !== null){
                   options.callback.call({},that);
@@ -1696,44 +1700,18 @@
    */
   var addColorAnimation = function(cone, options){
     
-    var cylinderColorAnimationR = new BABYLON.Animation("cylinderColorAnimationR", "diffuseColor.r", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-    var cylinderColorAnimationRKeys = [];
-    cylinderColorAnimationRKeys.push({
+    var cylinderColorAnimation = new BABYLON.Animation("cylinderColorAnimation", "material.diffuseColor", 60, BABYLON.Animation.ANIMATIONTYPE_COLOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var cylinderColorAnimationKeys = [];
+    cylinderColorAnimationKeys.push({
       frame: 0,
-      value: cone.cylinder.material.diffuseColor.r
+      value: new BABYLON.Color3(1,0,0)
     });
-    cylinderColorAnimationRKeys.push({
+    cylinderColorAnimationKeys.push({
       frame: 100,
-      value: options.color.r
+      value: options.color
     });
-    cylinderColorAnimationR.setKeys(cylinderColorAnimationRKeys);
-    cone.cylinder.material.animations.push(cylinderColorAnimationR);
-    
-    var cylinderColorAnimationG = new BABYLON.Animation("cylinderColorAnimationG", "diffuseColor.g", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-    var cylinderColorAnimationGKeys = [];
-    cylinderColorAnimationGKeys.push({
-      frame: 0,
-      value: cone.cylinder.material.diffuseColor.r
-    });
-    cylinderColorAnimationGKeys.push({
-      frame: 100,
-      value: options.color.g
-    });
-    cylinderColorAnimationG.setKeys(cylinderColorAnimationGKeys);
-    cone.cylinder.material.animations.push(cylinderColorAnimationG);
-    
-    var cylinderColorAnimationB = new BABYLON.Animation("cylinderColorAnimationB", "diffuseColor.r", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-    var cylinderColorAnimationBKeys = [];
-    cylinderColorAnimationBKeys.push({
-      frame: 0,
-      value: cone.cylinder.material.diffuseColor.r
-    });
-    cylinderColorAnimationBKeys.push({
-      frame: 100,
-      value: options.color.b
-    });
-    cylinderColorAnimationB.setKeys(cylinderColorAnimationBKeys);
-    cone.cylinder.material.animations.push(cylinderColorAnimationB);
+    cylinderColorAnimation.setKeys(cylinderColorAnimationKeys);
+    cone.cylinder.animations.push(cylinderColorAnimation);
     
   };
   
@@ -1744,9 +1722,7 @@
    * @return {undefined}
    */
   var removeColorAnimation = function(cone){
-    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimationR");
-    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimationG");
-    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimationB");
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimation");
   };
 
   /**
