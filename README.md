@@ -1,7 +1,13 @@
 BabylonJS first steps
 =====================
 
-Those are my first steps on BabylonJS.
+Those are my first steps on BabylonJS. I'm creating a class that will let you manipulate 3d cones with eyes. There is a full API ([doc's here](http://labs.topheman.com/babylonjs/js/vendor/Cone/yuidoc/ "Cone.js documentation")), if you wan't to take a look at the Cone.js file : [there you go](https://github.com/topheman/BabylonJSFirstSteps/blob/master/src/js/vendor/Cone/Cone.js "Cone.js - sources").
+
+You can simply use the [Cone.js](https://github.com/topheman/BabylonJSFirstSteps/blob/master/src/js/vendor/Cone/Cone.js "Cone.js - sources") file, or if you wan't to go further, here are the steps for development and generating doc.
+
+**You may take a look at the [example](http://labs.topheman.com/babylonjs/ "BabylonJS - first steps") ...**
+
+----------
 
 After you have cloned the repository :
 
