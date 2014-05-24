@@ -1,6 +1,16 @@
 RELEASES NOTES
 ==============
 
+#0.2.2
+
+* folder organization
+* added .animateColor() (still buggy)
+* upgraded to babylon.1.11.js
+* added .setScale() + .animateScale()
+* added .moveTo()
+* loop times number on animations
+* switched from jsdoc to yuidoc
+
 #0.2.1
 
 * Cone.List animations chainable
