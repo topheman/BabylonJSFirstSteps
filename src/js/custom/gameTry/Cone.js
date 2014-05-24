@@ -1248,6 +1248,7 @@
             
             addColorAnimation(that,options);
             that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+              removeColorAnimation(that);
               setTimeout(function(){
                 if(options.callback !== null){
                   options.callback.call({},that);
@@ -1255,7 +1256,6 @@
                 that.dequeue('fx');
               },options.delay);
             });
-            
           };
         })(this));
         
