@@ -6,7 +6,7 @@
         "linkNatives": "true",        
         "attributesEmit": "false",
         "selleck": "false",
-        "paths": ["./src/js/custom/gameTry"],
-        "outdir": "./src/js/custom/gameTry/yuidoc"
+        "paths": ["./src/js/vendor/Cone"],
+        "outdir": "./src/js/vendor/Cone/yuidoc"
     }
 }

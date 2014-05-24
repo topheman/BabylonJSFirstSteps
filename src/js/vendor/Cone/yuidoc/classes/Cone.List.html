@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Cone.helpers - Cone.js</title>
+    <title>Cone.List - Cone.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -88,7 +88,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Cone.helpers Class</h1>
+                        <h1>Cone.List Class</h1>
 <div class="box meta">
     
 
@@ -96,7 +96,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_js_custom_gameTry_Cone.js.html#l1538"><code>src\js\custom\gameTry\Cone.js:1538</code></a>
+            Defined in: <a href="../files/src_js_vendor_Cone_Cone.js.html#l1794"><code>src\js\vendor\Cone\Cone.js:1794</code></a>
         </div>
     
 
@@ -112,11 +112,116 @@
 
 
 <div class="box intro">
-    <p>Bunch of methods I didn&#39;t find inside BabylonJS, that I coded for myself.
- Please tell me if they exist</p>
+    <p>Creates a new cone list</p>
 
 </div>
 
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_Cone.List" class="method item">
+    <h3 class="name"><code>Cone.List</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>coneList</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1794"><code>src\js\vendor\Cone\Cone.js:1794</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">coneList</code>
+                        <span class="type">Array<Cone> | <a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -142,37 +247,22 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_cloneObject">cloneObject</a>
+                                <a href="#method_animate">animate</a>
 
                                 
-                                    <span class="flag static">static</span>
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_changeStateDispatcher">changeStateDispatcher</a>
+
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getAnimationNamesFromMesh">getAnimationNamesFromMesh</a>
+                                <a href="#method_each">each</a>
 
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_isAnimationRegistered">isAnimationRegistered</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_removeAnimationFromMesh">removeAnimationFromMesh</a>
-
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -193,8 +283,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_cloneObject" class="method item">
-    <h3 class="name"><code>cloneObject</code></h3>
+                    <div id="method_animate" class="method item">
+    <h3 class="name"><code>animate</code></h3>
 
     
         <div class="args">
@@ -202,7 +292,7 @@
             
                 <li class="arg">
                     
-                        <code>obj</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -212,7 +302,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+            <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>
         </span>
     
 
@@ -223,9 +313,9 @@
     
 
     
-        <span class="flag static">static</span>
-    
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -241,7 +331,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1586"><code>src\js\custom\gameTry\Cone.js:1586</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1845"><code>src\js\vendor\Cone\Cone.js:1845</code></a>
         
         </p>
 
@@ -252,7 +342,17 @@
     </div>
 
     <div class="description">
-        
+        <p>Run any animate methods such as :</p>
+<ul>
+<li>animateAlpha</li>
+<li>bump</li>
+<li>fadeIn</li>
+<li>fadeOut</li>
+<li>unWidenEyes</li>
+<li>widenEyes</li>
+</ul>
+<p>Just specify it in <code>options.method</code>. Those methods are also accessible via the same shortcuts like you would use on a <a href="../classes/Cone.html" class="crosslink">Cone</a> instance.</p>
+
     </div>
 
     
@@ -263,16 +363,34 @@
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
+                        <code class="param-name">options</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>same options as the ones on the cone for each animation method</p>
+
                     </div>
 
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">method</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
                     
                 </li>
             
@@ -287,7 +405,7 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                        <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>:
                     
                 
             </div>
@@ -295,11 +413,29 @@
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code class="lang-js">//you can use the .animate() dispatcher as well as the shortcuts, directly on a conelist :
+var myConeList = new ConeList([myCone1,myCone2,myCone3]);
+myConeList
+  .fadeOut()
+  .fadeIn()
+  .delay(1000)
+  .widenEyes()
+  .unWidenEyes()
+  .then(function(next){myConeList.setColor(&#39;#900000&#39;); next()})
+  .bump();</code></pre>
+
+            </div>
+        </div>
+    
 </div>
 
                 
-                    <div id="method_getAnimationNamesFromMesh" class="method item">
-    <h3 class="name"><code>getAnimationNamesFromMesh</code></h3>
+                    <div id="method_changeStateDispatcher" class="method item private">
+    <h3 class="name"><code>changeStateDispatcher</code></h3>
 
     
         <div class="args">
@@ -307,7 +443,19 @@
             
                 <li class="arg">
                     
-                        <code>mesh</code>
+                        <code>coneList</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>methodName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>args</code>
                     
                 </li>
             
@@ -317,18 +465,18 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+            <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>
         </span>
     
 
     
 
     
-
+        <span class="flag private">private</span>
     
 
     
-        <span class="flag static">static</span>
+
     
 
     
@@ -346,7 +494,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1546"><code>src\js\custom\gameTry\Cone.js:1546</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1909"><code>src\js\vendor\Cone\Cone.js:1909</code></a>
         
         </p>
 
@@ -368,119 +516,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">mesh</code>
-                        <span class="type">BABYLON.Mesh</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_isAnimationRegistered" class="method item">
-    <h3 class="name"><code>isAnimationRegistered</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>mesh</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>animationName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1558"><code>src\js\custom\gameTry\Cone.js:1558</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">mesh</code>
-                        <span class="type">BABYLON.Mesh</span>
+                        <code class="param-name">coneList</code>
+                        <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>
                     
 
                     
@@ -494,7 +531,7 @@
             
                 <li class="param">
                     
-                        <code class="param-name">animationName</code>
+                        <code class="param-name">methodName</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
@@ -507,6 +544,21 @@
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name">args</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -518,7 +570,7 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                        <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>:
                     
                 
             </div>
@@ -529,8 +581,8 @@
 </div>
 
                 
-                    <div id="method_removeAnimationFromMesh" class="method item">
-    <h3 class="name"><code>removeAnimationFromMesh</code></h3>
+                    <div id="method_each" class="method item">
+    <h3 class="name"><code>each</code></h3>
 
     
         <div class="args">
@@ -538,13 +590,7 @@
             
                 <li class="arg">
                     
-                        <code>mesh</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>animationName</code>
+                        <code>callback</code>
                     
                 </li>
             
@@ -554,7 +600,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+            <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>
         </span>
     
 
@@ -565,9 +611,9 @@
     
 
     
-        <span class="flag static">static</span>
-    
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -583,7 +629,7 @@
             
         
         
-        <a href="../files/src_js_custom_gameTry_Cone.js.html#l1568"><code>src\js\custom\gameTry\Cone.js:1568</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1824"><code>src\js\vendor\Cone\Cone.js:1824</code></a>
         
         </p>
 
@@ -594,7 +640,9 @@
     </div>
 
     <div class="description">
-        
+        <p>Loops through the cone list providing a callback like <code>function(cone, index){}</code></p>
+<p>Return false in the callback to stop the loop</p>
+
     </div>
 
     
@@ -605,23 +653,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">mesh</code>
-                        <span class="type">BABYLON.Mesh</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">animationName</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <code class="param-name">callback</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
                     
 
                     
@@ -644,7 +677,7 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                        <span class="type"><a href="../classes/Cone.List.html" class="crosslink">Cone.List</a></span>:
                     
                 
             </div>

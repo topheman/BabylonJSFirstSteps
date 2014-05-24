@@ -1,97 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>src\js\custom\gameTry\Cone.js - Cone.js</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
-    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
-    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
-</head>
-<body class="yui3-skin-sam">
-
-<div id="doc">
-    <div id="hd" class="yui3-g header">
-        <div class="yui3-u-3-4">
-            
-                <h1><img src="../assets/css/logo.png" title="Cone.js"></h1>
-            
-        </div>
-        <div class="yui3-u-1-4 version">
-            <em>API Docs for: </em>
-        </div>
-    </div>
-    <div id="bd" class="yui3-g">
-
-        <div class="yui3-u-1-4">
-            <div id="docs-sidebar" class="sidebar apidocs">
-                <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="../classes/Cone.html">Cone</a></li>
-            
-                <li><a href="../classes/Cone.helpers.html">Cone.helpers</a></li>
-            
-                <li><a href="../classes/Cone.List.html">Cone.List</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="../modules/Cone.html">Cone</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
-            </div>
-        </div>
-        <div class="yui3-u-3-4">
-                <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
-            <div class="apidocs">
-                <div id="docs-main">
-                    <div class="content">
-                        <h1 class="file-heading">File: src\js\custom\gameTry\Cone.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
 /*!
  * Copyright 2014, Christophe Rosset (Topheman)
  * http://labs.topheman.com/
@@ -101,17 +7,17 @@
  */
 
 (function(ConeExport) {
-  if (typeof define === &#x27;function&#x27; &amp;&amp; define.amd) {
+  if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(ConeExport);
-  } else if (typeof module !== &#x27;undefined&#x27; &amp;&amp; module.exports) {
+  } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = ConeExport();
   } else {
     // Browser globals
     window.Cone = ConeExport();
   }
 })(function() {
-&quot;use strict&quot;;
+"use strict";
   
   /**
    * @module Cone
@@ -135,7 +41,7 @@
    * @return {Cone}
    */
   var Cone = function(scene, options) {
-    options = typeof options === &#x27;object&#x27; ? options : {};
+    options = typeof options === 'object' ? options : {};
     
     /**
      * Original sizes
@@ -149,22 +55,22 @@
     };
     
     //single name
-    this.name = typeof options.name !== &#x27;undefined&#x27; ? options.name : &quot;cone&quot;+(new Date()).getTime();
+    this.name = typeof options.name !== 'undefined' ? options.name : "cone"+(new Date()).getTime();
 
     //default settings
-    this.moveStep = typeof options.moveStep !== &#x27;undefined&#x27; ? options.moveStep : 0.1;
-    this.turnStep = typeof options.turn !== &#x27;undefined&#x27; ? options.turnStep : 0.1;
-    this.eyeSize = typeof options.eyeSize !== &#x27;undefined&#x27; ? options.eyeSize : 1.5;
-    this.color = typeof options.color !== &#x27;undefined&#x27; ? (isRgb(options.color) ? options.color : hexToRgb(options.color)) : {r: 0.564, g: 0, b: 0};//#900000
-    options.pickable = typeof options.pickable === &#x27;undefined&#x27; ? true :  options.pickable;
+    this.moveStep = typeof options.moveStep !== 'undefined' ? options.moveStep : 0.1;
+    this.turnStep = typeof options.turn !== 'undefined' ? options.turnStep : 0.1;
+    this.eyeSize = typeof options.eyeSize !== 'undefined' ? options.eyeSize : 1.5;
+    this.color = typeof options.color !== 'undefined' ? ( isRgb(options.color) ? options.color : hexToRgb(options.color) ) : {r: 0.564, g: 0, b: 0};//#900000
+    options.pickable = typeof options.pickable === 'undefined' ? true :  options.pickable;
 
     //parent mesh to group all the others
-    var parentMesh = BABYLON.Mesh.CreatePlane(this.name + &quot;-group&quot;, 1, scene);
+    var parentMesh = BABYLON.Mesh.CreatePlane(this.name + "-group", 1, scene);
     parentMesh.isVisible = false;
     parentMesh.isPickable = false;
     
     //create + link + reposition the cylinder inside the group
-    this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + &quot;-group-cylinder&quot;, CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
+    this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + "-group-cylinder", CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
     var pivot = BABYLON.Matrix.Translation(0, CONE_CYLINDER_HEIGHT / 2, 0);
     this.cylinder.setPivotMatrix(pivot);
     this.cylinder.parent = parentMesh;
@@ -172,7 +78,7 @@
     this.cylinder.isPickable = options.pickable;
 
     //create a parent mesh for the eyes + link it to the global parent mesh + reposition and scale
-    this.parentEyes = BABYLON.Mesh.CreatePlane(this.name + &quot;-group-eyesGroup&quot;, 1, scene);
+    this.parentEyes = BABYLON.Mesh.CreatePlane(this.name + "-group-eyesGroup", 1, scene);
     this.parentEyes.parent = parentMesh;
     this.parentEyes.isVisible = false;
     this.parentEyes.setPositionWithLocalVector(new BABYLON.Vector3(PARENT_EYES_ORIGINAL_POSITION_X, PARENT_EYES_ORIGINAL_POSITION_Y, 0));
@@ -180,25 +86,25 @@
     this.parentEyes.isPickable = false;
 
     //create eyes + link them to the parentEyes mesh
-    this.leftEye = BABYLON.Mesh.CreateSphere(this.name + &quot;-group-eyesGroup-left-eye&quot;, 10.0, this.eyeSize, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
+    this.leftEye = BABYLON.Mesh.CreateSphere(this.name + "-group-eyesGroup-left-eye", 10.0, this.eyeSize, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
     this.leftEye.parent = this.parentEyes;
     this.leftEye.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0.7));
     this.leftEye.isPickable = options.pickable;
 
-    this.rightEye = BABYLON.Mesh.CreateSphere(this.name + &quot;-group-eyesGroup-right-eye&quot;, 10.0, this.eyeSize, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
+    this.rightEye = BABYLON.Mesh.CreateSphere(this.name + "-group-eyesGroup-right-eye", 10.0, this.eyeSize, scene);//Parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh. Beware to adapt the number of segments to the size of your mesh ;)
     this.rightEye.parent = this.parentEyes;
     this.rightEye.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, -0.7));
     this.rightEye.isPickable = options.pickable;
 
     //add texture to the cylinder
-    this.cylinder.material = new BABYLON.StandardMaterial(this.name + &quot;-texture-cyclinder&quot;, scene);
+    this.cylinder.material = new BABYLON.StandardMaterial(this.name + "-texture-cyclinder", scene);
     this.cylinder.material.diffuseColor = new BABYLON.Color3(this.color.r, this.color.g, this.color.b);
 
     //add texture to the eyes
-    this.leftEye.material = new BABYLON.StandardMaterial(this.name + &quot;-material-leftEye&quot;, scene);
-    this.rightEye.material = new BABYLON.StandardMaterial(this.name + &quot;-material-rightEye&quot;, scene);
-    this.leftEye.material.diffuseTexture = new BABYLON.Texture(&quot;./assets/gameTry/eye-light.png&quot;, scene);
-    this.rightEye.material.diffuseTexture = new BABYLON.Texture(&quot;./assets/gameTry/eye-light.png&quot;, scene);
+    this.leftEye.material = new BABYLON.StandardMaterial(this.name + "-material-leftEye", scene);
+    this.rightEye.material = new BABYLON.StandardMaterial(this.name + "-material-rightEye", scene);
+    this.leftEye.material.diffuseTexture = new BABYLON.Texture("./assets/Cone/eye-light.png", scene);
+    this.rightEye.material.diffuseTexture = new BABYLON.Texture("./assets/Cone/eye-light.png", scene);
 
     this.rightEye.material.diffuseTexture.vOffset = -0.245;
     this.rightEye.material.diffuseTexture.uOffset = 0;
@@ -234,7 +140,7 @@
      */
     var position = {};
     Object.defineProperties(position, {
-      &#x27;x&#x27;: {
+      'x': {
         get: function() {
           return parentMesh.position.x;
         },
@@ -242,7 +148,7 @@
           return parentMesh.position.x = x;
         }
       },
-      &#x27;y&#x27;: {
+      'y': {
         get: function() {
           return parentMesh.position.y;
         },
@@ -250,7 +156,7 @@
           return parentMesh.position.y = y;
         }
       },
-      &#x27;z&#x27;: {
+      'z': {
         get: function() {
           return parentMesh.position.z;
         },
@@ -279,7 +185,7 @@
      */
     var rotation = {};
     Object.defineProperties(rotation, {
-      &#x27;x&#x27;: {
+      'x': {
         get: function() {
           return parentMesh.rotation.x;
         },
@@ -287,7 +193,7 @@
           return parentMesh.rotation.x = x;
         }
       },
-      &#x27;y&#x27;: {
+      'y': {
         get: function() {
           return parentMesh.rotation.y;
         },
@@ -295,7 +201,7 @@
           return parentMesh.rotation.y = y;
         }
       },
-      &#x27;z&#x27;: {
+      'z': {
         get: function() {
           return parentMesh.rotation.z;
         },
@@ -324,7 +230,7 @@
      */
     var scaling = {};
     Object.defineProperties(scaling, {
-      &#x27;x&#x27;: {
+      'x': {
         get: function() {
           return parentMesh.scaling.x;
         },
@@ -332,7 +238,7 @@
           return parentMesh.scaling.x = x;
         }
       },
-      &#x27;y&#x27;: {
+      'y': {
         get: function() {
           return parentMesh.scaling.y;
         },
@@ -340,7 +246,7 @@
           return parentMesh.scaling.y = y;
         }
       },
-      &#x27;z&#x27;: {
+      'z': {
         get: function() {
           return parentMesh.scaling.z;
         },
@@ -366,7 +272,7 @@
     };
     
     //used for .then() to know on which queue add the callback
-    this._lastQueueNameCalled = &#x27;fx&#x27;;
+    this._lastQueueNameCalled = 'fx';
     
     this._currentMoveBeforeRenderLoopCallback = null;
     
@@ -383,12 +289,12 @@
      */
     dequeue: function(queueName){
       var next = function(){}, that = this;
-      if(typeof this._queue[queueName] === &#x27;undefined&#x27;){
-        throw new Error(&#x27;No queue &quot;&#x27;+queueName+&#x27;&quot; found&#x27;);
+      if(typeof this._queue[queueName] === 'undefined'){
+        throw new Error('No queue "'+queueName+'" found');
       }
       setTimeout(function(){
-        if(that._queue[queueName].length &gt; 0){
-          if(that._queue[queueName].length &gt; 1){
+        if(that._queue[queueName].length > 0){
+          if(that._queue[queueName].length > 1){
             next = (function(queueName){
               return function(){
                 that.dequeue(queueName);
@@ -397,7 +303,7 @@
           }
           that._queue[queueName][0].call({},next);
         }
-        if(that._queue[queueName].length &gt; 0){
+        if(that._queue[queueName].length > 0){
           that._queue[queueName].shift();
         }
       },0);
@@ -407,26 +313,26 @@
     /**
      * * Call it only with the queueName : **Returns the queue**.
      * * Call it with queueName + callback : registers the callback in the queue. This
-     * callback has a &quot;next&quot; parameter to launch the next callback in the queue. **Returns the cone to chain**.
+     * callback has a "next" parameter to launch the next callback in the queue. **Returns the cone to chain**.
      * * Call it with queueName + array of callback to replace the queue. **Returns the cone to chain**
      * 
      * @method queue
      * @param {string} queueName
-     * @param {function|Array&lt;function&gt;} [callback] use the next param like : &#x60;function(next){ myCone.fadeOut().delay(1000).then(next); }&#x60;
-     * @return {Cone|Array&lt;function&gt;}
+     * @param {function|Array<function>} [callback] use the next param like : `function(next){ myCone.fadeOut().delay(1000).then(next); }`
+     * @return {Cone|Array<function>}
      * @chainable
      */
     queue: function(queueName, callback){
       var result;
-      if(typeof this._queue[queueName] === &#x27;undefined&#x27;){
-        if(typeof callback === &#x27;undefined&#x27;){
+      if(typeof this._queue[queueName] === 'undefined'){
+        if(typeof callback === 'undefined'){
           if(this.warnings === true){
-            console.warn(&#x27;queue &quot;&#x27;+queueName+&#x27;&quot; is not registered&#x27;);
+            console.warn('queue "'+queueName+'" is not registered');
           }
         }
         result = this._queue[queueName] = [];
         }
-      if(typeof callback === &#x27;function&#x27;){
+      if(typeof callback === 'function'){
         this._queue[queueName].push(callback);
         if(this._queue[queueName].length === 1){
           this.dequeue(queueName);
@@ -448,10 +354,10 @@
      * Adds callback to the last used queue
      * 
      * @method then
-     * @param {function} callback &#x60;function(next){}&#x60;
+     * @param {function} callback `function(next){}`
      * @return {Cone}
      * @chainable
-     * @example &#x60;&#x60;&#x60;js
+     * @example ```js
      * var myCone = new Cone(scene);
      * myCone
      *   .fadeOut()
@@ -459,22 +365,22 @@
      *   .delay(1000)
      *   .widenEyes()
      *   .unWidenEyes()
-     *   .then(function(next){myCone.setColor(&#x27;#900000&#x27;); next()})
+     *   .then(function(next){myCone.setColor('#900000'); next()})
      *   .bump();
-     * &#x60;&#x60;&#x60;
+     * ```
      */
     then: function(callback){
-      if(typeof callback !== &#x27;function&#x27;){
-        throw new Error(&#x27;callback must be a function&#x27;);
+      if(typeof callback !== 'function'){
+        throw new Error('callback must be a function');
       }
       return this.queue(this._lastQueueNameCalled,callback);
     },
     /**
-     * Delays the next event in the queue of &quot;delay&quot; ms.
+     * Delays the next event in the queue of "delay" ms.
      * 
      * You can force the queue name.
      * 
-     * Can also be used without the &#x60;queueName&#x60; if you&#x27;re alredy chaining on the right queue like : &#x60;myCone.fadeOut().delay(2000).fadeIn()&#x60;
+     * Can also be used without the `queueName` if you're alredy chaining on the right queue like : `myCone.fadeOut().delay(2000).fadeIn()`
      * 
      * @method delay
      * @param {string} queueName
@@ -493,11 +399,11 @@
         queueName = arguments[0];
         delay = arguments[1];
       }
-      if(typeof delay !== &#x27;number&#x27;){
-        throw new Error(&#x27;delay must be a number&#x27;);
+      if(typeof delay !== 'number'){
+        throw new Error('delay must be a number');
       }
-      if(queueName !== null &amp;&amp; typeof queueName !== &#x27;string&#x27;){
-        throw new Error(&#x27;queueName must be a string&#x27;);
+      if(queueName !== null && typeof queueName !== 'string'){
+        throw new Error('queueName must be a string');
       }
       this.queue(queueName,function(next){
         setTimeout(function(){
@@ -528,7 +434,7 @@
      */
     flushAnimationQueue: function(){
       this.stopAllAnimationsRunning();
-      this.clearQueue(&#x27;fx&#x27;);
+      this.clearQueue('fx');
       return this;
     },
     /**
@@ -547,7 +453,7 @@
      * @return {Boolean}
      */
     isAnimationRunning: function(){
-      return this.isBumping() &amp;&amp; this.isWidenningEyes() &amp;&amp; this.isChangingAlpha();
+      return this.isBumping() && this.isWidenningEyes() && this.isChangingAlpha();
     },
     /**
      * Returns true if the cone is widenning eyes
@@ -581,7 +487,7 @@
      * @return {Boolean}
      */
     isChangingAlpha: function(){
-      return this.alphaAnimatingCylinder &amp;&amp; this.alphaAnimatingLeftEye &amp;&amp; this.alphaAnimatingRightEye;
+      return this.alphaAnimatingCylinder && this.alphaAnimatingLeftEye && this.alphaAnimatingRightEye;
     },
     /**
      * @method getMoveStep
@@ -609,14 +515,14 @@
      * @return {number}
      */
     getTopDiameter: function(){
-      return this._size.topDiameter*(this.cylinder.scaling.x &gt; this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x &gt; this.scaling.z ? this.scaling.x : this.scaling.z);
+      return this._size.topDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
     /**
      * @method getBottomDiameter
      * @return {number}
      */
     getBottomDiameter: function(){
-      return this._size.bottomDiameter*(this.cylinder.scaling.x &gt; this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x &gt; this.scaling.z ? this.scaling.x : this.scaling.z);
+      return this._size.bottomDiameter*(this.cylinder.scaling.x > this.cylinder.scaling.z ? this.cylinder.scaling.x : this.cylinder.scaling.z)*(this.scaling.x > this.scaling.z ? this.scaling.x : this.scaling.z);
     },
     /**
      * @method getDistance
@@ -629,7 +535,7 @@
     /**
      * Checks if two cones intersect (based on the bottom diameter)
      * 
-     * If a cone has been rescaled, it&#x27;s taken account (although, if scaling x and z are different the bigger one is taken in account)
+     * If a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)
      * 
      * @method intersectsCone
      * @param {Cone} cone
@@ -637,7 +543,7 @@
      */
     intersectsCone: function(cone){
       var distance = this.getDistance(cone);
-      if(distance &lt; (this.getBottomDiameter() + cone.getBottomDiameter())/2){
+      if(distance < (this.getBottomDiameter() + cone.getBottomDiameter())/2){
         return true;
       }
       return false;
@@ -646,30 +552,30 @@
      * 
      * @method intersectsGroundLimits
      * @param {BABYLON.Mesh} ground (plane)
-     * @param {Boolean} replace if you wan&#x27;t not only to check the limit but also keep the cone inside it
+     * @param {Boolean} replace if you wan't not only to check the limit but also keep the cone inside it
      * @return {Boolean}
      */
     intersectsGroundLimits: function(ground,replace){
       var boundingInfos = ground.getBoundingInfo(), result = false;
-      if((this.position.x + this.getBottomDiameter()/2) &gt; boundingInfos.boundingBox.maximum.x){
+      if((this.position.x + this.getBottomDiameter()/2) > boundingInfos.boundingBox.maximum.x){
         if(replace === true){
           this.position.x = boundingInfos.boundingBox.maximum.x - this.getBottomDiameter()/2;
         }
         result = true;
       }
-      if((this.position.x - this.getBottomDiameter()/2) &lt; boundingInfos.boundingBox.minimum.x){
+      if((this.position.x - this.getBottomDiameter()/2) < boundingInfos.boundingBox.minimum.x){
         if(replace === true){
           this.position.x = boundingInfos.boundingBox.minimum.x + this.getBottomDiameter()/2;
         }
         result = true;
       }
-      if((this.position.z + this.getBottomDiameter()/2) &gt; boundingInfos.boundingBox.maximum.y){
+      if((this.position.z + this.getBottomDiameter()/2) > boundingInfos.boundingBox.maximum.y){
         if(replace === true){
           this.position.z = boundingInfos.boundingBox.maximum.y - this.getBottomDiameter()/2;
         }
         result = true;
       }
-      if((this.position.z - this.getBottomDiameter()/2) &lt; boundingInfos.boundingBox.minimum.y){
+      if((this.position.z - this.getBottomDiameter()/2) < boundingInfos.boundingBox.minimum.y){
         if(replace === true){
           this.position.z = boundingInfos.boundingBox.minimum.y + this.getBottomDiameter()/2;
         }
@@ -691,14 +597,14 @@
      */
     tail: function(cone,options){
       var fullTail;
-      options = typeof options === &#x27;undefined&#x27; ? {} : options;
-      options.distance = typeof options.distance === &#x27;undefined&#x27; ? (this.getBottomDiameter() + cone.getBottomDiameter())/2 : options.distance;
+      options = typeof options === 'undefined' ? {} : options;
+      options.distance = typeof options.distance === 'undefined' ? (this.getBottomDiameter() + cone.getBottomDiameter())/2 : options.distance;
       this._tailingOptions = options;
       
       //if cones are already following, chose the last one in the tail
       fullTail = cone.getFullTail();
       console.log(fullTail);
-      if(fullTail.length &gt; 0){
+      if(fullTail.length > 0){
         cone = fullTail[fullTail.length-1];
       }
       
@@ -706,7 +612,7 @@
       cone._coneTailedBy = this;
       var thisCone = this;
       this._tailingBeforeRender = function(){
-        if(thisCone.getDistance(cone) &gt; options.distance){
+        if(thisCone.getDistance(cone) > options.distance){
           thisCone.follow(new BABYLON.Vector3(cone.position.x,0,cone.position.z));
         }
       };
@@ -789,7 +695,7 @@
      * @return {Boolean}
      */
     squint: function() {
-      if (this.rightEye.material.diffuseTexture.uOffset &lt; 0.08) {
+      if (this.rightEye.material.diffuseTexture.uOffset < 0.08) {
         this.leftEye.material.diffuseTexture.vOffset += 0.005;
         this.rightEye.material.diffuseTexture.vOffset -= 0.005;
         this.leftEye.material.diffuseTexture.uOffset += 0.003;
@@ -807,7 +713,7 @@
      * @return {Boolean}
      */
     unSquint: function() {
-      if (this.rightEye.material.diffuseTexture.uOffset &gt; 0) {
+      if (this.rightEye.material.diffuseTexture.uOffset > 0) {
         this.leftEye.material.diffuseTexture.vOffset -= 0.005;
         this.rightEye.material.diffuseTexture.vOffset += 0.005;
         this.leftEye.material.diffuseTexture.uOffset -= 0.003;
@@ -830,6 +736,20 @@
         color = hexToRgb(color);
       }
       this.cylinder.material.diffuseColor = new BABYLON.Color3(color.r, color.g, color.b);
+      return this;
+    },
+    /**
+     * Sets the scale on all the cone
+     * 
+     * @method setScale
+     * @param {number} scale
+     * @returns {Cone}
+     * @chainable
+     */
+    setScale: function(scale){
+      this.getMainMesh().scaling.x = scale;
+      this.getMainMesh().scaling.y = scale;
+      this.getMainMesh().scaling.z = scale;
       return this;
     },
     /**
@@ -1046,11 +966,11 @@
       return this;
     },
     /**
-     * Moves the cone towards &quot;point&quot; of one moveStep
+     * Moves the cone towards "point" of one moveStep
      * 
      * @method follow
      * @param {BABYLON.Vector3|Cone} point
-     * @param {function}[callback] callback executed when the cone gets to point &#x60;function(point){}&#x60;
+     * @param {function}[callback] callback executed when the cone gets to point `function(point){}`
      * @return {Cone}
      * @chainable
      */
@@ -1058,7 +978,7 @@
       if(point instanceof Cone){
         point = new BABYLON.Vector3(point.getPosition().x,point.getPosition().y,point.getPosition().z);
       }
-      if(point &amp;&amp; point.subtract(this.getPosition()).length() &gt; DEFAULT_FOLLOW_STEP_PRECISION){
+      if(point && point.subtract(this.getPosition()).length() > DEFAULT_FOLLOW_STEP_PRECISION){
         this.lookAt(point);
         this.moveForward();
       }
@@ -1066,7 +986,7 @@
         this.position.x = point.x;
         this.position.y = point.y;
         this.position.z = point.z;
-        if(typeof callback === &#x27;function&#x27;){
+        if(typeof callback === 'function'){
           callback.call({},point);
         }
       }
@@ -1083,14 +1003,14 @@
   
   //Those methods are added to the Cone.prototype below
   var animationMethods = {
-    &#x27;fx&#x27;: {
+    'fx': {
       /**
        * 
        * @method widenEyes
        * @param {Object} [options]
        * @param {number} [options.speed=5] 
        * @param {boolean|number} [options.loop=false] 
-       * @param {function} [options.callback=null] &#x60;function(cone){}&#x60;
+       * @param {function} [options.callback=null] `function(cone){}`
        * @param {number} [options.delay=0] 
        * @param {boolean} [options.break=false] 
        * @param {boolean} [options.full=false] 
@@ -1100,14 +1020,14 @@
        */
       widenEyes: function(options){
         var from, to, endState, eyesWidenState;
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
-        options.speed = (typeof options.speed === &#x27;undefined&#x27; || options.speed === 0) ? 5 : options.speed;
-        options.loop = (typeof options.loop === &#x27;undefined&#x27;) ? false : options.loop;
-        options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
-        options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-        options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
-        if(options.loop === true &amp;&amp; options.callback !== null){
-          console.warn(&quot;Can&#x27;t apply callback on looped animation&quot;);
+        options = typeof options === 'undefined' ? {} : options;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 5 : options.speed;
+        options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
         }
         if(options.close === true){
           from = 50;
@@ -1132,7 +1052,7 @@
           this.flushAnimationQueue();
         }
 
-        this.queue(&#x27;fx&#x27;,(function(that){
+        this.queue('fx',(function(that){
           return function(){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
@@ -1140,7 +1060,7 @@
             addWidenEyesAnimation(that);
             that.widenningEyes = true;
             that.eyesWiden = false;
-            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed,function(){
+            that.parentEyes.getScene().beginAnimation(that.parentEyes, from, to, typeof options.loop === 'number' ? false : options.loop, options.speed,function(){
               that.widenningEyes = endState;
               that.eyesWiden = eyesWidenState;
               removeWidenEyesAnimation(that);
@@ -1148,7 +1068,7 @@
                 if(options.callback !== null){
                   options.callback.call({},that);
                 }
-                that.dequeue(&#x27;fx&#x27;);
+                that.dequeue('fx');
               },options.delay);
             });
           };
@@ -1157,40 +1077,40 @@
         return this;
       },
       unWidenEyes: function(options){
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
+        options = typeof options === 'undefined' ? {} : options;
         options.close = true;
         return this.widenEyes(options);
       },
       bump: function(options) {
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
-        options.scale = (typeof options.scale === &#x27;undefined&#x27; || options.scale === 0) ? 1.2 : options.scale;
-        options.speed = (typeof options.speed === &#x27;undefined&#x27; || options.speed === 0) ? 3 : options.speed;
-        options.loop = (typeof options.loop === &#x27;undefined&#x27;) ? false : options.loop;
-        options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
-        options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-        options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
-        if(options.loop === true &amp;&amp; options.callback !== null){
-          console.warn(&quot;Can&#x27;t apply callback on looped animation&quot;);
+        options = typeof options === 'undefined' ? {} : options;
+        options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
         }
 
         if(options.break === true){
           this.flushAnimationQueue();
         }
 
-        this.queue(&#x27;fx&#x27;,(function(that){
+        this.queue('fx',(function(that){
           return function(){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
 
             addBumpAnimation(that,options.scale);
-            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function() {
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
               that.resetBump();
               removeBumpAnimation(that);
               setTimeout(function(){
                 if(options.callback !== null){
                   options.callback.call({},that);
                 }
-                that.dequeue(&#x27;fx&#x27;);
+                that.dequeue('fx');
               },options.delay);
             });
             that.bumping = true;
@@ -1200,25 +1120,25 @@
         return this;
       },
       animateAlpha: function(options){
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
-        options.alpha = typeof options.alpha === &#x27;undefined&#x27; ? 0 : options.alpha;
-        options.speed = (typeof options.speed === &#x27;undefined&#x27; || options.speed === 0) ? 3 : options.speed;
-        options.loop = typeof options.loop === &#x27;undefined&#x27; ? false : options.loop;
-        options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
-        options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-        options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
-        options.cylinder = typeof options.cylinder === &#x27;undefined&#x27; ? true : options.cylinder;
-        options.leftEye = typeof options.leftEye === &#x27;undefined&#x27; ? true : options.leftEye;
-        options.rightEye = typeof options.rightEye === &#x27;undefined&#x27; ? true : options.rightEye;
-        if(options.loop === true &amp;&amp; options.callback !== null){
-          console.warn(&quot;Can&#x27;t apply callback on looped animation&quot;);
+        options = typeof options === 'undefined' ? {} : options;
+        options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        options.cylinder = typeof options.cylinder === 'undefined' ? true : options.cylinder;
+        options.leftEye = typeof options.leftEye === 'undefined' ? true : options.leftEye;
+        options.rightEye = typeof options.rightEye === 'undefined' ? true : options.rightEye;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
         }
 
         if(options.break === true){
           this.flushAnimationQueue();
         }
 
-        this.queue(&#x27;fx&#x27;,(function(that){
+        this.queue('fx',(function(that){
           return function(){
             //to avoid collision between animations @todo animation queue
             that.stopAllAnimationsRunning();
@@ -1232,7 +1152,7 @@
                   if(options.callback !== null){
                     options.callback.call({},that);
                   }
-                  that.dequeue(&#x27;fx&#x27;);
+                  that.dequeue('fx');
                 },options.delay);
               }
               that.alphaAnimatingCylinder = false;
@@ -1242,19 +1162,19 @@
 
             if(options.cylinder === true){
               that.alphaAnimatingCylinder = true;
-              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function(){
+              that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
             if(options.leftEye === true){
               that.alphaAnimatingLeftEye = true;
-              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function(){
+              that.leftEye.getScene().beginAnimation(that.leftEye, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
             if(options.rightEye === true){
               that.alphaAnimatingRightEye = true;
-              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, typeof options.loop === &#x27;number&#x27; ? false : options.loop, options.speed, function(){
+              that.rightEye.getScene().beginAnimation(that.rightEye, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function(){
                 callback(that);
               });
             }
@@ -1263,39 +1183,116 @@
 
         return this;
       },
+      animateScale: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        options.scale = typeof options.scale === 'undefined' ? 1 : options.scale;
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
+        
+        this.queue('fx',(function(that){
+          return function (){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
+            
+            addScaleAnimation(that,options);            
+            that.getMainMesh().getScene().beginAnimation(that.getMainMesh(), 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+              setTimeout(function(){
+                if(options.callback !== null){
+                  options.callback.call({},that);
+                }
+                that.dequeue('fx');
+              },options.delay);
+            });
+            
+          };
+        })(this));
+        
+        return this;
+      },
+      animateColor: function(options){
+        options = typeof options === 'undefined' ? {} : options;
+        if(typeof options.color === 'undefined'){
+          throw new Error('options.color mandatory');
+        }
+        if(isRgb(options.color) === false){
+          options.color = hexToRgb(options.color);
+        }
+        options.color = new BABYLON.Color3(options.color.r, options.color.g, options.color.b);
+        options.speed = (typeof options.speed === 'undefined' || options.speed === 0) ? 3 : options.speed;
+        options.loop = typeof options.loop === 'undefined' ? false : options.loop;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(options.loop === true && options.callback !== null){
+          console.warn("Can't apply callback on looped animation");
+        }
+
+        if(options.break === true){
+          this.flushAnimationQueue();
+        }
+        
+        this.queue('fx',(function(that){
+          return function (){
+            //to avoid collision between animations @todo animation queue
+            that.stopAllAnimationsRunning();
+            
+            addColorAnimation(that,options);
+            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+              removeColorAnimation(that);
+              setTimeout(function(){
+                if(options.callback !== null){
+                  options.callback.call({},that);
+                }
+                that.dequeue('fx');
+              },options.delay);
+            });
+          };
+        })(this));
+        
+        return this;
+      },
       fadeIn: function(options){
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
+        options = typeof options === 'undefined' ? {} : options;
         options.alpha = 1;
         return this.animateAlpha(options);
       },
       fadeOut: function(options){
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
+        options = typeof options === 'undefined' ? {} : options;
         options.alpha = 0;
         return this.animateAlpha(options);
       }
     },
-    &#x27;move&#x27;:{
+    'move':{
       moveTo: function(options){
-        options = typeof options === &#x27;undefined&#x27; ? {} : options;
-        options.position = typeof options.position === &#x27;undefined&#x27; ? 0 : options.position;
-        options.callback = (typeof options.callback !== &#x27;function&#x27;) ? null : options.callback;
-        options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-        options.break = (typeof options.break === &#x27;undefined&#x27;) ? false : options.break;
-        if(typeof options.position === &#x27;undefined&#x27;){
-          throw new Error(&#x27;options.position mandatory. accepts Cone, BABYLON.Vector3, {x,y,z}, {x,z}&#x27;);
+        options = typeof options === 'undefined' ? {} : options;
+        options.callback = (typeof options.callback !== 'function') ? null : options.callback;
+        options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+        options.break = (typeof options.break === 'undefined') ? false : options.break;
+        if(typeof options.position === 'undefined'){
+          throw new Error('options.position mandatory. accepts Cone, BABYLON.Vector3, {x,y,z}, {x,z}');
         }
         else if(options.position instanceof Cone){
           options.position = new BABYLON.Vector3(options.position.getPosition().x,options.position.getPosition().y,options.position.getPosition().z);
         }
-        if( (options.position instanceof BABYLON.Vector3 || typeof options.position === &#x27;object&#x27;) &amp;&amp; typeof options.position.x !== &#x27;undefined&#x27; &amp;&amp; typeof options.position.z !== &#x27;undefined&#x27;){
-          options.position.y = typeof options.position.y === &#x27;undefined&#x27; ? this.getPosition().y : options.position.y;
+        if( (options.position instanceof BABYLON.Vector3 || typeof options.position === 'object') && typeof options.position.x !== 'undefined' && typeof options.position.z !== 'undefined'){
+          options.position.y = typeof options.position.y === 'undefined' ? this.getPosition().y : options.position.y;
           options.position = new BABYLON.Vector3(options.position.x,options.position.y,options.position.z);
         }
-        this.queue(&#x27;move&#x27;,(function(that){
+        this.queue('move',(function(that){
           var currentMoveBeforeRenderLoopCallback = function(){
             that.follow(options.position,function(){
               that.getMainMesh().getScene().unregisterBeforeRender(currentMoveBeforeRenderLoopCallback);
-              that.dequeue(&#x27;move&#x27;);
+              that.dequeue('move');
             });
           };
           return function(){
@@ -1316,7 +1313,7 @@
    * * unWidenEyes
    * * widenEyes
    * 
-   * Just specify it in &#x60;options.method&#x60;. Those methods are also accessible directly via shorcuts on the {{#crossLink &quot;Cone&quot;}}Cone{{/crossLink}} instance.
+   * Just specify it in `options.method`. Those methods are also accessible directly via shorcuts on the {{#crossLink "Cone"}}Cone{{/crossLink}} instance.
    * 
    * @method animate
    * @param {Object} options
@@ -1324,7 +1321,7 @@
    * @return {Cone}
    * @chainable
    * 
-   * @example &#x60;&#x60;&#x60;js
+   * @example ```js
    * //you can use the .animate() dispatcher as well as the shortcuts, directly on a cone instance :
    * var myCone = new Cone(scene);
    * myCone
@@ -1333,16 +1330,16 @@
    *   .delay(1000)
    *   .widenEyes()
    *   .unWidenEyes()
-   *   .then(function(next){myCone.setColor(&#x27;#900000&#x27;); next()})
+   *   .then(function(next){myCone.setColor('#900000'); next()})
    *   .bump();
-   * &#x60;&#x60;&#x60;
+   * ```
    */
   Cone.fn.animate = function(options){
-    if(typeof options === &#x27;undefined&#x27; || typeof options.method === &#x27;undefined&#x27;){
-      throw new Error(&#x27;options.method mandatory&#x27;);
+    if(typeof options === 'undefined' || typeof options.method === 'undefined'){
+      throw new Error('options.method mandatory');
     }
     else if(animationMethodExists(options.method) === false){
-      throw new Error(&#x27;&quot;&#x27;+options.method+&#x27;&quot; : method not allowed&#x27;);
+      throw new Error('"'+options.method+'" : method not allowed');
     }
     var queueName = getAnimationMethodQueueName(options.method);//@todo find the exact queueName for the method
     return animationMethods[queueName][options.method].call(this,options);
@@ -1354,13 +1351,13 @@
       for(var methodName in methods[queueName]){
         $[methodName] = (function(methodNameToCall){
           return function(options){
-            options = typeof options === &#x27;undefined&#x27; ? {} : options;
+            options = typeof options === 'undefined' ? {} : options;
             options.method = methodNameToCall;
-            if(typeof options.loop === &#x27;number&#x27; &amp;&amp; options.loop &gt; 1){
-              for(var i=0;i&lt;options.loop;i++){
+            if(typeof options.loop === 'number' && options.loop > 1){
+              for(var i=0;i<options.loop;i++){
                 (function(cone,timeToAssign,optionsPassed){
                   var optionsToUse = Cone.helpers.cloneObject(optionsPassed);
-                  if(typeof options.callback === &#x27;function&#x27;){
+                  if(typeof options.callback === 'function'){
                     optionsToUse.callback = function(){
                       return options.callback.call({},cone,timeToAssign);
                     };
@@ -1404,7 +1401,7 @@
    */
   var getAnimationMethodQueueName = function(methodName){
     for(var queueName in animationMethods){
-      if(typeof animationMethods[queueName][methodName] !== &#x27;undefined&#x27;){
+      if(typeof animationMethods[queueName][methodName] !== 'undefined'){
         return queueName;
       }
     }
@@ -1435,7 +1432,7 @@
    * @return {Boolean}
    */
   var isRgb = function(color){
-    if(typeof color !== &#x27;undefined&#x27; &amp;&amp; typeof color.r === &#x27;number&#x27; &amp;&amp; typeof color.g === &#x27;number&#x27; &amp;&amp; typeof color.b === &#x27;number&#x27;){
+    if(typeof color !== 'undefined' && typeof color.r === 'number' && typeof color.g === 'number' && typeof color.b === 'number'){
       return true;
     }
     return false;
@@ -1451,6 +1448,8 @@
     removeBumpAnimation(cone);
     removeWidenEyesAnimation(cone);
     removeAlphaAnimation(cone);
+    removeColorAnimation(cone);
+    removeScaleAnimation(cone);
   };
 
   /**
@@ -1462,7 +1461,7 @@
    * @return {undefined}
    */
   var addBumpAnimation = function(cone,scale) {
-    var bumpAnimation = new BABYLON.Animation(&quot;bumpAnimation&quot;, &quot;scaling.y&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var bumpAnimation = new BABYLON.Animation("bumpAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var keys = [];
     keys.push({
       frame: 0,
@@ -1487,7 +1486,7 @@
    * @return {undefined}
    */
   var removeBumpAnimation = function(cone){
-    helpers.removeAnimationFromMesh(cone.cylinder, &quot;bumpAnimation&quot;);
+    helpers.removeAnimationFromMesh(cone.cylinder, "bumpAnimation");
   };
   
   /**
@@ -1497,7 +1496,7 @@
    * @return {undefined}
    */
   var addWidenEyesAnimation = function(cone){
-    var parentEyesAnimationScalingY = new BABYLON.Animation(&quot;parentEyesAnimationScalingY&quot;, &quot;scaling.y&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var parentEyesAnimationScalingY = new BABYLON.Animation("parentEyesAnimationScalingY", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var parentEyesAnimationScalingYKeys = [];
     parentEyesAnimationScalingYKeys.push({
       frame: 0,
@@ -1514,7 +1513,7 @@
     parentEyesAnimationScalingY.setKeys(parentEyesAnimationScalingYKeys);
     cone.parentEyes.animations.push(parentEyesAnimationScalingY);
     
-    var parentEyesAnimationPositionX = new BABYLON.Animation(&quot;parentEyesAnimationPositionX&quot;, &quot;position.x&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var parentEyesAnimationPositionX = new BABYLON.Animation("parentEyesAnimationPositionX", "position.x", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var parentEyesAnimationPositionXKeys = [];
     parentEyesAnimationPositionXKeys.push({
       frame: 0,
@@ -1531,7 +1530,7 @@
     parentEyesAnimationPositionX.setKeys(parentEyesAnimationPositionXKeys);
     cone.parentEyes.animations.push(parentEyesAnimationPositionX);
     
-    var parentEyesAnimationPositionY = new BABYLON.Animation(&quot;parentEyesAnimationPositionY&quot;, &quot;position.y&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var parentEyesAnimationPositionY = new BABYLON.Animation("parentEyesAnimationPositionY", "position.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     var parentEyesAnimationPositionYKeys = [];
     parentEyesAnimationPositionYKeys.push({
       frame: 0,
@@ -1556,9 +1555,9 @@
    * @return {undefined}
    */
   var removeWidenEyesAnimation = function(cone){
-    helpers.removeAnimationFromMesh(cone.parentEyes, &quot;parentEyesAnimationScalingY&quot;);
-    helpers.removeAnimationFromMesh(cone.parentEyes, &quot;parentEyesAnimationPositionX&quot;);
-    helpers.removeAnimationFromMesh(cone.parentEyes, &quot;parentEyesAnimationPositionY&quot;);
+    helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationScalingY");
+    helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationPositionX");
+    helpers.removeAnimationFromMesh(cone.parentEyes, "parentEyesAnimationPositionY");
   };
   
   /**
@@ -1571,7 +1570,7 @@
   var addAlphaAnimation = function(cone,options){
     
     if(options.cylinder === true){
-      var cylinderAlphaAnimation = new BABYLON.Animation(&quot;cylinderAlphaAnimation&quot;, &quot;material.alpha&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      var cylinderAlphaAnimation = new BABYLON.Animation("cylinderAlphaAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
       var cylinderAlphaAnimationKeys = [];
       cylinderAlphaAnimationKeys.push({
         frame: 0,
@@ -1586,7 +1585,7 @@
     }
     
     if(options.leftEye === true){
-      var leftEyeAlphaAnimation = new BABYLON.Animation(&quot;leftEyeAlphaAnimation&quot;, &quot;material.alpha&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      var leftEyeAlphaAnimation = new BABYLON.Animation("leftEyeAlphaAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
       var leftEyeAlphaAnimationKeys = [];
       leftEyeAlphaAnimationKeys.push({
         frame: 0,
@@ -1601,7 +1600,7 @@
     }
     
     if(options.rightEye === true){
-      var rightEyeAlphaAnimation = new BABYLON.Animation(&quot;rightEyeAlphaAnimation&quot;, &quot;material.alpha&quot;, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      var rightEyeAlphaAnimation = new BABYLON.Animation("rightEyeAlphaAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
       var rightEyeAlphaAnimationKeys = [];
       rightEyeAlphaAnimationKeys.push({
         frame: 0,
@@ -1624,14 +1623,111 @@
    * @return {undefined}
    */
   var removeAlphaAnimation = function(cone){
-    helpers.removeAnimationFromMesh(cone.cylinder, &quot;cylinderAlphaAnimation&quot;);
-    helpers.removeAnimationFromMesh(cone.leftEye, &quot;leftEyeAlphaAnimation&quot;);
-    helpers.removeAnimationFromMesh(cone.rightEye, &quot;rightEyeAlphaAnimation&quot;);
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderAlphaAnimation");
+    helpers.removeAnimationFromMesh(cone.leftEye, "leftEyeAlphaAnimation");
+    helpers.removeAnimationFromMesh(cone.rightEye, "rightEyeAlphaAnimation");
+  };
+  
+  /**
+   * @method addScaleAnimation
+   * @private
+   * @param {Cone} cone
+   * @param {Object} options
+   * @return {undefined}
+   */
+  var addScaleAnimation = function(cone, options){
+
+    var mainMeshAnimationScalingX = new BABYLON.Animation("mainMeshAnimationScalingX", "scaling.x", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingXKeys = [];
+    mainMeshAnimationScalingXKeys.push({
+      frame: 0,
+      value: cone.scaling.x
+    });
+    mainMeshAnimationScalingXKeys.push({
+      frame: 100,
+      value: options.scale
+    });
+    mainMeshAnimationScalingX.setKeys(mainMeshAnimationScalingXKeys);
+    cone.getMainMesh().animations.push(mainMeshAnimationScalingX);
+
+    var mainMeshAnimationScalingY = new BABYLON.Animation("mainMeshAnimationScalingY", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingYKeys = [];
+    mainMeshAnimationScalingYKeys.push({
+      frame: 0,
+      value: cone.scaling.x
+    });
+    mainMeshAnimationScalingYKeys.push({
+      frame: 100,
+      value: options.scale
+    });
+    mainMeshAnimationScalingY.setKeys(mainMeshAnimationScalingYKeys);
+    cone.getMainMesh().animations.push(mainMeshAnimationScalingY);
+
+    var mainMeshAnimationScalingZ = new BABYLON.Animation("mainMeshAnimationScalingZ", "scaling.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var mainMeshAnimationScalingZKeys = [];
+    mainMeshAnimationScalingZKeys.push({
+      frame: 0,
+      value: cone.scaling.x
+    });
+    mainMeshAnimationScalingZKeys.push({
+      frame: 100,
+      value: options.scale
+    });
+    mainMeshAnimationScalingZ.setKeys(mainMeshAnimationScalingZKeys);
+    cone.getMainMesh().animations.push(mainMeshAnimationScalingZ);
+    
+  };
+  
+  /**
+   * @method removeScaleAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
+  var removeScaleAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "mainMeshAnimationScalingX");
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "mainMeshAnimationScalingY");
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "mainMeshAnimationScalingZ");
+  };
+  
+  /**
+   * @todo since under development
+   * @method addColorAnimation
+   * @private
+   * @param {Cone} cone
+   * @param {Object} options
+   * @return {undefined}
+   */
+  var addColorAnimation = function(cone, options){
+    
+    var cylinderColorAnimation = new BABYLON.Animation("cylinderColorAnimation", "material.diffuseColor", 60, BABYLON.Animation.ANIMATIONTYPE_COLOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var cylinderColorAnimationKeys = [];
+    cylinderColorAnimationKeys.push({
+      frame: 0,
+      value: new BABYLON.Color3(1,0,0)
+    });
+    cylinderColorAnimationKeys.push({
+      frame: 100,
+      value: options.color
+    });
+    cylinderColorAnimation.setKeys(cylinderColorAnimationKeys);
+    cone.cylinder.animations.push(cylinderColorAnimation);
+    
+  };
+  
+  /**
+   * @method removeColorAnimation
+   * @private
+   * @param {Cone} cone
+   * @return {undefined}
+   */
+  var removeColorAnimation = function(cone){
+    helpers.removeAnimationFromMesh(cone.cylinder, "cylinderColorAnimation");
   };
 
   /**
    * 
-   * Bunch of methods I didn&#x27;t find inside BabylonJS, that I coded for myself.
+   * Bunch of methods I didn't find inside BabylonJS, that I coded for myself.
    * Please tell me if they exist
    * 
    * @class Cone.helpers
@@ -1657,7 +1753,7 @@
      * @return {Boolean}
      */
     isAnimationRegistered: function(mesh, animationName) {
-      return helpers.getAnimationNamesFromMesh(mesh).indexOf(animationName) &gt; -1;
+      return helpers.getAnimationNamesFromMesh(mesh).indexOf(animationName) > -1;
     },
     /**
      * @method removeAnimationFromMesh
@@ -1669,7 +1765,7 @@
      * @return {Boolean}
      */
     removeAnimationFromMesh: function(mesh, animationName) {
-      if (mesh.animations.length &gt; 0) {
+      if (mesh.animations.length > 0) {
         mesh.animations.splice(mesh.animations.indexOf(animationName), 1);
         return true;
       }
@@ -1700,16 +1796,16 @@
    * 
    * @class Cone.List
    * @constructor
-   * @param {Array&lt;Cone&gt;|Cone} coneList
+   * @param {Array<Cone>|Cone} coneList
    * @return {Cone.List}
    */
   Cone.List = function(coneList){
-    var MESSAGE_ERROR = &#x27;Cone.List only accepts Cone object or Array of Cone objects&#x27;;
+    var MESSAGE_ERROR = 'Cone.List only accepts Cone object or Array of Cone objects';
     if(coneList instanceof Cone){
       this.push(coneList);
     }
     else if(coneList instanceof Array){
-      for(var i=0;i&lt;coneList.length;i++){
+      for(var i=0;i<coneList.length;i++){
         if(coneList[i] instanceof Cone){
           this.push(coneList[i]);
         }
@@ -1718,7 +1814,7 @@
         }
       }
     }
-    else if(typeof coneList !== &#x27;undefined&#x27;){
+    else if(typeof coneList !== 'undefined'){
       throw new Error(MESSAGE_ERROR);
     }
   };
@@ -1726,7 +1822,7 @@
   Cone.List.fn = Cone.List.prototype = [];
   
   /**
-   * Loops through the cone list providing a callback like &#x60;function(cone, index){}&#x60;
+   * Loops through the cone list providing a callback like `function(cone, index){}`
    * 
    * Return false in the callback to stop the loop
    * 
@@ -1736,8 +1832,8 @@
    * @chainable
    */
   Cone.List.fn.each = function(callback){
-    if(this.length &gt; 0){
-      for(var i=0; i&lt;this.length; i++){
+    if(this.length > 0){
+      for(var i=0; i<this.length; i++){
         if(callback.call({},this[i],i) === false){
           break;
         }
@@ -1756,7 +1852,7 @@
    * * unWidenEyes
    * * widenEyes
    * 
-   * Just specify it in &#x60;options.method&#x60;. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink &quot;Cone&quot;}}Cone{{/crossLink}} instance.
+   * Just specify it in `options.method`. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink "Cone"}}Cone{{/crossLink}} instance.
    * 
    * @method animate
    * @param {Object} options same options as the ones on the cone for each animation method
@@ -1764,7 +1860,7 @@
    * @return {Cone.List}
    * @chainable
    * 
-   * @example &#x60;&#x60;&#x60;js
+   * @example ```js
    * //you can use the .animate() dispatcher as well as the shortcuts, directly on a conelist :
    * var myConeList = new ConeList([myCone1,myCone2,myCone3]);
    * myConeList
@@ -1773,20 +1869,20 @@
    *   .delay(1000)
    *   .widenEyes()
    *   .unWidenEyes()
-   *   .then(function(next){myConeList.setColor(&#x27;#900000&#x27;); next()})
+   *   .then(function(next){myConeList.setColor('#900000'); next()})
    *   .bump();
-   * &#x60;&#x60;&#x60;
+   * ```
    */
   Cone.List.fn.animate = function(options){
-    options = typeof options === &#x27;undefined&#x27; ? {} : options;
-    options.loop = (typeof options.loop === &#x27;undefined&#x27;) ? false : options.loop;
-    options.callback = typeof options.callback !== &#x27;function&#x27; ? null : options.callback;
-    options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-    if(typeof options.method === &#x27;undefined&#x27;){
-      throw new Error(&#x27;method needs to be specified&#x27;);
+    options = typeof options === 'undefined' ? {} : options;
+    options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+    options.callback = typeof options.callback !== 'function' ? null : options.callback;
+    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+    if(typeof options.method === 'undefined'){
+      throw new Error('method needs to be specified');
     }
     if(animationMethodExists(options.method) === false){
-      throw new Error(&#x27;&quot;&#x27;+options.method+&#x27;&quot; : method not allowed&#x27;);
+      throw new Error('"'+options.method+'" : method not allowed');
     }
     this.each(function(cone){
       cone[options.method](options);
@@ -1801,7 +1897,7 @@
       for(methodName in animationMethods[queueName]){
         $[methodName] = (function(curMethodName){
           return function(options){
-            options = typeof options === &#x27;undefined&#x27; ? {} : options;
+            options = typeof options === 'undefined' ? {} : options;
             options.method = curMethodName;
             return this.animate(options);
           };
@@ -1837,35 +1933,16 @@
   
   
   Cone.List.fn.animateCascade = function(options){
-    options = typeof options === &#x27;undefined&#x27; ? {} : options;
-    options.totalCallback = typeof options.callback !== &#x27;function&#x27; ? null : options.callback;
-    options.totalLoop = (typeof options.loop === &#x27;undefined&#x27;) ? true : options.loop;
-    options.callback = typeof options.eachCallback !== &#x27;function&#x27; ? null : options.eachCallback;
-    options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
-    if(typeof options.method === &#x27;undefined&#x27;){
-      throw new Error(&#x27;method needs to be specified&#x27;);
+    options = typeof options === 'undefined' ? {} : options;
+    options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
+    options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
+    options.callback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
+    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+    if(typeof options.method === 'undefined'){
+      throw new Error('method needs to be specified');
     }
   };
   
   return Cone;
 
 });
-    </pre>
-</div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="../assets/vendor/prettify/prettify-min.js"></script>
-<script>prettyPrint();</script>
-<script src="../assets/js/yui-prettify.js"></script>
-<script src="../assets/../api.js"></script>
-<script src="../assets/js/api-filter.js"></script>
-<script src="../assets/js/api-list.js"></script>
-<script src="../assets/js/api-search.js"></script>
-<script src="../assets/js/apidocs.js"></script>
-</body>
-</html>
