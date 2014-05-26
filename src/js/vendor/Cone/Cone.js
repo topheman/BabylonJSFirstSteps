@@ -301,7 +301,7 @@
               };
             })(queueName);
           }
-          that._queue[queueName][0].call({},next);
+          that._queue[queueName][0].call({},next,that);
         }
         if(that._queue[queueName].length > 0){
           that._queue[queueName].shift();
@@ -318,7 +318,7 @@
      * 
      * @method queue
      * @param {string} queueName
-     * @param {function|Array<function>} [callback] use the next param like : `function(next){ myCone.fadeOut().delay(1000).then(next); }`
+     * @param {function|Array<function>} [callback] use the next param like : `function(next, currentCone){ myCone.fadeOut().delay(1000).then(next); }`
      * @return {Cone|Array<function>}
      * @chainable
      */
@@ -1934,13 +1934,32 @@
   
   Cone.List.fn.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
-    options.totalCallback = typeof options.callback !== 'function' ? null : options.callback;
-    options.totalLoop = (typeof options.loop === 'undefined') ? true : options.loop;
-    options.callback = typeof options.eachCallback !== 'function' ? null : options.eachCallback;
+    options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
+    options.callback = typeof options.callback !== 'function' ? null : options.callback;
     options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
+    options.totalCallback = typeof options.totalCallback !== 'function' ? null : options.callback;
+    options.totalLoop = (typeof options.totalLoop === 'undefined') ? true : options.totalLoop;
+    options.totalDelay = (typeof options.totalDelay === 'undefined') ? 0 : options.totalDelay;
     if(typeof options.method === 'undefined'){
       throw new Error('method needs to be specified');
     }
+    if(options.loop === true){
+      console.warn("options.loop can\'t be true, maybe you meant options.totalLoop");
+    }
+  };
+  
+  //@todo only a draft ...
+  Cone.List.fn.queueCascade = function(queueName, callback){
+    var coneList = this;
+    this.queue(queueName,(function(){
+      return function(next, cone){
+        if(coneList[coneList.length-1] !== cone){
+          cone.queue(queueName,function(){
+            callback();
+          });
+        }
+      };
+    })(this));
   };
   
   return Cone;

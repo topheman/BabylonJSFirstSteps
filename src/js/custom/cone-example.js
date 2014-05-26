@@ -121,15 +121,15 @@ window.onload = function() {
     //custom user chainable queues
     coneTest2.queue('color');
     coneTest2.delay('color',4000)
-      .then(function(next){ coneTest2.setColor('#00C510');next() })
+      .then(function(next,cone){ coneTest2.setColor('#00C510');console.log('cone',cone);next(); })
       .delay(1000)
-      .then(function(next){ coneTest2.setColor('#C56E00');next() })
-      .then(function(next){ coneTest2.bump({callback:next})})
-      .then(function(next){ coneTest2.setColor('#ffd53d');next() })
+      .then(function(next,cone){ cone.setColor('#C56E00');console.log('cone',cone);next(); })
+      .then(function(next){ coneTest2.bump({callback:next}); })
+      .then(function(next,cone){ coneTest2.setColor('#ffd53d');console.log('cone',cone);next(); })
       .delay(1000)
-      .then(function(next){ coneTest2.setColor('#00D500');next() })
+      .then(function(next,cone){ coneTest2.setColor('#00D500');console.log('cone',cone);next(); })
       .then(function(next){ coneTest2.widenEyes({full:true,speed:1,callback:next}); })
-      .then(function(next){ coneTest2.setColor('#ffd53d');next() });
+      .then(function(next,cone){ cone.setColor('#ffd53d');next(); });
       
     
 //    coneTest2.queue('color',function(next){
