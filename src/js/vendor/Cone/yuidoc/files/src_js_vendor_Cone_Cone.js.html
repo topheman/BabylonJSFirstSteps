@@ -395,7 +395,7 @@
               };
             })(queueName);
           }
-          that._queue[queueName][0].call({},next);
+          that._queue[queueName][0].call({},next,that);
         }
         if(that._queue[queueName].length &gt; 0){
           that._queue[queueName].shift();
@@ -412,7 +412,7 @@
      * 
      * @method queue
      * @param {string} queueName
-     * @param {function|Array&lt;function&gt;} [callback] use the next param like : &#x60;function(next){ myCone.fadeOut().delay(1000).then(next); }&#x60;
+     * @param {function|Array&lt;function&gt;} [callback] use the next param like : &#x60;function(next, currentCone){ myCone.fadeOut().delay(1000).then(next); }&#x60;
      * @return {Cone|Array&lt;function&gt;}
      * @chainable
      */
@@ -516,6 +516,19 @@
      */
     clearQueue: function(queueName){
       this._queue[queueName] = [];
+      return this;
+    },
+    /**
+     * Clears all the queues
+     * 
+     * @method clearQueues
+     * @return {Cone}
+     * @chainable
+     */
+    clearQueues: function(){
+      for(var queueName in this._queue){
+        this._queue[queueName] = [];
+      }
       return this;
     },
     /**
@@ -2028,12 +2041,17 @@
   
   Cone.List.fn.animateCascade = function(options){
     options = typeof options === &#x27;undefined&#x27; ? {} : options;
-    options.totalCallback = typeof options.callback !== &#x27;function&#x27; ? null : options.callback;
-    options.totalLoop = (typeof options.loop === &#x27;undefined&#x27;) ? true : options.loop;
-    options.callback = typeof options.eachCallback !== &#x27;function&#x27; ? null : options.eachCallback;
+    options.loop = (typeof options.loop === &#x27;undefined&#x27;) ? false : options.loop;
+    options.callback = typeof options.callback !== &#x27;function&#x27; ? null : options.callback;
     options.delay = (typeof options.delay === &#x27;undefined&#x27;) ? 0 : options.delay;
+    options.totalCallback = typeof options.totalCallback !== &#x27;function&#x27; ? null : options.callback;
+    options.totalLoop = (typeof options.totalLoop === &#x27;undefined&#x27;) ? true : options.totalLoop;
+    options.totalDelay = (typeof options.totalDelay === &#x27;undefined&#x27;) ? 0 : options.totalDelay;
     if(typeof options.method === &#x27;undefined&#x27;){
       throw new Error(&#x27;method needs to be specified&#x27;);
+    }
+    if(options.loop === true){
+      console.warn(&quot;options.loop can\&#x27;t be true, maybe you meant options.totalLoop&quot;);
     }
   };
   

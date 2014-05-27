@@ -425,6 +425,19 @@
       return this;
     },
     /**
+     * Clears all the queues
+     * 
+     * @method clearQueues
+     * @return {Cone}
+     * @chainable
+     */
+    clearQueues: function(){
+      for(var queueName in this._queue){
+        this._queue[queueName] = [];
+      }
+      return this;
+    },
+    /**
      * Stops all the animations on the fx queue then clears the queue
      * (all other queues continue)
      * 
@@ -1946,20 +1959,6 @@
     if(options.loop === true){
       console.warn("options.loop can\'t be true, maybe you meant options.totalLoop");
     }
-  };
-  
-  //@todo only a draft ...
-  Cone.List.fn.queueCascade = function(queueName, callback){
-    var coneList = this;
-    this.queue(queueName,(function(){
-      return function(next, cone){
-        if(coneList[coneList.length-1] !== cone){
-          cone.queue(queueName,function(){
-            callback();
-          });
-        }
-      };
-    })(this));
   };
   
   return Cone;
