@@ -1006,13 +1006,34 @@
       return this;
     }
   };
-  
-  //add the stateFull methods to the Cone.prototype
-  (function($, methods){
-    for(var methodName in methods){
-      $[methodName] = methods[methodName];
+    
+  /**
+   * This method is used internally to expose methods that are used both on Cone and Cone.List
+   * 
+   * You will use it when you make your own plugins to expose your own methods
+   * 
+   * @method addMethods
+   * @param {Object} methodList List of the methods to add to the cone list prototype
+   * @returns {undefined}
+   * @static
+   * 
+   * @example
+   * ```js
+   * //at the end of your file
+   * Cone.addMethods(stateFullMethods);
+   * Cone.List.addMethods(stateFullMethods);
+   * ```
+   */
+  Cone.addMethods = function(methodList){
+    for(var methodName in methodList){
+      if(!Cone.fn[methodName]){
+        Cone.fn[methodName] = methodList[methodName];
+      }
+      else{
+        console.warn('method '+methodName+' already registered on Cone');
+      }
     }
-  })(Cone.fn, stateFullMethods);
+  }
   
   //Those methods are added to the Cone.prototype below
   var animationMethods = {
@@ -1933,17 +1954,37 @@
     });
   };
   
-  //add the stateFull methods to the COne.List.prototype
-  (function($, methods){
-    for(var methodName in methods){
-      $[methodName] = (function(methodName){
-        return function(){
-          return changeStateDispatcher(this, methodName, arguments);
-        };
-      })(methodName);
+  /**
+   * This method is used internally to expose methods that are used both on Cone and Cone.List
+   * 
+   * You will use it when you make your own plugins to expose your own methods
+   * 
+   * @method addMethods
+   * @param {Object} methodList List of the methods to add to the cone list prototype
+   * @returns {undefined}
+   * @static
+   * 
+   * @example
+   * ```js
+   * //at the end of your file
+   * Cone.addMethods(stateFullMethods);
+   * Cone.List.addMethods(stateFullMethods);
+   * ```
+   */
+  Cone.List.addMethods = function(methodList){
+    for(var methodName in methodList){
+      if(!Cone.List.fn[methodName]){
+        Cone.List.fn[methodName] = (function(methodName){
+          return function(){
+            return changeStateDispatcher(this, methodName, arguments);
+          };
+        })(methodName);
+      }
+      else{
+        console.warn('method '+methodName+' already registered');
+      }
     }
-  })(Cone.List.fn, stateFullMethods);
-  
+  };  
   
   Cone.List.fn.animateCascade = function(options){
     options = typeof options === 'undefined' ? {} : options;
@@ -1960,6 +2001,10 @@
       console.warn("options.loop can\'t be true, maybe you meant options.totalLoop");
     }
   };
+  
+  //add stateFull methods on both Cone.fn and Cone.List.fn
+  Cone.addMethods(stateFullMethods);
+  Cone.List.addMethods(stateFullMethods);
   
   return Cone;
 
