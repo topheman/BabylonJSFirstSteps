@@ -127,6 +127,7 @@ window.onload = function() {
       right: false,
       squint : false,
       unSquint : false,
+      bump : false,
       pointer : {
         coneName : false,
         lastCoords : false,
@@ -144,6 +145,9 @@ window.onload = function() {
           break;
         case 16 :
           state.squint = true;
+          break;
+        case 32 :
+          state.bump = true;
           break;
         case 38 :
           state.up = true;
@@ -214,6 +218,10 @@ window.onload = function() {
       }
       if (state.right) {
         coneMain.turnRight();
+      }
+      if (state.bump && coneMain.isBumping() === false) {
+        coneMain.bump();
+        state.bump = false;
       }
       if(state.pointer.coneName && state.pointer.lastCoords){
         if(cones[state.pointer.coneName].instance.tailingCone() !== false){

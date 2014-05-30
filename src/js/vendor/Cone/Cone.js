@@ -922,7 +922,7 @@
      * @chainable
      */
     stopBump: function() {
-      this.cylinder.getScene().stopAnimation(this.cylinder);
+      this.getMainMesh().getScene().stopAnimation(this.getMainMesh());
       this.resetBump();
       removeBumpAnimation(this);
       return this;
@@ -935,7 +935,7 @@
      * @chainable
      */
     resetBump: function(){
-      this.cylinder.scaling.y = 1;
+      this.getMainMesh().scaling.y = 1;
       this.bumping = false;
       return this;
     },
@@ -1159,7 +1159,7 @@
             that.stopAllAnimationsRunning();
 
             addBumpAnimation(that,options.scale);
-            that.cylinder.getScene().beginAnimation(that.cylinder, 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
+            that.getMainMesh().getScene().beginAnimation(that.getMainMesh(), 0, 100, typeof options.loop === 'number' ? false : options.loop, options.speed, function() {
               that.resetBump();
               removeBumpAnimation(that);
               setTimeout(function(){
@@ -1532,7 +1532,7 @@
       value: 1
     });
     bumpAnimation.setKeys(keys);
-    cone.cylinder.animations.push(bumpAnimation);
+    cone.getMainMesh().animations.push(bumpAnimation);
   };
   
   /**
@@ -1542,7 +1542,7 @@
    * @return {undefined}
    */
   var removeBumpAnimation = function(cone){
-    helpers.removeAnimationFromMesh(cone.cylinder, "bumpAnimation");
+    helpers.removeAnimationFromMesh(cone.getMainMesh(), "bumpAnimation");
   };
   
   /**
