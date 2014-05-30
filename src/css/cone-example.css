@@ -12,8 +12,8 @@ canvas{
   border-top-right-radius:15px;
 }
 #infos.loaded{
-  -webkit-animation: infos-flash 0.7s linear 0s 3;
-  animation: infos-flash 0.7s linear 0s 3;
+  -webkit-animation: infos-flash 2s linear 0s 1;
+  animation: infos-flash 2s linear 0s 1;
 }
 #infos ul{
   -moz-user-select: none;

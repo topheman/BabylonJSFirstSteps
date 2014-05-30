@@ -31,9 +31,11 @@
   var PARENT_EYES_ORIGINAL_POSITION_X = 1;
   var PARENT_EYES_ORIGINAL_POSITION_Y = 3.5;
   var DEFAULT_FOLLOW_STEP_PRECISION = 0.5;
-    
+  
   /**
-   * Creates a new cone
+   * Manage 3d Cone with a simple API
+   * 
+   * Based on BabylonJS
    * @class Cone
    * @constructor
    * @param {BABYLON.Scene} scene
@@ -623,7 +625,6 @@
       
       //if cones are already following, chose the last one in the tail
       fullTail = cone.getFullTail();
-      console.log(fullTail);
       if(fullTail.length > 0){
         cone = fullTail[fullTail.length-1];
       }
@@ -649,26 +650,40 @@
       var cone = this._coneTailing;
       cone._coneTailedBy = false;
       this._coneTailing = false;
-      this.getMainMesh().getScene().unRegisterBeforeRender(this._tailingBeforeRender);
+      this.getMainMesh().getScene().unregisterBeforeRender(this._tailingBeforeRender);
       return cone;
     },
     /**
-     * Returns the cone instance which this cone is tailing or false in none
+     * Returns the cone this cone is tailing (or false if none)
      * 
-     * @method isTailing
-     * @return {Boolean|Cone}
+     * @method tailingCone
+     * @returns {Boolean|Cone}
      */
-    isTailing: function(){
+    tailingCone: function(){
       return this._coneTailing;
     },
     /**
-     * Returns the cone instance which this cone is tailed by or false in none
+     * Returns the cone this cone is tailed by (or false if none)
      * 
-     * @method isTailed
-     * @return {Boolean|Cone}
+     * @method tailedCone
+     * @returns {Boolean|Cone}
      */
-    isTailed: function(){
+    tailedCone: function(){
       return this._coneTailedBy;
+    },
+    /**
+     * Returns true if this cone is n a tail in a way or an other
+     * 
+     * @method isTailRelated
+     * @return {Boolean}
+     */
+    isInTail: function(){
+      if(this._coneTailing !== false || this._coneTailedBy !== false){
+        return true;
+      }
+      else{
+        return false;
+      }
     },
     /**
      * Returns a Cone.List of the cones tailing this one
@@ -679,7 +694,7 @@
     getFullTail: function(){
       var fullTail = new Cone.List, reccursiveTailingConesDiscovery;
       reccursiveTailingConesDiscovery = function(cone){
-        var tailingCone = cone.isTailed();
+        var tailingCone = cone.tailedCone();
         if(tailingCone !== false){
           fullTail.push(tailingCone);
           reccursiveTailingConesDiscovery(tailingCone);
@@ -1833,7 +1848,9 @@
   Cone.helpers = helpers;
   
   /**
-   * Creates a new cone list
+   * Management of Cone instances lists made easier
+   * 
+   * Instance methods made available directly on the list, and lots of other things.
    * 
    * @class Cone.List
    * @constructor
