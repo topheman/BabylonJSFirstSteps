@@ -55,14 +55,14 @@ window.onload = function() {
     coneTest2.position.z = -10;
     coneTest2.rotation.y = -1;
     
-    coneList1 = new Cone.List();
-    coneList1.push(coneMain);
-    coneList1.push(coneTest1);
-    coneList1.push(coneTest2);
+    coneListAll = new Cone.List();
+    coneListAll.push(coneMain);
+    coneListAll.push(coneTest1);
+    coneListAll.push(coneTest2);
     
-    coneList2 = new Cone.List();
-    coneList2.push(coneTest1);
-    coneList2.push(coneTest2);
+    coneListOthers = new Cone.List();
+    coneListOthers.push(coneTest1);
+    coneListOthers.push(coneTest2);
     
     
     var cones = {
@@ -88,76 +88,23 @@ window.onload = function() {
         }
       }
     };
-    //put them as an array as well
-    var conesArray = [];
-    for (var currentCone in cones){
-      conesArray.push(cones[currentCone].instance);
-      cones[currentCone].instance.setAlpha(0);//set all of them to alpha = 0
-    }
     
-    var coneIndex, previousOptions;
-    for(coneIndex = conesArray.length; coneIndex > 0; coneIndex--){
-//      console.log(coneIndex, previousOptions);
-      previousOptions = (function(coneIndex, previousOptions){
-        var options;
-        if(coneIndex < conesArray.length){
-          options = {
-            callback:function(){
-              previousOptions.speed = 1.5;
-              console.log('a',coneIndex,previousOptions);
-              conesArray[coneIndex].fadeIn(previousOptions);
-            }
-          };
-        }
-        else{
-          options = {speed:1.5};
-        }
-        return options;
-      })(coneIndex, previousOptions);
-    }
+    coneListAll.setAlpha(0).fadeIn();
     
-    conesArray[0].fadeIn(previousOptions);
+    coneMain.animateScale({scale:1.5,speed:10}).animateScale({scale:1,speed:10});
     
     //custom user chainable queues
-    coneTest2.queue('color');
-    coneTest2.delay('color',4000)
-      .then(function(next,cone){ coneTest2.setColor('#00C510');console.log('cone',cone);next(); })
-      .delay(1000)
-      .then(function(next,cone){ cone.setColor('#C56E00');console.log('cone',cone);next(); })
-      .then(function(next){ coneTest2.bump({callback:next}); })
-      .then(function(next,cone){ coneTest2.setColor('#ffd53d');console.log('cone',cone);next(); })
-      .delay(1000)
-      .then(function(next,cone){ coneTest2.setColor('#00D500');console.log('cone',cone);next(); })
-      .then(function(next){ coneTest2.widenEyes({full:true,speed:1,callback:next}); })
-      .then(function(next,cone){ cone.setColor('#ffd53d');next(); });
-      
-    
-//    coneTest2.queue('color',function(next){
-//      setTimeout(function(){
-//        coneTest2.setColor('#00C510');
-//        next();
-//      },4000);
-//    }).queue('color',function(next){
-//      setTimeout(function(){
-//        coneTest2.setColor('#C56E00');
-//        next();
-//      },2000);
-//    }).queue('color',function(next){
-//      setTimeout(function(){
-//        coneTest2.setColor('#ffd53d');
-//        next();
-//      },2000);
-//    });
-    
-//    coneMain.fadeIn({
-//      callback:function(){
-//        coneTest1.fadeIn({
-//          callback:function(){
-//            coneTest2.fadeIn();
-//          }
-//        });
-//      }
-//    });
+//    coneTest2.queue('color');
+//    coneTest2.delay('color',4000)
+//      .then(function(next,cone){ coneTest2.setColor('#00C510');console.log('cone',cone);next(); })
+//      .delay(1000)
+//      .then(function(next,cone){ cone.setColor('#C56E00');console.log('cone',cone);next(); })
+//      .then(function(next){ coneTest2.bump({callback:next}); })
+//      .then(function(next,cone){ coneTest2.setColor('#ffd53d');console.log('cone',cone);next(); })
+//      .delay(1000)
+//      .then(function(next,cone){ coneTest2.setColor('#00D500');console.log('cone',cone);next(); })
+//      .then(function(next){ coneTest2.widenEyes({full:true,speed:1,callback:next}); })
+//      .then(function(next,cone){ cone.setColor('#ffd53d');next(); });
     
     camera.target = coneMain.getMainMesh();
     var cameraMouseMode = false;
@@ -275,31 +222,31 @@ window.onload = function() {
       //this loop can be optimize (according to exactly what we want to do)
       var i,j;
       //loop from the 1rst cone
-      for(i=0; i<conesArray.length; i++){
+      for(i=0; i<coneListAll.length; i++){
         //loop from the second cone
-        for(j=i+1; j<conesArray.length; j++){
-          if(conesArray[i].intersectsCone(conesArray[j])){
+        for(j=i+1; j<coneListAll.length; j++){
+          if(coneListAll[i].intersectsCone(coneListAll[j])){
             //only do something to the instance that is not moving
-            if(conesArray[j].$hasMoved === true){
-              conesArray[i].$intersected = true;
+            if(coneListAll[j].$hasMoved === true){
+              coneListAll[i].$intersected = true;
             }
-            else if(conesArray[i].$hasMoved === true){
-              conesArray[j].$intersected = true;
+            else if(coneListAll[i].$hasMoved === true){
+              coneListAll[j].$intersected = true;
             }
           }
         }
-        conesArray[i].intersectsGroundLimits(ground,true);//keep cones inside ground
-        conesArray[i].$hasMoved = false;//reset tag
+        coneListAll[i].intersectsGroundLimits(ground,true);//keep cones inside ground
+        coneListAll[i].$hasMoved = false;//reset tag
       }
     
-      for(i=0; i<conesArray.length; i++){
-        if(conesArray[i].$intersected === true && conesArray[i].isWidenningEyes() === false){
-//          conesArray[i].widenEyes();
+      for(i=0; i<coneListAll.length; i++){
+        if(coneListAll[i].$intersected === true && coneListAll[i].isWidenningEyes() === false){
+          coneListAll[i].widenEyes();
         }
-        else if(conesArray[i].$intersected === false && conesArray[i].isEyesWiden()){
-//          conesArray[i].unWidenEyes();
+        else if(coneListAll[i].$intersected === false && coneListAll[i].isEyesWiden()){
+          coneListAll[i].unWidenEyes();
         }
-        conesArray[i].$intersected = false;
+        coneListAll[i].$intersected = false;
       }
     });
 

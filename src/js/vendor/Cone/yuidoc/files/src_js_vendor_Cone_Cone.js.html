@@ -370,6 +370,13 @@
     
     this._currentMoveBeforeRenderLoopCallback = null;
     
+    //allow the user to pass its own attributes starting by $ at the init
+    for(var optionName in options){
+      if(/^\$/.test(optionName) === true){
+        this[optionName] = options[optionName];
+      }
+    }
+    
   };
 
   //Instance methode shared on the prototype

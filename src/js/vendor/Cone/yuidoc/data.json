@@ -32,7 +32,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1828
+            "line": 1835
         }
     },
     "classes": {
@@ -78,7 +78,7 @@
             "module": "Cone",
             "namespace": "",
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1762,
+            "line": 1769,
             "description": "Bunch of methods I didn't find inside BabylonJS, that I coded for myself.\n Please tell me if they exist"
         },
         "Cone.List": {
@@ -92,7 +92,7 @@
             "module": "Cone",
             "namespace": "",
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1828,
+            "line": 1835,
             "description": "Creates a new cone list",
             "is_constructor": 1,
             "params": [
@@ -212,7 +212,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 283,
+            "line": 290,
             "description": "Launches the next callback in the queue then removes it from the queue",
             "itemtype": "method",
             "name": "dequeue",
@@ -233,7 +233,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 313,
+            "line": 320,
             "description": "* Call it only with the queueName : **Returns the queue**.\n* Call it with queueName + callback : registers the callback in the queue. This\ncallback has a \"next\" parameter to launch the next callback in the queue. **Returns the cone to chain**.\n* Call it with queueName + array of callback to replace the queue. **Returns the cone to chain**",
             "itemtype": "method",
             "name": "queue",
@@ -260,7 +260,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 353,
+            "line": 360,
             "description": "Adds callback to the last used queue",
             "itemtype": "method",
             "name": "then",
@@ -284,7 +284,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 378,
+            "line": 385,
             "description": "Delays the next event in the queue of \"delay\" ms.\n\nYou can force the queue name.\n\nCan also be used without the `queueName` if you're alredy chaining on the right queue like : `myCone.fadeOut().delay(2000).fadeIn()`",
             "itemtype": "method",
             "name": "delay",
@@ -310,7 +310,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 415,
+            "line": 422,
             "description": "Clears the queue",
             "itemtype": "method",
             "name": "clearQueue",
@@ -331,7 +331,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 427,
+            "line": 434,
             "description": "Clears all the queues",
             "itemtype": "method",
             "name": "clearQueues",
@@ -345,7 +345,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 440,
+            "line": 447,
             "description": "Stops all the animations on the fx queue then clears the queue\n(all other queues continue)",
             "itemtype": "method",
             "name": "flushAnimationQueue",
@@ -359,7 +359,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 453,
+            "line": 460,
             "description": "Returns cone position",
             "itemtype": "method",
             "name": "getPosition",
@@ -372,7 +372,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 462,
+            "line": 469,
             "description": "Returns true if an fx animation is running",
             "itemtype": "method",
             "name": "isAnimationRunning",
@@ -385,7 +385,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 471,
+            "line": 478,
             "description": "Returns true if the cone is widenning eyes",
             "itemtype": "method",
             "name": "isWidenningEyes",
@@ -398,7 +398,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 480,
+            "line": 487,
             "description": "Returns true if the cone has its eyes widen",
             "itemtype": "method",
             "name": "isEyesWiden",
@@ -411,7 +411,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 489,
+            "line": 496,
             "itemtype": "method",
             "name": "isBumping",
             "return": {
@@ -423,7 +423,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 496,
+            "line": 503,
             "description": "Returns true if alpha is animating on the cone",
             "itemtype": "method",
             "name": "isChangingAlpha",
@@ -436,7 +436,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 505,
+            "line": 512,
             "itemtype": "method",
             "name": "getMoveStep",
             "return": {
@@ -448,7 +448,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 512,
+            "line": 519,
             "itemtype": "method",
             "name": "getTurnStep",
             "return": {
@@ -460,7 +460,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 519,
+            "line": 526,
             "itemtype": "method",
             "name": "getHeight",
             "return": {
@@ -472,7 +472,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 526,
+            "line": 533,
             "itemtype": "method",
             "name": "getTopDiameter",
             "return": {
@@ -484,7 +484,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 533,
+            "line": 540,
             "itemtype": "method",
             "name": "getBottomDiameter",
             "return": {
@@ -496,7 +496,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 540,
+            "line": 547,
             "itemtype": "method",
             "name": "getDistance",
             "params": [
@@ -515,7 +515,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 548,
+            "line": 555,
             "description": "Checks if two cones intersect (based on the bottom diameter)\n\nIf a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)",
             "itemtype": "method",
             "name": "intersectsCone",
@@ -535,7 +535,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 564,
+            "line": 571,
             "itemtype": "method",
             "name": "intersectsGroundLimits",
             "params": [
@@ -559,7 +559,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 600,
+            "line": 607,
             "description": "* Attaches this cone to the one passed in parameter\n* If you try to tail a cone already followed by another, your cone will follow the last one in the tail\n* Returns the cone you end up tailing",
             "itemtype": "method",
             "name": "tail",
@@ -593,7 +593,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 635,
+            "line": 642,
             "description": "Detaches your cone, returns the cone it was tailing",
             "itemtype": "method",
             "name": "unTail",
@@ -606,7 +606,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 648,
+            "line": 655,
             "description": "Returns the cone instance which this cone is tailing or false in none",
             "itemtype": "method",
             "name": "isTailing",
@@ -619,7 +619,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 657,
+            "line": 664,
             "description": "Returns the cone instance which this cone is tailed by or false in none",
             "itemtype": "method",
             "name": "isTailed",
@@ -632,7 +632,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 666,
+            "line": 673,
             "description": "Returns a Cone.List of the cones tailing this one",
             "itemtype": "method",
             "name": "getFullTail",
@@ -645,7 +645,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 687,
+            "line": 694,
             "description": "Registers the cone to a BABYLON.ShadowGenerator to be able to render shadows on the shadow map",
             "itemtype": "method",
             "name": "registerToShadowGenerator",
@@ -666,7 +666,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 702,
+            "line": 709,
             "description": "Squints the eyes of one step\nReturns true if the eyes are not all squinted\nReturns false if they are and stop squint",
             "itemtype": "method",
             "name": "squint",
@@ -679,7 +679,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 720,
+            "line": 727,
             "description": "Unsquints the eyes of one step\nReturns true if the eyes are not all unsquinted\nReturns false if they are and stop squint",
             "itemtype": "method",
             "name": "unSquint",
@@ -692,7 +692,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 738,
+            "line": 745,
             "description": "Sets the color of the cylinder\nAccepts hexa or rgb color",
             "itemtype": "method",
             "name": "setColor",
@@ -713,7 +713,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 754,
+            "line": 761,
             "description": "Sets the scale on all the cone",
             "itemtype": "method",
             "name": "setScale",
@@ -734,7 +734,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 768,
+            "line": 775,
             "description": "Sets the alpha on all the cone",
             "itemtype": "method",
             "name": "setAlpha",
@@ -755,7 +755,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 782,
+            "line": 789,
             "description": "Moves the cone forward of one moveStep",
             "itemtype": "method",
             "name": "moveForward",
@@ -769,7 +769,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 793,
+            "line": 800,
             "description": "Moves the cone backwards of one moveStep",
             "itemtype": "method",
             "name": "moveBack",
@@ -783,7 +783,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 804,
+            "line": 811,
             "description": "Moves the cone left of one moveStep",
             "itemtype": "method",
             "name": "moveLeft",
@@ -797,7 +797,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 815,
+            "line": 822,
             "description": "Moves the cone right of one moveStep",
             "itemtype": "method",
             "name": "moveRight",
@@ -811,7 +811,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 826,
+            "line": 833,
             "description": "Turns the cone left of one turnStep",
             "itemtype": "method",
             "name": "turnLeft",
@@ -825,7 +825,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 837,
+            "line": 844,
             "description": "Turns the cone right of one turnStep",
             "itemtype": "method",
             "name": "turnRight",
@@ -839,7 +839,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 848,
+            "line": 855,
             "description": "Stops all the fx animations",
             "itemtype": "method",
             "name": "stopAllAnimationsRunning",
@@ -853,7 +853,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 868,
+            "line": 875,
             "description": "Stops eyes fx animation",
             "itemtype": "method",
             "name": "stopWidenEyes",
@@ -867,7 +867,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 881,
+            "line": 888,
             "description": "Reset eyes to orginal scale and position",
             "itemtype": "method",
             "name": "resetWidenEyes",
@@ -881,7 +881,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 895,
+            "line": 902,
             "description": "Stops cylinder fx animation",
             "itemtype": "method",
             "name": "stopBump",
@@ -895,7 +895,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 908,
+            "line": 915,
             "description": "Reset cylinder to orginal scale and position",
             "itemtype": "method",
             "name": "resetBump",
@@ -909,7 +909,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 920,
+            "line": 927,
             "itemtype": "method",
             "name": "toggleBump",
             "params": [
@@ -929,7 +929,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 935,
+            "line": 942,
             "itemtype": "method",
             "name": "stopAnimateAlpha",
             "return": {
@@ -942,7 +942,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 947,
+            "line": 954,
             "itemtype": "method",
             "name": "setMoveStep",
             "params": [
@@ -962,7 +962,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 957,
+            "line": 964,
             "itemtype": "method",
             "name": "setTurnStep",
             "params": [
@@ -982,7 +982,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 967,
+            "line": 974,
             "itemtype": "method",
             "name": "lookAt",
             "params": [
@@ -1002,7 +1002,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 981,
+            "line": 988,
             "description": "Moves the cone towards \"point\" of one moveStep",
             "itemtype": "method",
             "name": "follow",
@@ -1029,7 +1029,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1010,
+            "line": 1017,
             "description": "This method is used internally to expose methods that are used both on Cone and Cone.List\n\nYou will use it when you make your own plugins to expose your own methods",
             "itemtype": "method",
             "name": "addMethods",
@@ -1053,7 +1053,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1041,
+            "line": 1048,
             "itemtype": "method",
             "name": "widenEyes",
             "params": [
@@ -1125,7 +1125,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1340,
+            "line": 1347,
             "description": "Run any animate methods such as :\n\n* animateAlpha\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n\nJust specify it in `options.method`. Those methods are also accessible directly via shorcuts on the {{#crossLink \"Cone\"}}Cone{{/crossLink}} instance.",
             "itemtype": "method",
             "name": "animate",
@@ -1156,7 +1156,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1418,
+            "line": 1425,
             "itemtype": "method",
             "name": "animationMethodExists",
             "access": "private",
@@ -1177,7 +1177,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1429,
+            "line": 1436,
             "itemtype": "method",
             "name": "getAnimationMethodQueueName",
             "access": "private",
@@ -1198,7 +1198,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1445,
+            "line": 1452,
             "description": "this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb",
             "itemtype": "method",
             "name": "hexToRgb",
@@ -1220,7 +1220,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1462,
+            "line": 1469,
             "itemtype": "method",
             "name": "isRgb",
             "access": "private",
@@ -1241,7 +1241,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1475,
+            "line": 1482,
             "itemtype": "method",
             "name": "removeAllAnimations",
             "access": "private",
@@ -1262,7 +1262,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1489,
+            "line": 1496,
             "itemtype": "method",
             "name": "addBumpAnimation",
             "access": "private",
@@ -1288,7 +1288,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1516,
+            "line": 1523,
             "itemtype": "method",
             "name": "removeBumpAnimation",
             "access": "private",
@@ -1309,7 +1309,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1526,
+            "line": 1533,
             "itemtype": "method",
             "name": "addWidenEyesAnimation",
             "access": "private",
@@ -1330,7 +1330,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1585,
+            "line": 1592,
             "itemtype": "method",
             "name": "removeWidenEyesAnimation",
             "access": "private",
@@ -1351,7 +1351,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1597,
+            "line": 1604,
             "itemtype": "method",
             "name": "addAlphaAnimation",
             "access": "private",
@@ -1377,7 +1377,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1653,
+            "line": 1660,
             "itemtype": "method",
             "name": "removeAlphaAnimation",
             "access": "private",
@@ -1398,7 +1398,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1665,
+            "line": 1672,
             "itemtype": "method",
             "name": "addScaleAnimation",
             "access": "private",
@@ -1424,7 +1424,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1715,
+            "line": 1722,
             "itemtype": "method",
             "name": "removeScaleAnimation",
             "access": "private",
@@ -1445,7 +1445,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1727,
+            "line": 1734,
             "todo": [
                 "since under development"
             ],
@@ -1474,7 +1474,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1752,
+            "line": 1759,
             "itemtype": "method",
             "name": "removeColorAnimation",
             "access": "private",
@@ -1495,7 +1495,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1770,
+            "line": 1777,
             "itemtype": "method",
             "name": "getAnimationNamesFromMesh",
             "static": 1,
@@ -1515,7 +1515,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1782,
+            "line": 1789,
             "itemtype": "method",
             "name": "isAnimationRegistered",
             "static": 1,
@@ -1540,7 +1540,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1792,
+            "line": 1799,
             "itemtype": "method",
             "name": "removeAnimationFromMesh",
             "static": "Removes the animation from the mesh\nreturns true if the animation was removed / false if there was no animation to remove",
@@ -1565,7 +1565,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1810,
+            "line": 1817,
             "itemtype": "method",
             "name": "cloneObject",
             "static": "Clone object (simple, not deep reccursive)",
@@ -1585,7 +1585,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1858,
+            "line": 1865,
             "description": "Loops through the cone list providing a callback like `function(cone, index){}`\n\nReturn false in the callback to stop the loop",
             "itemtype": "method",
             "name": "each",
@@ -1606,7 +1606,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1879,
+            "line": 1886,
             "description": "Run any animate methods such as :\n\n* animateAlpha\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n\nJust specify it in `options.method`. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink \"Cone\"}}Cone{{/crossLink}} instance.",
             "itemtype": "method",
             "name": "animate",
@@ -1637,7 +1637,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1943,
+            "line": 1950,
             "itemtype": "method",
             "name": "changeStateDispatcher",
             "access": "private",
@@ -1668,7 +1668,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1957,
+            "line": 1964,
             "description": "This method is used internally to expose methods that are used both on Cone and Cone.List\n\nYou will use it when you make your own plugins to expose your own methods",
             "itemtype": "method",
             "name": "addMethods",
@@ -1694,15 +1694,15 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:754"
+            "line": " src\\js\\vendor\\Cone\\Cone.js:761"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:1010"
+            "line": " src\\js\\vendor\\Cone\\Cone.js:1017"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:1957"
+            "line": " src\\js\\vendor\\Cone\\Cone.js:1964"
         }
     ]
 }
