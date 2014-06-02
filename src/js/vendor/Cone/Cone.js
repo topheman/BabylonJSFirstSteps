@@ -39,7 +39,14 @@
    * @class Cone
    * @constructor
    * @param {BABYLON.Scene} scene
-   * @param {Object} options
+   * @param {Object} [options]
+   * @param {string} [options.name] Name of the cone instance
+   * @param {number} [options.moveStep=0.1] How much the cone will move at each move call
+   * @param {number} [options.turnStep=0.1] How much the cone will turn at each turn call (in rad)
+   * @param {number} [options.eyeSize=1.5] Eye size
+   * @param {string|Object} [options.color] Color of the cone's sylinder (default : #900000) - can be in RGB or HEXA
+   * @param {Boolean} [options.pickable=true] Defines if the cone is pickable
+   * @param {mixed} [options.$customOption] Pass any custom option with a parameter's name starting by $
    * @return {Cone}
    */
   var Cone = function(scene, options) {
@@ -48,7 +55,10 @@
     /**
      * Original sizes
      * @private
-     * @property {Object] _size
+     * @property {Object} _size
+     * @property {number} _size.topDiameter
+     * @property {number} _size.bottomDiameter
+     * @property {number} _size.height
      */
     this._size = {
       topDiameter : CONE_CYLINDER_TOP_DIAMETER,
@@ -605,7 +615,6 @@
       }
       return result;
     },
-    //@todo implement a hasMoved tag to know if the instance has moved (update it in a registerBeforeRenderLoop)
     /**
      * * Attaches this cone to the one passed in parameter
      * * If you try to tail a cone already followed by another, your cone will follow the last one in the tail
@@ -692,7 +701,7 @@
      * @return {Cone.List}
      */
     getFullTail: function(){
-      var fullTail = new Cone.List, reccursiveTailingConesDiscovery;
+      var fullTail = new Cone.List(), reccursiveTailingConesDiscovery;
       reccursiveTailingConesDiscovery = function(cone){
         var tailingCone = cone.tailedCone();
         if(tailingCone !== false){
@@ -1055,22 +1064,28 @@
         console.warn('method '+methodName+' already registered on Cone');
       }
     }
-  }
+  };
   
   //Those methods are added to the Cone.prototype below
   var animationMethods = {
     'fx': {
       /**
+       * Widens the eyes of the cone (and more)
+       * 
+       * Can also be run via the `.animate()` dispatcher
        * 
        * @method widenEyes
        * @param {Object} [options]
        * @param {number} [options.speed=5] 
-       * @param {boolean|number} [options.loop=false] 
-       * @param {function} [options.callback=null] `function(cone){}`
-       * @param {number} [options.delay=0] 
-       * @param {boolean} [options.break=false] 
-       * @param {boolean} [options.full=false] 
-       * @param {boolean} [options.close=false] 
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @param {boolean} [options.full=false] If true, runs the full animation (openning and closing eyes)
+       * @param {boolean} [options.close=false] If true, runs only the close eyes part of the animation (by default, only opens eyes)
        * @return {Cone}
        * @chainable
        */
@@ -1132,11 +1147,50 @@
 
         return this;
       },
+      /**
+       * Unwidens the eyes of the cone (and more)
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method unWidenEyes
+       * @param {Object} [options]
+       * @param {number} [options.speed=5] 
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @param {boolean} [options.full=false] If true, runs the full animation (openning and closing eyes)
+       * @param {boolean} [options.close=true] If true, runs only the close eyes part of the animation (by default, does that on unWidenEyes)
+       * @return {Cone}
+       * @chainable
+       */
       unWidenEyes: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.close = true;
         return this.widenEyes(options);
       },
+      /**
+       * Bumps the cone
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method bump
+       * @param {Object} [options]
+       * @param {number} [options.scale=1.2]
+       * @param {number} [options.speed=3]
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @return {Cone}
+       * @chainable
+       */
       bump: function(options) {
         options = typeof options === 'undefined' ? {} : options;
         options.scale = (typeof options.scale === 'undefined' || options.scale === 0) ? 1.2 : options.scale;
@@ -1175,6 +1229,28 @@
 
         return this;
       },
+      /**
+       * Animates the alpha of the cone
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method animateAlpha
+       * @param {Object} [options]
+       * @param {number} [options.alpha=0]
+       * @param {number} [options.speed=3]
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @param {boolean} [options.cylinder=true] True by default, if false, won't be affected
+       * @param {boolean} [options.leftEye=true] True by default, if false, won't be affected
+       * @param {boolean} [options.rightEye=true] True by default, if false, won't be affected
+       * @return {Cone}
+       * @chainable
+       */
       animateAlpha: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.alpha = typeof options.alpha === 'undefined' ? 0 : options.alpha;
@@ -1239,6 +1315,25 @@
 
         return this;
       },
+      /**
+       * Animates the scale of the cone
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method animateScale
+       * @param {Object} [options]
+       * @param {number} [options.scale=1]
+       * @param {number} [options.speed=3]
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @return {Cone}
+       * @chainable
+       */
       animateScale: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.scale = typeof options.scale === 'undefined' ? 1 : options.scale;
@@ -1275,6 +1370,28 @@
         
         return this;
       },
+      /**
+       * Animates the color of the cylinder of the cone
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * **Does not work for the moment**
+       * 
+       * @todo Does not work for the moment
+       * @method animateColor
+       * @param {Object} options
+       * @param {number} options.color
+       * @param {number} [options.speed=3]
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @return {Cone}
+       * @chainable
+       */
       animateColor: function(options){
         options = typeof options === 'undefined' ? {} : options;
         if(typeof options.color === 'undefined'){
@@ -1317,11 +1434,53 @@
         
         return this;
       },
+      /**
+       * Shortcut for animateAlpha(), from the current alpha to alpha=1
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method fadeIn
+       * @param {Object} [options]
+       * @param {number} [options.speed=3]
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @param {boolean} [options.cylinder=true] True by default, if false, won't be affected
+       * @param {boolean} [options.leftEye=true] True by default, if false, won't be affected
+       * @param {boolean} [options.rightEye=true] True by default, if false, won't be affected
+       * @return {Cone}
+       * @chainable
+       */
       fadeIn: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.alpha = 1;
         return this.animateAlpha(options);
       },
+      /**
+       * Shortcut for animateAlpha(), from the current alpha to alpha=0
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method fadeOut
+       * @param {Object} [options]
+       * @param {number} [options.speed=3]
+       * @param {boolean|number} [options.loop=false] 3 possibilities :
+       * * `true` will loop the animation until you stop it
+       * * `false` will play the animation only once
+       * * a number will play the animation a number of times
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
+       * @param {boolean} [options.cylinder=true] True by default, if false, won't be affected
+       * @param {boolean} [options.leftEye=true] True by default, if false, won't be affected
+       * @param {boolean} [options.rightEye=true] True by default, if false, won't be affected
+       * @return {Cone}
+       * @chainable
+       */
       fadeOut: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.alpha = 0;
@@ -1329,6 +1488,20 @@
       }
     },
     'move':{
+      /**
+       * Let's your cone move to a position.
+       * 
+       * Can also be run via the `.animate()` dispatcher
+       * 
+       * @method moveTo
+       * @param {Object} [options]
+       * @param {Cone|BABYLON.Vector3|Object} options.position
+       * @param {function} [options.callback=null] will run your callback at the end of the animation : `function(cone){}`
+       * @param {number} [options.delay=0] Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)
+       * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one (`.moveTo()` is on the `move` queue, not the `fx` queue as the other animations, so you can run them in parallel of moveTo)
+       * @return {Cone}
+       * @chainable
+       */
       moveTo: function(options){
         options = typeof options === 'undefined' ? {} : options;
         options.callback = (typeof options.callback !== 'function') ? null : options.callback;
@@ -1363,11 +1536,13 @@
    * Run any animate methods such as :
    * 
    * * animateAlpha
+   * * animateScale
    * * bump
    * * fadeIn
    * * fadeOut
    * * unWidenEyes
    * * widenEyes
+   * * moveTo
    * 
    * Just specify it in `options.method`. Those methods are also accessible directly via shorcuts on the {{#crossLink "Cone"}}Cone{{/crossLink}} instance.
    * 
@@ -1397,7 +1572,7 @@
     else if(animationMethodExists(options.method) === false){
       throw new Error('"'+options.method+'" : method not allowed');
     }
-    var queueName = getAnimationMethodQueueName(options.method);//@todo find the exact queueName for the method
+    var queueName = getAnimationMethodQueueName(options.method);
     return animationMethods[queueName][options.method].call(this,options);
   };
   
@@ -1747,7 +1922,7 @@
   };
   
   /**
-   * @todo since under development
+   * @todo still under development
    * @method addColorAnimation
    * @private
    * @param {Cone} cone
@@ -1812,10 +1987,11 @@
       return helpers.getAnimationNamesFromMesh(mesh).indexOf(animationName) > -1;
     },
     /**
+     * Removes the animation from the mesh
+     * 
+     * returns true if the animation was removed / false if there was no animation to remove
      * @method removeAnimationFromMesh
      * @static
-     * Removes the animation from the mesh
-     * returns true if the animation was removed / false if there was no animation to remove
      * @param {BABYLON.Mesh} mesh
      * @param {String} animationName
      * @return {Boolean}
@@ -1830,9 +2006,9 @@
       }
     },
     /**
+     * Clone object (simple, not deep reccursive)
      * @method cloneObject
      * @static
-     * Clone object (simple, not deep reccursive)
      * @param {Object} obj
      * @return {Object}
      */
@@ -1904,11 +2080,13 @@
    * Run any animate methods such as :
    * 
    * * animateAlpha
+   * * animateScale
    * * bump
    * * fadeIn
    * * fadeOut
    * * unWidenEyes
    * * widenEyes
+   * * moveTo
    * 
    * Just specify it in `options.method`. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink "Cone"}}Cone{{/crossLink}} instance.
    * 
@@ -2007,22 +2185,6 @@
       else{
         console.warn('method '+methodName+' already registered');
       }
-    }
-  };  
-  
-  Cone.List.fn.animateCascade = function(options){
-    options = typeof options === 'undefined' ? {} : options;
-    options.loop = (typeof options.loop === 'undefined') ? false : options.loop;
-    options.callback = typeof options.callback !== 'function' ? null : options.callback;
-    options.delay = (typeof options.delay === 'undefined') ? 0 : options.delay;
-    options.totalCallback = typeof options.totalCallback !== 'function' ? null : options.callback;
-    options.totalLoop = (typeof options.totalLoop === 'undefined') ? true : options.totalLoop;
-    options.totalDelay = (typeof options.totalDelay === 'undefined') ? 0 : options.totalDelay;
-    if(typeof options.method === 'undefined'){
-      throw new Error('method needs to be specified');
-    }
-    if(options.loop === true){
-      console.warn("options.loop can\'t be true, maybe you meant options.totalLoop");
     }
   };
   

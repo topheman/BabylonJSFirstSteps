@@ -32,7 +32,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1850
+            "line": 2026
         }
     },
     "classes": {
@@ -59,7 +59,56 @@
                 {
                     "name": "options",
                     "description": "",
-                    "type": "Object"
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "name",
+                            "description": "Name of the cone instance",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "moveStep",
+                            "description": "How much the cone will move at each move call",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0.1"
+                        },
+                        {
+                            "name": "turnStep",
+                            "description": "How much the cone will turn at each turn call (in rad)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0.1"
+                        },
+                        {
+                            "name": "eyeSize",
+                            "description": "Eye size",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1.5"
+                        },
+                        {
+                            "name": "color",
+                            "description": "Color of the cone's sylinder (default : #900000) - can be in RGB or HEXA",
+                            "type": "String|Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "pickable",
+                            "description": "Defines if the cone is pickable",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "$customOption",
+                            "description": "Pass any custom option with a parameter's name starting by $",
+                            "type": "Mixed",
+                            "optional": true
+                        }
+                    ]
                 }
             ],
             "return": {
@@ -78,7 +127,7 @@
             "module": "Cone",
             "namespace": "",
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1784,
+            "line": 1959,
             "description": "Bunch of methods I didn't find inside BabylonJS, that I coded for myself.\n Please tell me if they exist"
         },
         "Cone.List": {
@@ -92,7 +141,7 @@
             "module": "Cone",
             "namespace": "",
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1850,
+            "line": 2026,
             "description": "Management of Cone instances lists made easier\n\nInstance methods made available directly on the list, and lots of other things.",
             "is_constructor": 1,
             "params": [
@@ -111,18 +160,36 @@
     "classitems": [
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 48,
+            "line": 55,
             "description": "Original sizes",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
-            "name": "{Object] _size",
+            "name": "_size",
+            "type": "Object",
             "class": "Cone",
-            "module": "Cone"
+            "module": "Cone",
+            "subprops": [
+                {
+                    "name": "topDiameter",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "bottomDiameter",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "",
+                    "type": "Number"
+                }
+            ]
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 128,
+            "line": 138,
             "description": "x postion of the cone in the space",
             "itemtype": "property",
             "name": "position.x",
@@ -132,7 +199,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 133,
+            "line": 143,
             "description": "y postion of the cone in the space",
             "itemtype": "property",
             "name": "position.y",
@@ -142,7 +209,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 138,
+            "line": 148,
             "description": "z postion of the cone in the space",
             "itemtype": "property",
             "name": "position.z",
@@ -152,7 +219,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 173,
+            "line": 183,
             "description": "x rotation of the cone in the space",
             "itemtype": "property",
             "name": "rotation.x",
@@ -162,7 +229,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 178,
+            "line": 188,
             "description": "y rotation of the cone in the space",
             "itemtype": "property",
             "name": "rotation.y",
@@ -172,7 +239,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 183,
+            "line": 193,
             "description": "z rotation of the cone in the space",
             "itemtype": "property",
             "name": "rotation.z",
@@ -182,7 +249,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 218,
+            "line": 228,
             "description": "x scaling of the cone",
             "itemtype": "property",
             "name": "scaling.x",
@@ -192,7 +259,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 223,
+            "line": 233,
             "description": "y scaling of the cone",
             "itemtype": "property",
             "name": "scaling.y",
@@ -202,7 +269,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 228,
+            "line": 238,
             "description": "z scaling of the cone",
             "itemtype": "property",
             "name": "scaling.z",
@@ -212,7 +279,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 292,
+            "line": 302,
             "description": "Launches the next callback in the queue then removes it from the queue",
             "itemtype": "method",
             "name": "dequeue",
@@ -233,7 +300,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 322,
+            "line": 332,
             "description": "* Call it only with the queueName : **Returns the queue**.\n* Call it with queueName + callback : registers the callback in the queue. This\ncallback has a \"next\" parameter to launch the next callback in the queue. **Returns the cone to chain**.\n* Call it with queueName + array of callback to replace the queue. **Returns the cone to chain**",
             "itemtype": "method",
             "name": "queue",
@@ -260,7 +327,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 362,
+            "line": 372,
             "description": "Adds callback to the last used queue",
             "itemtype": "method",
             "name": "then",
@@ -284,7 +351,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 387,
+            "line": 397,
             "description": "Delays the next event in the queue of \"delay\" ms.\n\nYou can force the queue name.\n\nCan also be used without the `queueName` if you're alredy chaining on the right queue like : `myCone.fadeOut().delay(2000).fadeIn()`",
             "itemtype": "method",
             "name": "delay",
@@ -310,7 +377,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 424,
+            "line": 434,
             "description": "Clears the queue",
             "itemtype": "method",
             "name": "clearQueue",
@@ -331,7 +398,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 436,
+            "line": 446,
             "description": "Clears all the queues",
             "itemtype": "method",
             "name": "clearQueues",
@@ -345,7 +412,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 449,
+            "line": 459,
             "description": "Stops all the animations on the fx queue then clears the queue\n(all other queues continue)",
             "itemtype": "method",
             "name": "flushAnimationQueue",
@@ -359,7 +426,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 462,
+            "line": 472,
             "description": "Returns cone position",
             "itemtype": "method",
             "name": "getPosition",
@@ -372,7 +439,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 471,
+            "line": 481,
             "description": "Returns true if an fx animation is running",
             "itemtype": "method",
             "name": "isAnimationRunning",
@@ -385,7 +452,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 480,
+            "line": 490,
             "description": "Returns true if the cone is widenning eyes",
             "itemtype": "method",
             "name": "isWidenningEyes",
@@ -398,7 +465,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 489,
+            "line": 499,
             "description": "Returns true if the cone has its eyes widen",
             "itemtype": "method",
             "name": "isEyesWiden",
@@ -411,7 +478,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 498,
+            "line": 508,
             "itemtype": "method",
             "name": "isBumping",
             "return": {
@@ -423,7 +490,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 505,
+            "line": 515,
             "description": "Returns true if alpha is animating on the cone",
             "itemtype": "method",
             "name": "isChangingAlpha",
@@ -436,7 +503,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 514,
+            "line": 524,
             "itemtype": "method",
             "name": "getMoveStep",
             "return": {
@@ -448,7 +515,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 521,
+            "line": 531,
             "itemtype": "method",
             "name": "getTurnStep",
             "return": {
@@ -460,7 +527,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 528,
+            "line": 538,
             "itemtype": "method",
             "name": "getHeight",
             "return": {
@@ -472,7 +539,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 535,
+            "line": 545,
             "itemtype": "method",
             "name": "getTopDiameter",
             "return": {
@@ -484,7 +551,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 542,
+            "line": 552,
             "itemtype": "method",
             "name": "getBottomDiameter",
             "return": {
@@ -496,7 +563,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 549,
+            "line": 559,
             "itemtype": "method",
             "name": "getDistance",
             "params": [
@@ -515,7 +582,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 557,
+            "line": 567,
             "description": "Checks if two cones intersect (based on the bottom diameter)\n\nIf a cone has been rescaled, it's taken account (although, if scaling x and z are different the bigger one is taken in account)",
             "itemtype": "method",
             "name": "intersectsCone",
@@ -535,7 +602,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 573,
+            "line": 583,
             "itemtype": "method",
             "name": "intersectsGroundLimits",
             "params": [
@@ -559,7 +626,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 609,
+            "line": 618,
             "description": "* Attaches this cone to the one passed in parameter\n* If you try to tail a cone already followed by another, your cone will follow the last one in the tail\n* Returns the cone you end up tailing",
             "itemtype": "method",
             "name": "tail",
@@ -593,7 +660,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 643,
+            "line": 652,
             "description": "Detaches your cone, returns the cone it was tailing",
             "itemtype": "method",
             "name": "unTail",
@@ -606,7 +673,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 656,
+            "line": 665,
             "description": "Returns the cone this cone is tailing (or false if none)",
             "itemtype": "method",
             "name": "tailingCone",
@@ -619,7 +686,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 665,
+            "line": 674,
             "description": "Returns the cone this cone is tailed by (or false if none)",
             "itemtype": "method",
             "name": "tailedCone",
@@ -632,7 +699,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 674,
+            "line": 683,
             "description": "Returns true if this cone is n a tail in a way or an other",
             "itemtype": "method",
             "name": "isTailRelated",
@@ -645,7 +712,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 688,
+            "line": 697,
             "description": "Returns a Cone.List of the cones tailing this one",
             "itemtype": "method",
             "name": "getFullTail",
@@ -658,7 +725,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 709,
+            "line": 718,
             "description": "Registers the cone to a BABYLON.ShadowGenerator to be able to render shadows on the shadow map",
             "itemtype": "method",
             "name": "registerToShadowGenerator",
@@ -679,7 +746,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 724,
+            "line": 733,
             "description": "Squints the eyes of one step\nReturns true if the eyes are not all squinted\nReturns false if they are and stop squint",
             "itemtype": "method",
             "name": "squint",
@@ -692,7 +759,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 742,
+            "line": 751,
             "description": "Unsquints the eyes of one step\nReturns true if the eyes are not all unsquinted\nReturns false if they are and stop squint",
             "itemtype": "method",
             "name": "unSquint",
@@ -705,7 +772,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 760,
+            "line": 769,
             "description": "Sets the color of the cylinder\nAccepts hexa or rgb color",
             "itemtype": "method",
             "name": "setColor",
@@ -726,7 +793,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 776,
+            "line": 785,
             "description": "Sets the scale on all the cone",
             "itemtype": "method",
             "name": "setScale",
@@ -747,7 +814,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 790,
+            "line": 799,
             "description": "Sets the alpha on all the cone",
             "itemtype": "method",
             "name": "setAlpha",
@@ -768,7 +835,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 804,
+            "line": 813,
             "description": "Moves the cone forward of one moveStep",
             "itemtype": "method",
             "name": "moveForward",
@@ -782,7 +849,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 815,
+            "line": 824,
             "description": "Moves the cone backwards of one moveStep",
             "itemtype": "method",
             "name": "moveBack",
@@ -796,7 +863,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 826,
+            "line": 835,
             "description": "Moves the cone left of one moveStep",
             "itemtype": "method",
             "name": "moveLeft",
@@ -810,7 +877,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 837,
+            "line": 846,
             "description": "Moves the cone right of one moveStep",
             "itemtype": "method",
             "name": "moveRight",
@@ -824,7 +891,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 848,
+            "line": 857,
             "description": "Turns the cone left of one turnStep",
             "itemtype": "method",
             "name": "turnLeft",
@@ -838,7 +905,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 859,
+            "line": 868,
             "description": "Turns the cone right of one turnStep",
             "itemtype": "method",
             "name": "turnRight",
@@ -852,7 +919,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 870,
+            "line": 879,
             "description": "Stops all the fx animations",
             "itemtype": "method",
             "name": "stopAllAnimationsRunning",
@@ -866,7 +933,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 890,
+            "line": 899,
             "description": "Stops eyes fx animation",
             "itemtype": "method",
             "name": "stopWidenEyes",
@@ -880,7 +947,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 903,
+            "line": 912,
             "description": "Reset eyes to orginal scale and position",
             "itemtype": "method",
             "name": "resetWidenEyes",
@@ -894,7 +961,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 917,
+            "line": 926,
             "description": "Stops cylinder fx animation",
             "itemtype": "method",
             "name": "stopBump",
@@ -908,7 +975,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 930,
+            "line": 939,
             "description": "Reset cylinder to orginal scale and position",
             "itemtype": "method",
             "name": "resetBump",
@@ -922,7 +989,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 942,
+            "line": 951,
             "itemtype": "method",
             "name": "toggleBump",
             "params": [
@@ -942,7 +1009,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 957,
+            "line": 966,
             "itemtype": "method",
             "name": "stopAnimateAlpha",
             "return": {
@@ -955,7 +1022,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 969,
+            "line": 978,
             "itemtype": "method",
             "name": "setMoveStep",
             "params": [
@@ -975,7 +1042,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 979,
+            "line": 988,
             "itemtype": "method",
             "name": "setTurnStep",
             "params": [
@@ -995,7 +1062,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 989,
+            "line": 998,
             "itemtype": "method",
             "name": "lookAt",
             "params": [
@@ -1015,7 +1082,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1003,
+            "line": 1012,
             "description": "Moves the cone towards \"point\" of one moveStep",
             "itemtype": "method",
             "name": "follow",
@@ -1042,7 +1109,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1032,
+            "line": 1041,
             "description": "This method is used internally to expose methods that are used both on Cone and Cone.List\n\nYou will use it when you make your own plugins to expose your own methods",
             "itemtype": "method",
             "name": "addMethods",
@@ -1066,7 +1133,8 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1063,
+            "line": 1072,
+            "description": "Widens the eyes of the cone (and more)\n\nCan also be run via the `.animate()` dispatcher",
             "itemtype": "method",
             "name": "widenEyes",
             "params": [
@@ -1085,42 +1153,42 @@
                         },
                         {
                             "name": "loop",
-                            "description": "",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
                             "type": "Boolean|number",
                             "optional": true,
                             "optdefault": "false"
                         },
                         {
                             "name": "callback",
-                            "description": "`function(cone){}`",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
                             "type": "Function",
                             "optional": true,
                             "optdefault": "null"
                         },
                         {
                             "name": "delay",
-                            "description": "",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
                             "type": "Number",
                             "optional": true,
                             "optdefault": "0"
                         },
                         {
                             "name": "break",
-                            "description": "",
+                            "description": "If true cancels all animations in the queue before running this one",
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
                         },
                         {
                             "name": "full",
-                            "description": "",
+                            "description": "If true, runs the full animation (openning and closing eyes)",
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
                         },
                         {
                             "name": "close",
-                            "description": "",
+                            "description": "If true, runs only the close eyes part of the animation (by default, only opens eyes)",
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
@@ -1138,8 +1206,576 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1362,
-            "description": "Run any animate methods such as :\n\n* animateAlpha\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n\nJust specify it in `options.method`. Those methods are also accessible directly via shorcuts on the {{#crossLink \"Cone\"}}Cone{{/crossLink}} instance.",
+            "line": 1150,
+            "description": "Unwidens the eyes of the cone (and more)\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "unWidenEyes",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "5"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "full",
+                            "description": "If true, runs the full animation (openning and closing eyes)",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "close",
+                            "description": "If true, runs only the close eyes part of the animation (by default, does that on unWidenEyes)",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1175,
+            "description": "Bumps the cone\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "bump",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "scale",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1.2"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1232,
+            "description": "Animates the alpha of the cone\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "animateAlpha",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "alpha",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "cylinder",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "leftEye",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "rightEye",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1318,
+            "description": "Animates the scale of the cone\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "animateScale",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "scale",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1373,
+            "description": "Animates the color of the cylinder of the cone\n\nCan also be run via the `.animate()` dispatcher\n\n**Does not work for the moment**",
+            "todo": [
+                "Does not work for the moment"
+            ],
+            "itemtype": "method",
+            "name": "animateColor",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "color",
+                            "description": "",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1437,
+            "description": "Shortcut for animateAlpha(), from the current alpha to alpha=1\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "fadeIn",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "cylinder",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "leftEye",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "rightEye",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1463,
+            "description": "Shortcut for animateAlpha(), from the current alpha to alpha=0\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "fadeOut",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "speed",
+                            "description": "",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "3 possibilities :\n* `true` will loop the animation until you stop it\n* `false` will play the animation only once\n* a number will play the animation a number of times",
+                            "type": "Boolean|number",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "cylinder",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "leftEye",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "rightEye",
+                            "description": "True by default, if false, won't be affected",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1491,
+            "description": "Let's your cone move to a position.\n\nCan also be run via the `.animate()` dispatcher",
+            "itemtype": "method",
+            "name": "moveTo",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "position",
+                            "description": "",
+                            "type": "Cone|BABYLON.Vector3|Object"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "will run your callback at the end of the animation : `function(cone){}`",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "break",
+                            "description": "If true cancels all animations in the queue before running this one (`.moveTo()` is on the `move` queue, not the `fx` queue as the other animations, so you can run them in parallel of moveTo)",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Cone"
+            },
+            "chainable": 1,
+            "class": "Cone",
+            "module": "Cone"
+        },
+        {
+            "file": "src\\js\\vendor\\Cone\\Cone.js",
+            "line": 1535,
+            "description": "Run any animate methods such as :\n\n* animateAlpha\n* animateScale\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n* moveTo\n\nJust specify it in `options.method`. Those methods are also accessible directly via shorcuts on the {{#crossLink \"Cone\"}}Cone{{/crossLink}} instance.",
             "itemtype": "method",
             "name": "animate",
             "params": [
@@ -1169,7 +1805,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1440,
+            "line": 1615,
             "itemtype": "method",
             "name": "animationMethodExists",
             "access": "private",
@@ -1190,7 +1826,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1451,
+            "line": 1626,
             "itemtype": "method",
             "name": "getAnimationMethodQueueName",
             "access": "private",
@@ -1211,7 +1847,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1467,
+            "line": 1642,
             "description": "this method is inpired by http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb",
             "itemtype": "method",
             "name": "hexToRgb",
@@ -1233,7 +1869,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1484,
+            "line": 1659,
             "itemtype": "method",
             "name": "isRgb",
             "access": "private",
@@ -1254,7 +1890,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1497,
+            "line": 1672,
             "itemtype": "method",
             "name": "removeAllAnimations",
             "access": "private",
@@ -1275,7 +1911,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1511,
+            "line": 1686,
             "itemtype": "method",
             "name": "addBumpAnimation",
             "access": "private",
@@ -1301,7 +1937,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1538,
+            "line": 1713,
             "itemtype": "method",
             "name": "removeBumpAnimation",
             "access": "private",
@@ -1322,7 +1958,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1548,
+            "line": 1723,
             "itemtype": "method",
             "name": "addWidenEyesAnimation",
             "access": "private",
@@ -1343,7 +1979,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1607,
+            "line": 1782,
             "itemtype": "method",
             "name": "removeWidenEyesAnimation",
             "access": "private",
@@ -1364,7 +2000,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1619,
+            "line": 1794,
             "itemtype": "method",
             "name": "addAlphaAnimation",
             "access": "private",
@@ -1390,7 +2026,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1675,
+            "line": 1850,
             "itemtype": "method",
             "name": "removeAlphaAnimation",
             "access": "private",
@@ -1411,7 +2047,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1687,
+            "line": 1862,
             "itemtype": "method",
             "name": "addScaleAnimation",
             "access": "private",
@@ -1437,7 +2073,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1737,
+            "line": 1912,
             "itemtype": "method",
             "name": "removeScaleAnimation",
             "access": "private",
@@ -1458,9 +2094,9 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1749,
+            "line": 1924,
             "todo": [
-                "since under development"
+                "still under development"
             ],
             "itemtype": "method",
             "name": "addColorAnimation",
@@ -1487,7 +2123,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1774,
+            "line": 1949,
             "itemtype": "method",
             "name": "removeColorAnimation",
             "access": "private",
@@ -1508,7 +2144,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1792,
+            "line": 1967,
             "itemtype": "method",
             "name": "getAnimationNamesFromMesh",
             "static": 1,
@@ -1528,7 +2164,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1804,
+            "line": 1979,
             "itemtype": "method",
             "name": "isAnimationRegistered",
             "static": 1,
@@ -1553,10 +2189,11 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1814,
+            "line": 1989,
+            "description": "Removes the animation from the mesh\n\nreturns true if the animation was removed / false if there was no animation to remove",
             "itemtype": "method",
             "name": "removeAnimationFromMesh",
-            "static": "Removes the animation from the mesh\nreturns true if the animation was removed / false if there was no animation to remove",
+            "static": 1,
             "params": [
                 {
                     "name": "mesh",
@@ -1578,10 +2215,11 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1832,
+            "line": 2008,
+            "description": "Clone object (simple, not deep reccursive)",
             "itemtype": "method",
             "name": "cloneObject",
-            "static": "Clone object (simple, not deep reccursive)",
+            "static": 1,
             "params": [
                 {
                     "name": "obj",
@@ -1598,7 +2236,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1882,
+            "line": 2058,
             "description": "Loops through the cone list providing a callback like `function(cone, index){}`\n\nReturn false in the callback to stop the loop",
             "itemtype": "method",
             "name": "each",
@@ -1619,8 +2257,8 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1903,
-            "description": "Run any animate methods such as :\n\n* animateAlpha\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n\nJust specify it in `options.method`. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink \"Cone\"}}Cone{{/crossLink}} instance.",
+            "line": 2079,
+            "description": "Run any animate methods such as :\n\n* animateAlpha\n* animateScale\n* bump\n* fadeIn\n* fadeOut\n* unWidenEyes\n* widenEyes\n* moveTo\n\nJust specify it in `options.method`. Those methods are also accessible via the same shortcuts like you would use on a {{#crossLink \"Cone\"}}Cone{{/crossLink}} instance.",
             "itemtype": "method",
             "name": "animate",
             "params": [
@@ -1650,7 +2288,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1967,
+            "line": 2145,
             "itemtype": "method",
             "name": "changeStateDispatcher",
             "access": "private",
@@ -1681,7 +2319,7 @@
         },
         {
             "file": "src\\js\\vendor\\Cone\\Cone.js",
-            "line": 1981,
+            "line": 2159,
             "description": "This method is used internally to expose methods that are used both on Cone and Cone.List\n\nYou will use it when you make your own plugins to expose your own methods",
             "itemtype": "method",
             "name": "addMethods",
@@ -1707,23 +2345,23 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:656"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
             "line": " src\\js\\vendor\\Cone\\Cone.js:665"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:776"
+            "line": " src\\js\\vendor\\Cone\\Cone.js:674"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:1032"
+            "line": " src\\js\\vendor\\Cone\\Cone.js:785"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\vendor\\Cone\\Cone.js:1981"
+            "line": " src\\js\\vendor\\Cone\\Cone.js:1041"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\js\\vendor\\Cone\\Cone.js:2159"
         }
     ]
 }

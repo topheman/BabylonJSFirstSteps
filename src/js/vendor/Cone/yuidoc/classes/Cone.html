@@ -135,7 +135,7 @@
             
                 <li class="arg">
                     
-                        <code>options</code>
+                        <code class="optional">[options]</code>
                     
                 </li>
             
@@ -209,8 +209,9 @@
             
                 <li class="param">
                     
-                        <code class="param-name">options</code>
+                        <code class="param-name optional">[options]</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
@@ -219,6 +220,115 @@
                          
                     </div>
 
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[name]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Name of the cone instance</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[moveStep=0.1]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>How much the cone will move at each move call</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[turnStep=0.1]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>How much the cone will turn at each turn call (in rad)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[eyeSize=1.5]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Eye size</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[color]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Color of the cone&#39;s sylinder (default : #900000) - can be in RGB or HEXA</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[pickable=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Defines if the cone is pickable</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[$customOption]</code>
+                                    <span class="type">Mixed</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Pass any custom option with a parameter&#39;s name starting by $</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
                     
                 </li>
             
@@ -321,8 +431,36 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_animateAlpha">animateAlpha</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_animateColor">animateColor</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_animateScale">animateScale</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method private">
                                 <a href="#method_animationMethodExists">animationMethodExists</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_bump">bump</a>
 
                                 
                                 
@@ -351,6 +489,20 @@
                         
                             <li class="index-item method">
                                 <a href="#method_dequeue">dequeue</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_fadeIn">fadeIn</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_fadeOut">fadeOut</a>
 
                                 
                                 
@@ -533,6 +685,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_moveRight">moveRight</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_moveTo">moveTo</a>
 
                                 
                                 
@@ -742,6 +901,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_unWidenEyes">unWidenEyes</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_widenEyes">widenEyes</a>
 
                                 
@@ -757,6 +923,13 @@
                     <h3>Properties</h3>
 
                     <ul class="index-list properties">
+                        
+                            <li class="index-item property private">
+                                <a href="#property__size">_size</a>
+
+                                
+                                
+                            </li>
                         
                             <li class="index-item property">
                                 <a href="#property_position.x">position.x</a>
@@ -816,13 +989,6 @@
                         
                             <li class="index-item property">
                                 <a href="#property_scaling.z">scaling.z</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property_{Object] _size">{Object] _size</a>
 
                                 
                                 
@@ -896,7 +1062,7 @@
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1619"><code>src\js\vendor\Cone\Cone.js:1619</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1794"><code>src\js\vendor\Cone\Cone.js:1794</code></a>
         
         </p>
 
@@ -1022,7 +1188,7 @@
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1511"><code>src\js\vendor\Cone\Cone.js:1511</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1686"><code>src\js\vendor\Cone\Cone.js:1686</code></a>
         
         </p>
 
@@ -1149,7 +1315,7 @@
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1749"><code>src\js\vendor\Cone\Cone.js:1749</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1924"><code>src\js\vendor\Cone\Cone.js:1924</code></a>
         
         </p>
 
@@ -1269,7 +1435,7 @@
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1032"><code>src\js\vendor\Cone\Cone.js:1032</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1041"><code>src\js\vendor\Cone\Cone.js:1041</code></a>
         
         </p>
 
@@ -1394,7 +1560,7 @@ Cone.List.addMethods(stateFullMethods);</code></pre>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1687"><code>src\js\vendor\Cone\Cone.js:1687</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1862"><code>src\js\vendor\Cone\Cone.js:1862</code></a>
         
         </p>
 
@@ -1514,7 +1680,7 @@ Cone.List.addMethods(stateFullMethods);</code></pre>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1548"><code>src\js\vendor\Cone\Cone.js:1548</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1723"><code>src\js\vendor\Cone\Cone.js:1723</code></a>
         
         </p>
 
@@ -1619,7 +1785,7 @@ Cone.List.addMethods(stateFullMethods);</code></pre>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1362"><code>src\js\vendor\Cone\Cone.js:1362</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1535"><code>src\js\vendor\Cone\Cone.js:1535</code></a>
         
         </p>
 
@@ -1633,11 +1799,13 @@ Cone.List.addMethods(stateFullMethods);</code></pre>
         <p>Run any animate methods such as :</p>
 <ul>
 <li>animateAlpha</li>
+<li>animateScale</li>
 <li>bump</li>
 <li>fadeIn</li>
 <li>fadeOut</li>
 <li>unWidenEyes</li>
 <li>widenEyes</li>
+<li>moveTo</li>
 </ul>
 <p>Just specify it in <code>options.method</code>. Those methods are also accessible directly via shorcuts on the <a href="../classes/Cone.html" class="crosslink">Cone</a> instance.</p>
 
@@ -1721,6 +1889,665 @@ myCone
 </div>
 
                 
+                    <div id="method_animateAlpha" class="method item">
+    <h3 class="name"><code>animateAlpha</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1232"><code>src\js\vendor\Cone\Cone.js:1232</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Animates the alpha of the cone</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[alpha=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=3]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[cylinder=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[leftEye=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[rightEye=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_animateColor" class="method item">
+    <h3 class="name"><code>animateColor</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1373"><code>src\js\vendor\Cone\Cone.js:1373</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Animates the color of the cylinder of the cone</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+<p><strong>Does not work for the moment</strong></p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">color</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=3]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_animateScale" class="method item">
+    <h3 class="name"><code>animateScale</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1318"><code>src\js\vendor\Cone\Cone.js:1318</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Animates the scale of the cone</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[scale=1]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=3]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_animationMethodExists" class="method item private">
     <h3 class="name"><code>animationMethodExists</code></h3>
 
@@ -1769,7 +2596,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1440"><code>src\js\vendor\Cone\Cone.js:1440</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1615"><code>src\js\vendor\Cone\Cone.js:1615</code></a>
         
         </p>
 
@@ -1816,6 +2643,211 @@ myCone
                 
                     
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_bump" class="method item">
+    <h3 class="name"><code>bump</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1175"><code>src\js\vendor\Cone\Cone.js:1175</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Bumps the cone</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[scale=1.2]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=3]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
                     
                 
             </div>
@@ -1874,7 +2906,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l424"><code>src\js\vendor\Cone\Cone.js:424</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l434"><code>src\js\vendor\Cone\Cone.js:434</code></a>
         
         </p>
 
@@ -1970,7 +3002,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l436"><code>src\js\vendor\Cone\Cone.js:436</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l446"><code>src\js\vendor\Cone\Cone.js:446</code></a>
         
         </p>
 
@@ -2059,7 +3091,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l387"><code>src\js\vendor\Cone\Cone.js:387</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l397"><code>src\js\vendor\Cone\Cone.js:397</code></a>
         
         </p>
 
@@ -2182,7 +3214,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l292"><code>src\js\vendor\Cone\Cone.js:292</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l302"><code>src\js\vendor\Cone\Cone.js:302</code></a>
         
         </p>
 
@@ -2215,6 +3247,478 @@ myCone
                          
                     </div>
 
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_fadeIn" class="method item">
+    <h3 class="name"><code>fadeIn</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1437"><code>src\js\vendor\Cone\Cone.js:1437</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Shortcut for animateAlpha(), from the current alpha to alpha=1</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=3]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[cylinder=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[leftEye=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[rightEye=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_fadeOut" class="method item">
+    <h3 class="name"><code>fadeOut</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1463"><code>src\js\vendor\Cone\Cone.js:1463</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Shortcut for animateAlpha(), from the current alpha to alpha=0</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=3]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[cylinder=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[leftEye=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[rightEye=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>True by default, if false, won&#39;t be affected</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
                     
                 </li>
             
@@ -2278,7 +3782,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l449"><code>src\js\vendor\Cone\Cone.js:449</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l459"><code>src\js\vendor\Cone\Cone.js:459</code></a>
         
         </p>
 
@@ -2368,7 +3872,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1003"><code>src\js\vendor\Cone\Cone.js:1003</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1012"><code>src\js\vendor\Cone\Cone.js:1012</code></a>
         
         </p>
 
@@ -2491,7 +3995,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1451"><code>src\js\vendor\Cone\Cone.js:1451</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1626"><code>src\js\vendor\Cone\Cone.js:1626</code></a>
         
         </p>
 
@@ -2584,7 +4088,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l542"><code>src\js\vendor\Cone\Cone.js:542</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l552"><code>src\js\vendor\Cone\Cone.js:552</code></a>
         
         </p>
 
@@ -2664,7 +4168,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l549"><code>src\js\vendor\Cone\Cone.js:549</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l559"><code>src\js\vendor\Cone\Cone.js:559</code></a>
         
         </p>
 
@@ -2757,7 +4261,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l688"><code>src\js\vendor\Cone\Cone.js:688</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l697"><code>src\js\vendor\Cone\Cone.js:697</code></a>
         
         </p>
 
@@ -2828,7 +4332,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l528"><code>src\js\vendor\Cone\Cone.js:528</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l538"><code>src\js\vendor\Cone\Cone.js:538</code></a>
         
         </p>
 
@@ -2898,7 +4402,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l514"><code>src\js\vendor\Cone\Cone.js:514</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l524"><code>src\js\vendor\Cone\Cone.js:524</code></a>
         
         </p>
 
@@ -2968,7 +4472,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l462"><code>src\js\vendor\Cone\Cone.js:462</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l472"><code>src\js\vendor\Cone\Cone.js:472</code></a>
         
         </p>
 
@@ -3039,7 +4543,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l535"><code>src\js\vendor\Cone\Cone.js:535</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l545"><code>src\js\vendor\Cone\Cone.js:545</code></a>
         
         </p>
 
@@ -3109,7 +4613,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l521"><code>src\js\vendor\Cone\Cone.js:521</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l531"><code>src\js\vendor\Cone\Cone.js:531</code></a>
         
         </p>
 
@@ -3191,7 +4695,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1467"><code>src\js\vendor\Cone\Cone.js:1467</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1642"><code>src\js\vendor\Cone\Cone.js:1642</code></a>
         
         </p>
 
@@ -3295,7 +4799,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l557"><code>src\js\vendor\Cone\Cone.js:557</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l567"><code>src\js\vendor\Cone\Cone.js:567</code></a>
         
         </p>
 
@@ -3406,7 +4910,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l573"><code>src\js\vendor\Cone\Cone.js:573</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l583"><code>src\js\vendor\Cone\Cone.js:583</code></a>
         
         </p>
 
@@ -3516,7 +5020,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l471"><code>src\js\vendor\Cone\Cone.js:471</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l481"><code>src\js\vendor\Cone\Cone.js:481</code></a>
         
         </p>
 
@@ -3587,7 +5091,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l498"><code>src\js\vendor\Cone\Cone.js:498</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l508"><code>src\js\vendor\Cone\Cone.js:508</code></a>
         
         </p>
 
@@ -3657,7 +5161,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l505"><code>src\js\vendor\Cone\Cone.js:505</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l515"><code>src\js\vendor\Cone\Cone.js:515</code></a>
         
         </p>
 
@@ -3728,7 +5232,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l489"><code>src\js\vendor\Cone\Cone.js:489</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l499"><code>src\js\vendor\Cone\Cone.js:499</code></a>
         
         </p>
 
@@ -3811,7 +5315,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1484"><code>src\js\vendor\Cone\Cone.js:1484</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1659"><code>src\js\vendor\Cone\Cone.js:1659</code></a>
         
         </p>
 
@@ -3904,7 +5408,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l674"><code>src\js\vendor\Cone\Cone.js:674</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l683"><code>src\js\vendor\Cone\Cone.js:683</code></a>
         
         </p>
 
@@ -3975,7 +5479,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l480"><code>src\js\vendor\Cone\Cone.js:480</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l490"><code>src\js\vendor\Cone\Cone.js:490</code></a>
         
         </p>
 
@@ -4058,7 +5562,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l989"><code>src\js\vendor\Cone\Cone.js:989</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l998"><code>src\js\vendor\Cone\Cone.js:998</code></a>
         
         </p>
 
@@ -4153,7 +5657,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l815"><code>src\js\vendor\Cone\Cone.js:815</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l824"><code>src\js\vendor\Cone\Cone.js:824</code></a>
         
         </p>
 
@@ -4226,7 +5730,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l804"><code>src\js\vendor\Cone\Cone.js:804</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l813"><code>src\js\vendor\Cone\Cone.js:813</code></a>
         
         </p>
 
@@ -4299,7 +5803,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l826"><code>src\js\vendor\Cone\Cone.js:826</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l835"><code>src\js\vendor\Cone\Cone.js:835</code></a>
         
         </p>
 
@@ -4372,7 +5876,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l837"><code>src\js\vendor\Cone\Cone.js:837</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l846"><code>src\js\vendor\Cone\Cone.js:846</code></a>
         
         </p>
 
@@ -4387,6 +5891,176 @@ myCone
 
     </div>
 
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_moveTo" class="method item">
+    <h3 class="name"><code>moveTo</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1491"><code>src\js\vendor\Cone\Cone.js:1491</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Let&#39;s your cone move to a position.</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">position</code>
+                                    <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a> | BABYLON.Vector3 | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one (<code>.moveTo()</code> is on the <code>move</code> queue, not the <code>fx</code> queue as the other animations, so you can run them in parallel of moveTo)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -4461,7 +6135,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l322"><code>src\js\vendor\Cone\Cone.js:322</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l332"><code>src\js\vendor\Cone\Cone.js:332</code></a>
         
         </p>
 
@@ -4589,7 +6263,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l709"><code>src\js\vendor\Cone\Cone.js:709</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l718"><code>src\js\vendor\Cone\Cone.js:718</code></a>
         
         </p>
 
@@ -4695,7 +6369,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1497"><code>src\js\vendor\Cone\Cone.js:1497</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1672"><code>src\js\vendor\Cone\Cone.js:1672</code></a>
         
         </p>
 
@@ -4800,7 +6474,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1675"><code>src\js\vendor\Cone\Cone.js:1675</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1850"><code>src\js\vendor\Cone\Cone.js:1850</code></a>
         
         </p>
 
@@ -4905,7 +6579,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1538"><code>src\js\vendor\Cone\Cone.js:1538</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1713"><code>src\js\vendor\Cone\Cone.js:1713</code></a>
         
         </p>
 
@@ -5010,7 +6684,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1774"><code>src\js\vendor\Cone\Cone.js:1774</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1949"><code>src\js\vendor\Cone\Cone.js:1949</code></a>
         
         </p>
 
@@ -5115,7 +6789,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1737"><code>src\js\vendor\Cone\Cone.js:1737</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1912"><code>src\js\vendor\Cone\Cone.js:1912</code></a>
         
         </p>
 
@@ -5220,7 +6894,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1607"><code>src\js\vendor\Cone\Cone.js:1607</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1782"><code>src\js\vendor\Cone\Cone.js:1782</code></a>
         
         </p>
 
@@ -5315,7 +6989,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l930"><code>src\js\vendor\Cone\Cone.js:930</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l939"><code>src\js\vendor\Cone\Cone.js:939</code></a>
         
         </p>
 
@@ -5388,7 +7062,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l903"><code>src\js\vendor\Cone\Cone.js:903</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l912"><code>src\js\vendor\Cone\Cone.js:912</code></a>
         
         </p>
 
@@ -5471,7 +7145,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l790"><code>src\js\vendor\Cone\Cone.js:790</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l799"><code>src\js\vendor\Cone\Cone.js:799</code></a>
         
         </p>
 
@@ -5577,7 +7251,7 @@ callback has a &quot;next&quot; parameter to launch the next callback in the que
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l760"><code>src\js\vendor\Cone\Cone.js:760</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l769"><code>src\js\vendor\Cone\Cone.js:769</code></a>
         
         </p>
 
@@ -5684,7 +7358,7 @@ Accepts hexa or rgb color</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l969"><code>src\js\vendor\Cone\Cone.js:969</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l978"><code>src\js\vendor\Cone\Cone.js:978</code></a>
         
         </p>
 
@@ -5789,7 +7463,7 @@ Accepts hexa or rgb color</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l776"><code>src\js\vendor\Cone\Cone.js:776</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l785"><code>src\js\vendor\Cone\Cone.js:785</code></a>
         
         </p>
 
@@ -5895,7 +7569,7 @@ Accepts hexa or rgb color</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l979"><code>src\js\vendor\Cone\Cone.js:979</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l988"><code>src\js\vendor\Cone\Cone.js:988</code></a>
         
         </p>
 
@@ -5988,7 +7662,7 @@ Accepts hexa or rgb color</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l724"><code>src\js\vendor\Cone\Cone.js:724</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l733"><code>src\js\vendor\Cone\Cone.js:733</code></a>
         
         </p>
 
@@ -6063,7 +7737,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l870"><code>src\js\vendor\Cone\Cone.js:870</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l879"><code>src\js\vendor\Cone\Cone.js:879</code></a>
         
         </p>
 
@@ -6136,7 +7810,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l957"><code>src\js\vendor\Cone\Cone.js:957</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l966"><code>src\js\vendor\Cone\Cone.js:966</code></a>
         
         </p>
 
@@ -6208,7 +7882,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l917"><code>src\js\vendor\Cone\Cone.js:917</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l926"><code>src\js\vendor\Cone\Cone.js:926</code></a>
         
         </p>
 
@@ -6281,7 +7955,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l890"><code>src\js\vendor\Cone\Cone.js:890</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l899"><code>src\js\vendor\Cone\Cone.js:899</code></a>
         
         </p>
 
@@ -6368,7 +8042,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l609"><code>src\js\vendor\Cone\Cone.js:609</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l618"><code>src\js\vendor\Cone\Cone.js:618</code></a>
         
         </p>
 
@@ -6501,7 +8175,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l665"><code>src\js\vendor\Cone\Cone.js:665</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l674"><code>src\js\vendor\Cone\Cone.js:674</code></a>
         
         </p>
 
@@ -6572,7 +8246,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l656"><code>src\js\vendor\Cone\Cone.js:656</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l665"><code>src\js\vendor\Cone\Cone.js:665</code></a>
         
         </p>
 
@@ -6655,7 +8329,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l362"><code>src\js\vendor\Cone\Cone.js:362</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l372"><code>src\js\vendor\Cone\Cone.js:372</code></a>
         
         </p>
 
@@ -6779,7 +8453,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l942"><code>src\js\vendor\Cone\Cone.js:942</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l951"><code>src\js\vendor\Cone\Cone.js:951</code></a>
         
         </p>
 
@@ -6874,7 +8548,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l848"><code>src\js\vendor\Cone\Cone.js:848</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l857"><code>src\js\vendor\Cone\Cone.js:857</code></a>
         
         </p>
 
@@ -6947,7 +8621,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l859"><code>src\js\vendor\Cone\Cone.js:859</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l868"><code>src\js\vendor\Cone\Cone.js:868</code></a>
         
         </p>
 
@@ -7018,7 +8692,7 @@ myCone
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l742"><code>src\js\vendor\Cone\Cone.js:742</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l751"><code>src\js\vendor\Cone\Cone.js:751</code></a>
         
         </p>
 
@@ -7091,7 +8765,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l643"><code>src\js\vendor\Cone\Cone.js:643</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l652"><code>src\js\vendor\Cone\Cone.js:652</code></a>
         
         </p>
 
@@ -7106,6 +8780,227 @@ Returns false if they are and stop squint</p>
 
     </div>
 
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_unWidenEyes" class="method item">
+    <h3 class="name"><code>unWidenEyes</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Cone.html" class="crosslink">Cone</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1150"><code>src\js\vendor\Cone\Cone.js:1150</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Unwidens the eyes of the cone (and more)</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[speed=5]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[loop=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[callback=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[delay=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[break=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[full=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true, runs the full animation (openning and closing eyes)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[close=true]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If true, runs only the close eyes part of the animation (by default, does that on unWidenEyes)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -7174,7 +9069,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1063"><code>src\js\vendor\Cone\Cone.js:1063</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l1072"><code>src\js\vendor\Cone\Cone.js:1072</code></a>
         
         </p>
 
@@ -7185,7 +9080,9 @@ Returns false if they are and stop squint</p>
     </div>
 
     <div class="description">
-        
+        <p>Widens the eyes of the cone (and more)</p>
+<p>Can also be run via the <code>.animate()</code> dispatcher</p>
+
     </div>
 
     
@@ -7232,7 +9129,13 @@ Returns false if they are and stop squint</p>
                                 
 
                                 <div class="param-description">
-                                    
+                                    <p>3 possibilities :</p>
+<ul>
+<li><code>true</code> will loop the animation until you stop it</li>
+<li><code>false</code> will play the animation only once</li>
+<li>a number will play the animation a number of times</li>
+</ul>
+
                                 </div>
 
                                 
@@ -7246,7 +9149,7 @@ Returns false if they are and stop squint</p>
                                 
 
                                 <div class="param-description">
-                                    <p><code>function(cone){}</code></p>
+                                    <p>will run your callback at the end of the animation : <code>function(cone){}</code></p>
 
                                 </div>
 
@@ -7261,7 +9164,8 @@ Returns false if they are and stop squint</p>
                                 
 
                                 <div class="param-description">
-                                    
+                                    <p>Delay between the end of the animation and the execution of the callback (and potentionally the next animation in the queue)</p>
+
                                 </div>
 
                                 
@@ -7275,7 +9179,8 @@ Returns false if they are and stop squint</p>
                                 
 
                                 <div class="param-description">
-                                    
+                                    <p>If true cancels all animations in the queue before running this one</p>
+
                                 </div>
 
                                 
@@ -7289,7 +9194,8 @@ Returns false if they are and stop squint</p>
                                 
 
                                 <div class="param-description">
-                                    
+                                    <p>If true, runs the full animation (openning and closing eyes)</p>
+
                                 </div>
 
                                 
@@ -7303,7 +9209,8 @@ Returns false if they are and stop squint</p>
                                 
 
                                 <div class="param-description">
-                                    
+                                    <p>If true, runs only the close eyes part of the animation (by default, only opens eyes)</p>
+
                                 </div>
 
                                 
@@ -7343,6 +9250,98 @@ Returns false if they are and stop squint</p>
                 <h2 class="off-left">Properties</h2>
 
                 
+                    <div id="property__size" class="property item private">
+    <h3 class="name"><code>_size</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l55"><code>src\js\vendor\Cone\Cone.js:55</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Original sizes</p>
+
+    </div>
+
+    
+
+    
+
+    
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            
+            <li class="param">
+                
+                    <code class="param-name">topDiameter</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">bottomDiameter</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">height</code>
+                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+        </ul>
+    
+</div>
+
+                
                     <div id="property_position.x" class="property item">
     <h3 class="name"><code>position.x</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -7366,7 +9365,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l128"><code>src\js\vendor\Cone\Cone.js:128</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l138"><code>src\js\vendor\Cone\Cone.js:138</code></a>
         
         </p>
 
@@ -7411,7 +9410,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l133"><code>src\js\vendor\Cone\Cone.js:133</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l143"><code>src\js\vendor\Cone\Cone.js:143</code></a>
         
         </p>
 
@@ -7456,7 +9455,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l138"><code>src\js\vendor\Cone\Cone.js:138</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l148"><code>src\js\vendor\Cone\Cone.js:148</code></a>
         
         </p>
 
@@ -7501,7 +9500,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l173"><code>src\js\vendor\Cone\Cone.js:173</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l183"><code>src\js\vendor\Cone\Cone.js:183</code></a>
         
         </p>
 
@@ -7546,7 +9545,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l178"><code>src\js\vendor\Cone\Cone.js:178</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l188"><code>src\js\vendor\Cone\Cone.js:188</code></a>
         
         </p>
 
@@ -7591,7 +9590,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l183"><code>src\js\vendor\Cone\Cone.js:183</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l193"><code>src\js\vendor\Cone\Cone.js:193</code></a>
         
         </p>
 
@@ -7636,7 +9635,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l218"><code>src\js\vendor\Cone\Cone.js:218</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l228"><code>src\js\vendor\Cone\Cone.js:228</code></a>
         
         </p>
 
@@ -7681,7 +9680,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l223"><code>src\js\vendor\Cone\Cone.js:223</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l233"><code>src\js\vendor\Cone\Cone.js:233</code></a>
         
         </p>
 
@@ -7726,7 +9725,7 @@ Returns false if they are and stop squint</p>
             
         
         
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l228"><code>src\js\vendor\Cone\Cone.js:228</code></a>
+        <a href="../files/src_js_vendor_Cone_Cone.js.html#l238"><code>src\js\vendor\Cone\Cone.js:238</code></a>
         
         </p>
 
@@ -7737,53 +9736,6 @@ Returns false if they are and stop squint</p>
 
     <div class="description">
         <p>z scaling of the cone</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_{Object] _size" class="property item private">
-    <h3 class="name"><code>{Object] _size</code></h3>
-    <span class="type">Unknown</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js_vendor_Cone_Cone.js.html#l48"><code>src\js\vendor\Cone\Cone.js:48</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Original sizes</p>
 
     </div>
 
