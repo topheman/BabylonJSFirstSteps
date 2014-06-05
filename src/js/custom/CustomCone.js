@@ -37,6 +37,7 @@
       }
       //for the last one
       else{
+        item.widenEyes({full:true});
         item.moveTo({position:firstConePosition}).queue('move',function(next,cone){
           cone.bump();
           if(options.callback){
