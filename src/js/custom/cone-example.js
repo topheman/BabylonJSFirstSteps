@@ -11,7 +11,8 @@
  * If you have ideas please share them !
  */
 
-var camera, coneMain, coneTest1, coneTest2, ground, coneList1, coneList2;
+//globals so you could play with on the console
+var camera, coneMain, coneTest1, coneTest2, ground, coneListAll, coneListOthers;
 
 window.onload = function() {
   var canvas = document.getElementById("canvas");
@@ -20,7 +21,7 @@ window.onload = function() {
     window.alert('Browser not supported');
   }
   else {    
-    var engine = new BABYLON.Engine(canvas, false);
+    var engine = new BABYLON.Engine(canvas, true);
 
     var scene = new BABYLON.Scene(engine);
 

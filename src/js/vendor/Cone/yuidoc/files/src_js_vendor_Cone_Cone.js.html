@@ -135,6 +135,7 @@
    * @param {BABYLON.Scene} scene
    * @param {Object} [options]
    * @param {string} [options.name] Name of the cone instance
+   * @param {number} [options.tessellation=30] Number of faces of the cylinder
    * @param {number} [options.moveStep=0.1] How much the cone will move at each move call
    * @param {number} [options.turnStep=0.1] How much the cone will turn at each turn call (in rad)
    * @param {number} [options.eyeSize=1.5] Eye size
@@ -145,6 +146,8 @@
    */
   var Cone = function(scene, options) {
     options = typeof options === &#x27;object&#x27; ? options : {};
+    
+    options.tessellation = typeof options.tessellation === &#x27;undefined&#x27; ? 30 : options.tessellation;
     
     /**
      * Original sizes
@@ -176,7 +179,7 @@
     parentMesh.isPickable = false;
     
     //create + link + reposition the cylinder inside the group
-    this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + &quot;-group-cylinder&quot;, CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, 20, scene);
+    this.cylinder = BABYLON.Mesh.CreateCylinder(this.name + &quot;-group-cylinder&quot;, CONE_CYLINDER_HEIGHT, CONE_CYLINDER_BOTTOM_DIAMETER, CONE_CYLINDER_TOP_DIAMETER, options.tessellation, scene);
     var pivot = BABYLON.Matrix.Translation(0, CONE_CYLINDER_HEIGHT / 2, 0);
     this.cylinder.setPivotMatrix(pivot);
     this.cylinder.parent = parentMesh;
@@ -1485,8 +1488,10 @@
        * @param {boolean} [options.break=false] If true cancels all animations in the queue before running this one
        * @return {Cone}
        * @chainable
+       * @deprecated
        */
       animateColor: function(options){
+        console.warn(&#x27;animateColor : this feature has a bug I could fixed : the color changes but is not animated, anyway, your callback is called at the end of the animation&#x27;);
         options = typeof options === &#x27;undefined&#x27; ? {} : options;
         if(typeof options.color === &#x27;undefined&#x27;){
           throw new Error(&#x27;options.color mandatory&#x27;);

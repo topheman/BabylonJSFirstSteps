@@ -8,10 +8,10 @@
  * 
  * This page exposes the plugin extentions possibilities of the Cone class
  * 
- * This file may seem poorly coded (global variables, etc ...), this is only to test the framework
- * I don't really have a clue of what I will do exactly (a game probably)
- * If you have ideas please share them !
  */
+
+//globals so you could play with on the console
+var coneList;
 
 window.onload = function(){
   var canvas = document.getElementById("canvas");
@@ -20,7 +20,7 @@ window.onload = function(){
     window.alert('Browser not supported');
   }
   else{
-    var engine = new BABYLON.Engine(canvas, false);
+    var engine = new BABYLON.Engine(canvas, true);
 
     var scene = new BABYLON.Scene(engine);
 
@@ -50,6 +50,12 @@ window.onload = function(){
         color:Cone.helpers.getRandomColor()
       }));
     }
+    
+    //shadows
+    var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
+    shadowGenerator.useVarianceShadowMap = false;
+    ground.receiveShadows = true;
+    coneList.registerToShadowGenerator(shadowGenerator);
     
     coneList[0].position.x = -10;
     coneList[1].position.z = -10;
