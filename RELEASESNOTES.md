@@ -1,6 +1,16 @@
 RELEASES NOTES
 ==============
 
+#0.3.0
+
+* static `.addMethods()` accessible on both `Cone` and `Cone.List` for user plugins
+* cones now tail each other on example if pass through
+* modified bump animation + bump on space bar
+* added a plugin example : `src/cone-plugin-example.html`
+* `options.tessalation` on `new Cone()`
+* special user options beginning by $ `new Cone()`
+* license
+
 #0.2.2
 
 * folder organization

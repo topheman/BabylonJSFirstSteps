@@ -1,4 +1,11 @@
-/**
+/*!
+ * Copyright 2014, Christophe Rosset (Topheman)
+ * http://labs.topheman.com/
+ * http://twitter.com/topheman
+ * 
+ * @requires BabylonJS - https://github.com/BabylonJS/Babylon.js
+ * @requires Cone.js
+ * 
  * This file extends the Cone class with other method
  * You can do that like you would on a jQuery plugin
  */

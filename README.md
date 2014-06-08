@@ -7,6 +7,8 @@ You can simply use the [Cone.js](https://github.com/topheman/BabylonJSFirstSteps
 
 **You may take a look at the [example](http://labs.topheman.com/babylonjs/ "BabylonJS - first steps") ...**
 
+More infos on this [blog post](http://dev.topheman.com/babylonjs-first-steps-cone/ "Blog post").
+
 ----------
 
 After you have cloned the repository :
