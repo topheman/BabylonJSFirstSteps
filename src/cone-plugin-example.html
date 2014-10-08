@@ -9,18 +9,22 @@
     <meta name=viewport content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="./css/fullscreen.css" />
     <link rel="stylesheet" type="text/css" href="./css/cone-example.css" />
-    <script src="./js/vendor/babylon.1.11.js"></script>
+    <script src="./js/vendor/babylon.1.12.js"></script>
     <script src="./js/vendor/hand-1.3.7.js"></script>
   </head>
   <body>
     <div id="rootDiv">
       <div id="infos">
-        <ul>
+        <ul class="desktop">
           <li>click on any cone to <code>cone.surprised()</code></li>
-          <li id="switchPlaces" class="pointer"><code>coneList.switchPlaces()</code></li>
+          <li class="switchPlaces pointer"><code>coneList.switchPlaces()</code></li>
           <li id="toggleFullScreen" class="pointer">Switch to fullscreen</li>
         </ul>
-        <p>The file <a href="./js/custom/CustomCone.js">CustomCone.js</a> <strong>extends</strong> <a href="./js/vendor/Cone/Cone.js">Cone.js</a> like you would do with a jQuery plugin.</p>
+        <p class="desktop">The file <a href="./js/custom/CustomCone.js">CustomCone.js</a> <strong>extends</strong> <a href="./js/vendor/Cone/Cone.js">Cone.js</a> like you would do with a jQuery plugin.</p>
+        <ul class="mobile">
+          <li>click on any cone to <code>cone.surprised()</code></li>
+          <li class="switchPlaces pointer">touch here to <code>coneList.switchPlaces()</code></li>
+        </ul>
       </div>
       <canvas id="canvas"></canvas>
     </div>

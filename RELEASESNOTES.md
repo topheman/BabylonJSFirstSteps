@@ -1,6 +1,11 @@
 RELEASES NOTES
 ==============
 
+#0.3.1
+
+* changed BabylonJS version from v1.11 to v1.12 to fix `scene.pick()` bug on Mac OS X (note : v1.13 and v1.14-beta render completly different - so cannot upgrade more)
+* adapt UI for mobile (now also works on iOS)
+
 #0.3.0
 
 * static `.addMethods()` accessible on both `Cone` and `Cone.List` for user plugins

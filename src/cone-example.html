@@ -9,13 +9,13 @@
     <meta name=viewport content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="./css/fullscreen.css" />
     <link rel="stylesheet" type="text/css" href="./css/cone-example.css" />
-    <script src="./js/vendor/babylon.1.11.js"></script>
+    <script src="./js/vendor/babylon.1.12.js"></script>
     <script src="./js/vendor/hand-1.3.7.js"></script>
   </head>
   <body>
     <div id="rootDiv">
       <div id="infos">
-        <ul>
+        <ul class="desktop">
           <li>Drive any cone with your mouse</li>
           <li>Use the arrow keys for the red cone</li>
           <li>Pass through the cones to make them follow each other</li>
@@ -24,6 +24,9 @@
           <li>press space to bump the red cone</li>
           <li>Alt+mouse to move camera</li>
           <li id="toggleFullScreen" class="pointer">Switch to fullscreen</li>
+        </ul>
+        <ul class="mobile">
+          <li>Touch and drag the cones</li>
         </ul>
       </div>
       <canvas id="canvas"></canvas>

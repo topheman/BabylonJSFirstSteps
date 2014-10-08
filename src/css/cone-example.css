@@ -30,6 +30,24 @@ canvas{
   cursor: pointer;
 }
 
+@media only screen and (min-device-width: 768px){
+  .desktop{
+    display: block;
+  }
+  .mobile{
+    display:none;
+  }
+}
+
+@media only screen and (max-device-width: 768px){
+  .desktop{
+    display: none;
+  }
+  .mobile{
+    display:block;
+  }
+}
+
 /** animations */
 /* Chrome, Safari, Opera */
 @-webkit-keyframes infos-flash{

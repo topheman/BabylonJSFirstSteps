@@ -75,15 +75,18 @@ window.onload = function(){
     },false);
     
     var switchingPlaces = false;
-    document.getElementById('switchPlaces').addEventListener('click', function() {
-      if(switchingPlaces !== true){
-        switchingPlaces = true;
-        coneList.switchPlaces({
-          callback:function(){
-            switchingPlaces = false;
-        }});
-      }
-    });
+    var elms = document.getElementsByClassName('switchPlaces');
+    for(var i=0; i<elms.length; i++){
+      elms[i].addEventListener('click', function() {
+        if(switchingPlaces !== true){
+          switchingPlaces = true;
+          coneList.switchPlaces({
+            callback:function(){
+              switchingPlaces = false;
+          }});
+        }
+      });
+    }
 
     document.getElementById('toggleFullScreen').addEventListener('click', function() {
       var rootDiv = document.getElementById('rootDiv');
