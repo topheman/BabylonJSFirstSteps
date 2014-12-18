@@ -1,12 +1,13 @@
 {
-    "name": "Cone.js",
-    "description": "A little class to manage 3d cones in BabylonJS",
-    "url": "http://labs.topheman.com/babylonjs",
-    "options": {
-        "linkNatives": "true",        
-        "attributesEmit": "false",
-        "selleck": "false",
-        "paths": ["./src/js/vendor/Cone"],
-        "outdir": "./src/js/vendor/Cone/yuidoc"
-    }
+  "name": "Cone.js",
+  "description": "A little class to manage 3d cones in BabylonJS",
+  "url": "http://labs.topheman.com/babylonjs",
+  "options": {
+    "linkNatives": "true",
+    "attributesEmit": "false",
+    "selleck": "false",
+    "paths": ["./src/js/vendor/Cone"],
+    "outdir": "./src/js/vendor/Cone/yuidoc",
+    "themedir" : "./extras/yuidoc-theme-blue"
+  }
 }

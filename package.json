@@ -17,6 +17,6 @@
     "url": "http://github.com/topheman/BabylonJSFirstSteps.git"
   },
   "scripts": {
-    "yuidoc" : "yuidoc --norecurse -c yuidoc.json"
+    "yuidoc": "yuidoc --norecurse -c yuidoc.json --project-version 0.3.1"
   }
 }
