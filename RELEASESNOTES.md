@@ -1,5 +1,7 @@
 RELEASES NOTES
 ==============
+#v1.0.0
+* added specific templates to yuidoc
 
 #0.3.1
 

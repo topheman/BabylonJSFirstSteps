@@ -1,6 +1,6 @@
 {
   "name": "BabylonJSFirstSteps",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -17,6 +17,6 @@
     "url": "http://github.com/topheman/BabylonJSFirstSteps.git"
   },
   "scripts": {
-    "yuidoc": "yuidoc --norecurse -c yuidoc.json --project-version 0.3.1"
+    "yuidoc": "yuidoc --norecurse -c yuidoc.json --project-version 1.0.0"
   }
 }
