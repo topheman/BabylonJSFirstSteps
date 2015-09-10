@@ -8,6 +8,6 @@
     "selleck": "false",
     "paths": ["./src/js/vendor/Cone"],
     "outdir": "./src/js/vendor/Cone/yuidoc",
-    "themedir" : "./extras/yuidoc-theme-blue"
+    "themedir" : "./extras/yuidoc-theme-topheman"
   }
 }

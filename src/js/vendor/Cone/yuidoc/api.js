@@ -13,6 +13,7 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "Cone",
             "name": "Cone"
         }
-    ]
+    ],
+    "elements": []
 } };
 });

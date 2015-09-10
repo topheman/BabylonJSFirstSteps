@@ -3,7 +3,7 @@
         "name": "Cone.js",
         "description": "A little class to manage 3d cones in BabylonJS",
         "url": "http://labs.topheman.com/babylonjs",
-        "version": "1.0.0"
+        "version": "1.0.1"
     },
     "files": {
         "src/js/vendor/Cone/Cone.js": {
@@ -24,6 +24,7 @@
         "Cone": {
             "name": "Cone",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "Cone": 1,
                 "Cone.helpers": 1,
@@ -165,6 +166,7 @@
             }
         }
     },
+    "elements": {},
     "classitems": [
         {
             "file": "src/js/vendor/Cone/Cone.js",
